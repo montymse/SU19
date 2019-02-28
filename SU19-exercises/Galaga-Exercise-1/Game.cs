@@ -13,9 +13,8 @@ namespace Galaga_Exercise_1 {
         private Window win;
         private DIKUArcade.Timers.GameTimer gameTimer;
         private Player player;
+        private GameEventBus<object> bus;
         public Game() {
-            // TODO: Choose some reasonable values for the window and timer constructor.
-            // For the window, we recommend a 500x500 resolution (a 1:1 aspect ratio).
             win = new Window("Window-name",500, 500);
             gameTimer = new GameTimer(60,60);
             
