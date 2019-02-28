@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Media;
+using System.Xml;
 using DIKUArcade;
 using DIKUArcade.EventBus;
 using DIKUArcade.Timers;
@@ -15,6 +16,11 @@ namespace Galaga_Exercise_1 {
         private DIKUArcade.Timers.GameTimer gameTimer;
         private Player player;
         private GameEventBus<object> eventBus;
+        
+        public List<Image> enemyStrides;
+
+        public List<Enemy> enemies;
+        
         public Game() {
             win = new Window("Window-name",500, 500);
             gameTimer = new GameTimer(60,60);
@@ -31,9 +37,23 @@ namespace Galaga_Exercise_1 {
             win.RegisterEventBus(eventBus);
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.WindowEvent, this);
+            
+            enemyStrides = ImageStride.CreateStrides(4,
+            Path.Combine("Assets", "Images", "BlueMonster.png"));
+            enemies = new List<Enemy>();
+            AddEnemies();
+        }
+
+        //TODO: fix this shit
+        private float xposition;
+        public void AddEnemies() {
+            for (int i = 1; i < 10; i++) {
+                xposition = i * 0.09f;
+                enemies.Add(new Enemy(this, new DynamicShape(new Vec2F(xposition, 0.9f),
+                    new Vec2F(0.1f, 0.1f)),new ImageStride(80, enemyStrides)));
+            }
         }
         public void GameLoop() {
-            
             while(win.IsRunning()) {
                 gameTimer.MeasureTime();
                 eventBus.ProcessEvents();
@@ -45,6 +65,9 @@ namespace Galaga_Exercise_1 {
                     win.Clear();
                     // Render gameplay entities here
                     player.RenderEntity();
+                    foreach (Enemy item in enemies) {
+                        item.RenderEntity();
+                    }
                     win.SwapBuffers();
                 }
                 if (gameTimer.ShouldReset()) {
