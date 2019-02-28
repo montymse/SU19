@@ -1,3 +1,4 @@
+using System.IO;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
@@ -25,6 +26,12 @@ namespace Galaga_Exercise_1 {
             else if(this.Shape.Position.X >= 1-this.Shape.Extent.X && this.Shape.AsDynamicShape().Direction.X < 0) {
                 this.Shape.Move(this.Shape.AsDynamicShape().Direction);
             }
+        }
+
+        //TODO: load image once
+        public void Shoot() {
+            game.playerShots.Add(new PlayerShot(game, new DynamicShape(new Vec2F(this.Shape.Position.X, this.Shape.Position.Y+this.Shape.Extent.Y),
+                new Vec2F(0.008f,0.027f)), new Image(Path.Combine("Assets","Images","BulletRed2.png"))));
         }
     }
 }

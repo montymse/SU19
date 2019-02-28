@@ -20,6 +20,7 @@ namespace Galaga_Exercise_1 {
         public List<Image> enemyStrides;
 
         public List<Enemy> enemies;
+        public List<PlayerShot> playerShots { get; private set; }
         
         public Game() {
             win = new Window("Window-name",500, 500);
@@ -42,6 +43,8 @@ namespace Galaga_Exercise_1 {
             Path.Combine("Assets", "Images", "BlueMonster.png"));
             enemies = new List<Enemy>();
             AddEnemies();
+            
+            playerShots = new List<PlayerShot>();
         }
 
         //TODO: fix this shit
@@ -93,6 +96,9 @@ namespace Galaga_Exercise_1 {
             case "KEY_D":
                 player.Direction(new Vec2F(0.05f,0.00f));
                 player.Move();
+                break;
+            case "KEY_W":
+                player.Shoot();
                 break;
             }
         }
