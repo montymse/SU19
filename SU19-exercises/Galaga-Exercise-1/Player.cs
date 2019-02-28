@@ -22,7 +22,6 @@ namespace Galaga_Exercise_1 {
             else if(this.Shape.Position.X <= 0 + this.Shape.Extent.X && this.Shape.AsDynamicShape().Direction.X > 0) {
                 this.Shape.Move(this.Shape.AsDynamicShape().Direction);
             }
-            //else if(this.Shape.Position.X >= 1-this.Shape.Extent.X && this.Shape.AsDynamicShape().Direction.X < 0 + this.Shape.Extent.X) {
             else if(this.Shape.Position.X >= 1-this.Shape.Extent.X && this.Shape.AsDynamicShape().Direction.X < 0) {
                 this.Shape.Move(this.Shape.AsDynamicShape().Direction);
             }
