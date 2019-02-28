@@ -9,6 +9,7 @@ using DIKUArcade.Timers;
 using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using  DIKUArcade.Graphics;
+using DIKUArcade.Physics;
 
 namespace Galaga_Exercise_1 {
     public class Game  : IGameEventProcessor<object> {
@@ -56,12 +57,46 @@ namespace Galaga_Exercise_1 {
                     new Vec2F(0.1f, 0.1f)),new ImageStride(80, enemyStrides)));
             }
         }
+        public void IterateShots() {
+            foreach (var shot in playerShots) {
+                shot.Shape.Move();
+            if (shot.Shape.Position.Y > 1.0f) {
+                shot.DeleteEntity();
+            }
+                foreach (var enemy in enemies) {
+                    // TODO: perform collision detection
+                    // (hint: Physics.CollisionDetection.Aabb)
+                    if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {
+                        shot.DeleteEntity();
+                        enemy.DeleteEntity();
+                    }
+                }
+            }
+            
+            List<Enemy> newEnemies = new List<Enemy>();
+            foreach (Enemy enemy in enemies) {
+                if (!enemy.IsDeleted()) {
+                    newEnemies.Add(enemy);
+                }
+            }
+            enemies = newEnemies;
+            
+            List<PlayerShot> newPlayerShots = new List<PlayerShot>();
+            foreach (PlayerShot shot in playerShots) {
+                if (!shot.IsDeleted()) {
+                    newPlayerShots.Add(shot);
+                }
+            }
+
+            playerShots = newPlayerShots;
+        }
         public void GameLoop() {
             while(win.IsRunning()) {
                 gameTimer.MeasureTime();
                 eventBus.ProcessEvents();
                 while (gameTimer.ShouldUpdate()) {
                     win.PollEvents();
+                    IterateShots();
                     // Update game logic here
                 }
                 if (gameTimer.ShouldRender()) {
@@ -70,6 +105,10 @@ namespace Galaga_Exercise_1 {
                     player.RenderEntity();
                     foreach (Enemy item in enemies) {
                         item.RenderEntity();
+                    }
+
+                    foreach (PlayerShot shot in playerShots) {
+                        shot.RenderEntity();
                     }
                     win.SwapBuffers();
                 }
@@ -97,7 +136,7 @@ namespace Galaga_Exercise_1 {
                 player.Direction(new Vec2F(0.05f,0.00f));
                 player.Move();
                 break;
-            case "KEY_W":
+            case "KEY_SPACE":
                 player.Shoot();
                 break;
             }
