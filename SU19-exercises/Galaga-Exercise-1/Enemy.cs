@@ -19,8 +19,6 @@ namespace Galaga_Exercise_1 {
         enemies = new List<Enemy>();
     }
 
-        ImageStride strides = new ImageStride(int 80, enemyStrides);
-
         public void AddEnemies() {
             Enemy Enemy1 = new Enemy(game, new DynamicShape(new Vec2F(0.20f, 0.9f), 
                 new Vec2F(0.1f, 0.1f)),);
