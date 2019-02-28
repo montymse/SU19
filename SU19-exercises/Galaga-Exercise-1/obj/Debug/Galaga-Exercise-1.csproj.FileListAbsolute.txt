@@ -8,3 +8,14 @@
 /Users/Muse/su19-mikaelMuseFrederik/SU19-exercises/Galaga-Exercise-1/obj/Debug/Galaga-Exercise-1.csproj.CoreCompileInputs.cache
 /Users/Muse/su19-mikaelMuseFrederik/SU19-exercises/Galaga-Exercise-1/obj/Debug/Galaga_Exercise_1.exe
 /Users/Muse/su19-mikaelMuseFrederik/SU19-exercises/Galaga-Exercise-1/obj/Debug/Galaga_Exercise_1.pdb
+/home/mikael/Documents/Skole/software/assignment4/su19-mikaelMuseFrederik/SU19-exercises/Galaga-Exercise-1/bin/Debug/Galaga_Exercise_1.exe
+/home/mikael/Documents/Skole/software/assignment4/su19-mikaelMuseFrederik/SU19-exercises/Galaga-Exercise-1/bin/Debug/Galaga_Exercise_1.pdb
+/home/mikael/Documents/Skole/software/assignment4/su19-mikaelMuseFrederik/SU19-exercises/Galaga-Exercise-1/bin/Debug/DIKUArcade.dll
+/home/mikael/Documents/Skole/software/assignment4/su19-mikaelMuseFrederik/SU19-exercises/Galaga-Exercise-1/bin/Debug/OpenTK.dll
+/home/mikael/Documents/Skole/software/assignment4/su19-mikaelMuseFrederik/SU19-exercises/Galaga-Exercise-1/bin/Debug/DIKUArcade.pdb
+/home/mikael/Documents/Skole/software/assignment4/su19-mikaelMuseFrederik/SU19-exercises/Galaga-Exercise-1/bin/Debug/OpenTK.xml
+/home/mikael/Documents/Skole/software/assignment4/su19-mikaelMuseFrederik/SU19-exercises/Galaga-Exercise-1/obj/Debug/Galaga-Exercise-1.csprojAssemblyReference.cache
+/home/mikael/Documents/Skole/software/assignment4/su19-mikaelMuseFrederik/SU19-exercises/Galaga-Exercise-1/obj/Debug/Galaga-Exercise-1.csproj.CoreCompileInputs.cache
+/home/mikael/Documents/Skole/software/assignment4/su19-mikaelMuseFrederik/SU19-exercises/Galaga-Exercise-1/obj/Debug/Galaga-Exercise-1.csproj.CopyComplete
+/home/mikael/Documents/Skole/software/assignment4/su19-mikaelMuseFrederik/SU19-exercises/Galaga-Exercise-1/obj/Debug/Galaga_Exercise_1.exe
+/home/mikael/Documents/Skole/software/assignment4/su19-mikaelMuseFrederik/SU19-exercises/Galaga-Exercise-1/obj/Debug/Galaga_Exercise_1.pdb
