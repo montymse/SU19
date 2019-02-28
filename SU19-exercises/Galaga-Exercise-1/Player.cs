@@ -30,7 +30,7 @@ namespace Galaga_Exercise_1 {
 
         //TODO: load image once
         public void Shoot() {
-            game.playerShots.Add(new PlayerShot(game, new DynamicShape(new Vec2F(this.Shape.Position.X, this.Shape.Position.Y+this.Shape.Extent.Y),
+            game.playerShots.Add(new PlayerShot(game, new DynamicShape(new Vec2F((this.Shape.Position.X+0.045f), this.Shape.Position.Y+this.Shape.Extent.Y),
                 new Vec2F(0.008f,0.027f)), new Image(Path.Combine("Assets","Images","BulletRed2.png"))));
         }
     }
