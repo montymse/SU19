@@ -21,6 +21,10 @@ namespace Galaga_Exercise_1 {
         public List<Image> enemyStrides;
 
         public List<Enemy> enemies;
+        
+        private List<Image> explosionStrides;
+        
+        private AnimationContainer explosions;
         public List<PlayerShot> playerShots { get; private set; }
         
         public Game() {
@@ -30,6 +34,10 @@ namespace Galaga_Exercise_1 {
             player = new Player(this, new DynamicShape(new Vec2F(0.45f, 0.1f), 
                 new Vec2F(0.1f, 0.1f)), new Image(Path.Combine("Assets", "Images", 
                 "Player.png")));
+            explosionStrides = ImageStride.CreateStrides(8,
+                Path.Combine("Assets", "Images", "Explosion.png"));
+            explosions = new AnimationContainer(100);
+            
             
             eventBus = new GameEventBus<object>();
             eventBus.InitializeEventBus(new List<GameEventType>() {
@@ -46,6 +54,13 @@ namespace Galaga_Exercise_1 {
             AddEnemies();
             
             playerShots = new List<PlayerShot>();
+        }
+        private int explosionLength = 500;
+        public void AddExplosion(float posX, float posY,
+            float extentX, float extentY) {
+            explosions.AddAnimation(
+                new StationaryShape(posX, posY, extentX, extentY), explosionLength,
+                new ImageStride(explosionLength / 8, explosionStrides));
         }
 
         //TODO: fix this shit
@@ -67,6 +82,8 @@ namespace Galaga_Exercise_1 {
                     // TODO: perform collision detection
                     // (hint: Physics.CollisionDetection.Aabb)
                     if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {
+                        AddExplosion(enemy.Shape.Position.X, enemy.Shape.Position.Y,
+                            enemy.Shape.Extent.X, enemy.Shape.Extent.Y);
                         shot.DeleteEntity();
                         enemy.DeleteEntity();
                     }
@@ -103,6 +120,7 @@ namespace Galaga_Exercise_1 {
                     win.Clear();
                     // Render gameplay entities here
                     player.RenderEntity();
+                    
                     foreach (Enemy item in enemies) {
                         item.RenderEntity();
                     }
