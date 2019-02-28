@@ -1,4 +1,5 @@
 using DIKUArcade.Entities;
+using DIKUArcade.Graphics;
 
 namespace Galaga_Exercise_1 {
     public class Player : Entity {
