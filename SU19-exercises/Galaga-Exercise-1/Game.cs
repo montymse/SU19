@@ -1,4 +1,5 @@
 using System;
+using System.Media;
 using DIKUArcade;
 using DIKUArcade.EventBus;
 using DIKUArcade.Timers;
@@ -7,6 +8,7 @@ namespace Galaga_Exercise_1 {
     public class Game  : IGameEventProcessor<object> {
         private Window win;
         private DIKUArcade.Timers.GameTimer gameTimer;
+        private Player player;
         public Game() {
 // TODO: Choose some reasonable values for the window and timer constructor.
 // For the window, we recommend a 500x500 resolution (a 1:1 aspect ratio).
