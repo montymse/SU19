@@ -63,11 +63,13 @@ namespace Galaga_Exercise_1 {
                         "", ""));
                 break;
 
-            case "KEY_LEFT":
-                player.Direction(new Vec2F(-0.01f,0.00f));
+            case "KEY_A":
+                player.Direction(new Vec2F(-0.05f,0.00f));
+                player.Move();
                 break;
-            case "KEY_RIGHT":
-                player.Direction(new Vec2F(0.01f,0.00f));
+            case "KEY_D":
+                player.Direction(new Vec2F(0.05f,0.00f));
+                player.Move();
                 break;
             }
         }

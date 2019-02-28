@@ -16,8 +16,14 @@ namespace Galaga_Exercise_1 {
 
         public void Move() {
             //our player will only move left and right, so we only check X values
-            if ((this.Shape.Position.X += this.Shape.AsDynamicShape().Direction.X) <= 1.0f
-                || (this.Shape.Position.X += this.Shape.AsDynamicShape().Direction.X) >= 0.0f) {
+            if(this.Shape.Position.X > 0.01 && this.Shape.Position.X < 1-this.Shape.Extent.X) {
+                this.Shape.Move(this.Shape.AsDynamicShape().Direction);
+            }
+            else if(this.Shape.Position.X <= 0 + this.Shape.Extent.X && this.Shape.AsDynamicShape().Direction.X > 0) {
+                this.Shape.Move(this.Shape.AsDynamicShape().Direction);
+            }
+            //else if(this.Shape.Position.X >= 1-this.Shape.Extent.X && this.Shape.AsDynamicShape().Direction.X < 0 + this.Shape.Extent.X) {
+            else if(this.Shape.Position.X >= 1-this.Shape.Extent.X && this.Shape.AsDynamicShape().Direction.X < 0) {
                 this.Shape.Move(this.Shape.AsDynamicShape().Direction);
             }
         }
