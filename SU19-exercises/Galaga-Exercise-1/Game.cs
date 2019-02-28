@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Media;
 using DIKUArcade;
 using DIKUArcade.EventBus;
 using DIKUArcade.Timers;
@@ -13,8 +14,8 @@ namespace Galaga_Exercise_1 {
         private DIKUArcade.Timers.GameTimer gameTimer;
         private Player player;
         public Game() {
-// TODO: Choose some reasonable values for the window and timer constructor.
-// For the window, we recommend a 500x500 resolution (a 1:1 aspect ratio).
+            // TODO: Choose some reasonable values for the window and timer constructor.
+            // For the window, we recommend a 500x500 resolution (a 1:1 aspect ratio).
             win = new Window("Window-name",500, 500);
             gameTimer = new GameTimer(60,60);
             
@@ -26,15 +27,16 @@ namespace Galaga_Exercise_1 {
                 gameTimer.MeasureTime();
                 while (gameTimer.ShouldUpdate()) {
                     win.PollEvents();
-        // Update game logic here
+                    // Update game logic here
                 }
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
-        // Render gameplay entities here
+                    // Render gameplay entities here
+                    player.RenderEntity();
                     win.SwapBuffers();
                 }
                 if (gameTimer.ShouldReset()) {
-        // 1 second has passed - display last captured ups and fps
+                    // 1 second has passed - display last captured ups and fps
                     win.Title = "Galaga | UPS: " + gameTimer.CapturedUpdates +
                                 ", FPS: " + gameTimer.CapturedFrames;
                 }
