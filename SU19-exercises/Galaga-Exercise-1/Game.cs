@@ -40,7 +40,7 @@ namespace Galaga_Exercise_1 {
                 Path.Combine("Assets", "Images", "Explosion.png"));
             explosions = new AnimationContainer(500);
             
-             score= new Score(new Vec2F(0.9f, 0.8f), 
+             score= new Score(new Vec2F(0.8f, 0.7f), 
                 new Vec2F(0.2f, 0.2f));
             
             eventBus = new GameEventBus<object>();
@@ -68,8 +68,8 @@ namespace Galaga_Exercise_1 {
         }
 
         //TODO: fix this shit
-        private float xposition;
         public void AddEnemies() {
+            float xposition;
             for (int i = 1; i < 10; i++) {
                 xposition = i * 0.09f;
                 enemies.Add(new Enemy(this, new DynamicShape(new Vec2F(xposition, 0.9f),
@@ -117,10 +117,12 @@ namespace Galaga_Exercise_1 {
         public void GameLoop() {
             while(win.IsRunning()) {
                 gameTimer.MeasureTime();
-                eventBus.ProcessEvents();
                 while (gameTimer.ShouldUpdate()) {
+                    player.Move();
                     win.PollEvents();
+                    eventBus.ProcessEvents();
                     IterateShots();
+
                     // Update game logic here
                 }
                 if (gameTimer.ShouldRender()) {
@@ -155,20 +157,16 @@ namespace Galaga_Exercise_1 {
                 break;
 
             case "KEY_A":
-                player.Direction(new Vec2F(-0.05f,0.00f));
-                player.Move();
+                player.Direction(new Vec2F(-0.01f,0.00f));
                 break;
             case "KEY_D":
-                player.Direction(new Vec2F(0.05f,0.00f));
-                player.Move();
+                player.Direction(new Vec2F(0.01f,0.00f));
                 break;
             case "KEY_LEFT":
-                player.Direction(new Vec2F(-0.05f,0.00f));
-                player.Move();
+                player.Direction(new Vec2F(-0.01f,0.00f));
                 break;
             case "KEY_RIGHT":
-                player.Direction(new Vec2F(0.05f,0.00f));
-                player.Move();
+                player.Direction(new Vec2F(0.01f,0.00f));
                 break;
             case "KEY_SPACE":
                 player.Shoot();
@@ -178,10 +176,24 @@ namespace Galaga_Exercise_1 {
         
         public void KeyRelease(string key) {
             switch (key) {
-            case "KEY_RELEASE":
+            case "KEY_A":
                 player.Direction(new Vec2F(0.00f,0.00f));
                 break;
+            case "KEY_D":
+                player.Direction(new Vec2F(0.00f,0.00f));
+                break;
+            case "KEY_LEFT":
+                player.Direction(new Vec2F(0.00f,0.00f));
+                break;
+            case "KEY_RIGHT":
+                player.Direction(new Vec2F(0.00f,0.00f));
+                break;
+            case "KEY_SPACE":
+                player.Shoot();
+                break;
             }
+                         
+
            
         }
         
