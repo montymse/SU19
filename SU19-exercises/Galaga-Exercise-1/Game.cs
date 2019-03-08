@@ -67,7 +67,6 @@ namespace Galaga_Exercise_1 {
                 new ImageStride(explosionLength / 8, explosionStrides));
         }
 
-        //TODO: fix this shit
         public void AddEnemies() {
             float xposition;
             for (int i = 1; i < 10; i++) {
@@ -83,8 +82,6 @@ namespace Galaga_Exercise_1 {
                 shot.DeleteEntity();
             }
                 foreach (var enemy in enemies) {
-                    // TODO: perform collision detection
-                    // (hint: Physics.CollisionDetection.Aabb)
                     if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {
                         score.AddPoint();
                         explosions.RenderAnimations();
@@ -118,12 +115,11 @@ namespace Galaga_Exercise_1 {
             while(win.IsRunning()) {
                 gameTimer.MeasureTime();
                 while (gameTimer.ShouldUpdate()) {
+                    // Update game logic here
                     player.Move();
                     win.PollEvents();
                     eventBus.ProcessEvents();
                     IterateShots();
-
-                    // Update game logic here
                 }
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
