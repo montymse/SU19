@@ -25,6 +25,8 @@ namespace Galaga_Exercise_1 {
         private List<Image> explosionStrides;
         
         private AnimationContainer explosions;
+
+        private Score score;
         public List<PlayerShot> playerShots { get; private set; }
         
         public Game() {
@@ -36,8 +38,10 @@ namespace Galaga_Exercise_1 {
                 "Player.png")));
             explosionStrides = ImageStride.CreateStrides(8,
                 Path.Combine("Assets", "Images", "Explosion.png"));
-            explosions = new AnimationContainer(100);
+            explosions = new AnimationContainer(500);
             
+             score= new Score(new Vec2F(0.8f, 0.7f), 
+                new Vec2F(0.2f, 0.2f));
             
             eventBus = new GameEventBus<object>();
             eventBus.InitializeEventBus(new List<GameEventType>() {
@@ -63,9 +67,8 @@ namespace Galaga_Exercise_1 {
                 new ImageStride(explosionLength / 8, explosionStrides));
         }
 
-        //TODO: fix this shit
-        private float xposition;
         public void AddEnemies() {
+            float xposition;
             for (int i = 1; i < 10; i++) {
                 xposition = i * 0.09f;
                 enemies.Add(new Enemy(this, new DynamicShape(new Vec2F(xposition, 0.9f),
@@ -79,10 +82,12 @@ namespace Galaga_Exercise_1 {
                 shot.DeleteEntity();
             }
                 foreach (var enemy in enemies) {
-                    // TODO: perform collision detection
-                    // (hint: Physics.CollisionDetection.Aabb)
                     if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {
-                        AddExplosion(enemy.Shape.Position.X, enemy.Shape.Position.Y,enemy.Shape.Extent.X, enemy.Shape.Extent.Y);
+                        score.AddPoint();
+                        explosions.RenderAnimations();
+                        AddExplosion(enemy.Shape.Position.X, enemy.Shape.Position.Y,
+                            enemy.Shape.Extent.X, enemy.Shape.Extent.Y);
+                        
                         shot.DeleteEntity();
                         enemy.DeleteEntity();
                     }
@@ -109,17 +114,19 @@ namespace Galaga_Exercise_1 {
         public void GameLoop() {
             while(win.IsRunning()) {
                 gameTimer.MeasureTime();
-                eventBus.ProcessEvents();
                 while (gameTimer.ShouldUpdate()) {
-                    win.PollEvents();
-                    IterateShots();
                     // Update game logic here
+                    player.Move();
+                    win.PollEvents();
+                    eventBus.ProcessEvents();
+                    IterateShots();
                 }
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
                     // Render gameplay entities here
                     player.RenderEntity();
-                    
+                    score.RenderScore();
+                    explosions.RenderAnimations();
                     foreach (Enemy item in enemies) {
                         item.RenderEntity();
                     }
@@ -146,12 +153,16 @@ namespace Galaga_Exercise_1 {
                 break;
 
             case "KEY_A":
-                player.Direction(new Vec2F(-0.05f,0.00f));
-                player.Move();
+                player.Direction(new Vec2F(-0.01f,0.00f));
                 break;
             case "KEY_D":
-                player.Direction(new Vec2F(0.05f,0.00f));
-                player.Move();
+                player.Direction(new Vec2F(0.01f,0.00f));
+                break;
+            case "KEY_LEFT":
+                player.Direction(new Vec2F(-0.01f,0.00f));
+                break;
+            case "KEY_RIGHT":
+                player.Direction(new Vec2F(0.01f,0.00f));
                 break;
             case "KEY_SPACE":
                 player.Shoot();
@@ -161,10 +172,24 @@ namespace Galaga_Exercise_1 {
         
         public void KeyRelease(string key) {
             switch (key) {
-            case "KEY_RELEASE":
+            case "KEY_A":
                 player.Direction(new Vec2F(0.00f,0.00f));
                 break;
+            case "KEY_D":
+                player.Direction(new Vec2F(0.00f,0.00f));
+                break;
+            case "KEY_LEFT":
+                player.Direction(new Vec2F(0.00f,0.00f));
+                break;
+            case "KEY_RIGHT":
+                player.Direction(new Vec2F(0.00f,0.00f));
+                break;
+            case "KEY_SPACE":
+                player.Shoot();
+                break;
             }
+                         
+
            
         }
         
