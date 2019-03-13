@@ -82,8 +82,7 @@ namespace Galaga_Exercise_1 {
                     // TODO: perform collision detection
                     // (hint: Physics.CollisionDetection.Aabb)
                     if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {
-                        AddExplosion(enemy.Shape.Position.X, enemy.Shape.Position.Y,
-                            enemy.Shape.Extent.X, enemy.Shape.Extent.Y);
+                        AddExplosion(enemy.Shape.Position.X, enemy.Shape.Position.Y,enemy.Shape.Extent.X, enemy.Shape.Extent.Y);
                         shot.DeleteEntity();
                         enemy.DeleteEntity();
                     }
