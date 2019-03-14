@@ -1,13 +1,17 @@
 using DIKUArcade.Entities;
+using DIKUArcade.Math;
 
 namespace Galaga_Exercise_1.MovementStrategy {
     public class Down : IMovementStrategy {
         public void MoveEnemy(Enemy enemy) {
-            throw new System.NotImplementedException();
+            enemy.Shape.AsDynamicShape().Direction = new Vec2F(0.0f, -0.001f);
+            enemy.Shape.AsDynamicShape().Move();
         }
 
         public void MoveEnemies(EntityContainer<Enemy> enemies) {
-            throw new System.NotImplementedException();
+            foreach (Entity enemy in enemies) {
+                MoveEnemy(enemy as Enemy);
+            }
         }
     }
 }

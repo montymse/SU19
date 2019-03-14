@@ -10,6 +10,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using  DIKUArcade.Graphics;
 using DIKUArcade.Physics;
+using Galaga_Exercise_1.MovementStrategy;
 using Galaga_Exercise_1.Squadrons;
 
 namespace Galaga_Exercise_1 {
@@ -32,6 +33,8 @@ namespace Galaga_Exercise_1 {
         private Triangle t;
         private Square s;
         private Diamond d;
+        
+        private Down down;
         public List<PlayerShot> playerShots { get; private set; }
 
         public Game() {
@@ -40,6 +43,7 @@ namespace Galaga_Exercise_1 {
             t = new Triangle(this);
             s = new Square(this);
             d = new Diamond(this);
+            down = new Down();
             
             player = new Player(this, new DynamicShape(new Vec2F(0.45f, 0.1f),
                 new Vec2F(0.1f, 0.1f)), new Image(Path.Combine("Assets", "Images",
@@ -141,6 +145,7 @@ namespace Galaga_Exercise_1 {
                     win.PollEvents();
                     eventBus.ProcessEvents();
                     IterateShots();
+                    down.MoveEnemies(d.enemies);
                 }
 
                 if (gameTimer.ShouldRender()) {
