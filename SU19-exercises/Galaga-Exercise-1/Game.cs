@@ -87,7 +87,7 @@ namespace Galaga_Exercise_1 {
         }
 
         public void AddEnemies() {
-            t.CreateEnemies(enemyStrides);
+            d.CreateEnemies(enemyStrides);
             // d.CreateEnemies(enemyStrides);
             // t.CreateEnemies(enemyStrides);
             /* float xposition;
@@ -147,7 +147,7 @@ namespace Galaga_Exercise_1 {
                     win.PollEvents();
                     eventBus.ProcessEvents();
                     IterateShots();
-                    down.MoveEnemies(d.enemies);
+                    zzdown.MoveEnemies(d.enemies);
                 }
 
                 if (gameTimer.ShouldRender()) {

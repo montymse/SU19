@@ -12,24 +12,25 @@ namespace Galaga_Exercise_1.Squadrons {
 
         public Diamond(Game game) {
             this.game = game;
-            this.MaxEnemies = 3;
+            this.MaxEnemies = 11;
             this.enemies = new EntityContainer<Enemy>();
         }
 
         public void CreateEnemies(List<Image> enemyStrides) {
-            for (int i = 1; i < 10; i++) {
-                float xposition = i * 0.09f;
-                enemies.AddDynamicEntity(new Enemy(game, new DynamicShape(new Vec2F(xposition, 0.9f),
-                    new Vec2F(0.1f, 0.1f)), new ImageStride(80, enemyStrides)));
-            }
-
-            enemies.AddDynamicEntity(new Enemy(game,new DynamicShape(new Vec2F(0.7f, 0.7f),
+            
+            enemies.AddDynamicEntity(new Enemy(game,new DynamicShape(new Vec2F(0.4f, 0.8f),
                 new Vec2F(0.1f, 0.1f)), new ImageStride(80, enemyStrides)));
-        
-            enemies.AddDynamicEntity(new Enemy(game,new DynamicShape(new Vec2F(0.1f, 0.7f),
+            
+            enemies.AddDynamicEntity(new Enemy(game,new DynamicShape(new Vec2F(0.6f, 0.8f),
                 new Vec2F(0.1f, 0.1f)), new ImageStride(80, enemyStrides)));
-        
-            enemies.AddDynamicEntity(new Enemy(game,new DynamicShape(new Vec2F(0.4f, 0.6f),
+            
+            enemies.AddDynamicEntity(new Enemy(game,new DynamicShape(new Vec2F(0.5f, 0.9f),
+                new Vec2F(0.1f, 0.1f)), new ImageStride(80, enemyStrides)));
+            
+            enemies.AddDynamicEntity(new Enemy(game,new DynamicShape(new Vec2F(0.5f, 0.8f),
+                new Vec2F(0.1f, 0.1f)), new ImageStride(80, enemyStrides)));
+            
+            enemies.AddDynamicEntity(new Enemy(game,new DynamicShape(new Vec2F(0.5f, 0.7f),
                 new Vec2F(0.1f, 0.1f)), new ImageStride(80, enemyStrides)));
         }
     }
