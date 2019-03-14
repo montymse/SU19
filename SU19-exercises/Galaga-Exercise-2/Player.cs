@@ -1,11 +1,12 @@
 using System.IO;
 using System.Xml;
 using DIKUArcade.Entities;
+using DIKUArcade.EventBus;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 
 namespace Galaga_Exercise_1 {
-    public class Player : Entity {
+public class Player : Entity {
         private Game game;
         
         public Player(Game game, DynamicShape shape, IBaseImage image) : base(shape, image) {
@@ -15,6 +16,7 @@ namespace Galaga_Exercise_1 {
         public void Direction(Vec2F dir) {
             this.Shape.AsDynamicShape().Direction = dir;
         }
+
 
         public void Move() {
             //our player will only move left and right, so we only check X values
