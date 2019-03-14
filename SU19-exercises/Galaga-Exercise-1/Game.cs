@@ -35,6 +35,7 @@ namespace Galaga_Exercise_1 {
         private Diamond d;
         
         private Down down;
+        private ZigZagDown zzdown;
         public List<PlayerShot> playerShots { get; private set; }
 
         public Game() {
@@ -44,6 +45,7 @@ namespace Galaga_Exercise_1 {
             s = new Square(this);
             d = new Diamond(this);
             down = new Down();
+            zzdown = new ZigZagDown(0.0003f,0.05f,0.045f);
             
             player = new Player(this, new DynamicShape(new Vec2F(0.45f, 0.1f),
                 new Vec2F(0.1f, 0.1f)), new Image(Path.Combine("Assets", "Images",
