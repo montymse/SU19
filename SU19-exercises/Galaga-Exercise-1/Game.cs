@@ -81,7 +81,7 @@ namespace Galaga_Exercise_1 {
         }
 
         public void AddEnemies() {
-            t.CreateEnemies(enemyStrides);
+            d.CreateEnemies(enemyStrides);
             // d.CreateEnemies(enemyStrides);
             // t.CreateEnemies(enemyStrides);
             /* float xposition;
