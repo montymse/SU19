@@ -10,6 +10,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using  DIKUArcade.Graphics;
 using DIKUArcade.Physics;
+using Galaga_Exercise_1.Squadrons;
 
 namespace Galaga_Exercise_1 {
     public class Game : IGameEventProcessor<object> {
@@ -27,12 +28,19 @@ namespace Galaga_Exercise_1 {
         private AnimationContainer explosions;
 
         private Score score;
+
+        private Triangle t;
+        private Square s;
+        private Diamond d;
         public List<PlayerShot> playerShots { get; private set; }
 
         public Game() {
             win = new Window("Window-name", 500, 500);
             gameTimer = new GameTimer(60, 60);
-
+            t = new Triangle(this);
+            s = new Square(this);
+            d = new Diamond(this);
+            
             player = new Player(this, new DynamicShape(new Vec2F(0.45f, 0.1f),
                 new Vec2F(0.1f, 0.1f)), new Image(Path.Combine("Assets", "Images",
                 "Player.png")));
@@ -73,12 +81,15 @@ namespace Galaga_Exercise_1 {
         }
 
         public void AddEnemies() {
-            float xposition;
+            d.CreateEnemies(enemyStrides);
+            // s.CreateEnemies(enemyStrides);
+            // t.CreateEnemies(enemyStrides);
+            /* float xposition;
             for (int i = 1; i < 10; i++) {
                 xposition = i * 0.09f;
                 enemies.Add(new Enemy(this, new DynamicShape(new Vec2F(xposition, 0.9f),
                     new Vec2F(0.1f, 0.1f)), new ImageStride(80, enemyStrides)));
-            }
+            } */
         }
 
         public void IterateShots() {
@@ -135,6 +146,9 @@ namespace Galaga_Exercise_1 {
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
                     // Render gameplay entities here
+                    d.enemies.RenderEntities();
+                    s.enemies.RenderEntities();
+                    t.enemies.RenderEntities();
                     player.Entity.RenderEntity();
                     score.RenderScore();
                     explosions.RenderAnimations();
