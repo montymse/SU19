@@ -122,7 +122,6 @@ namespace Galaga_Exercise_1 {
                     win.PollEvents();
                     eventBus.ProcessEvents();
                     IterateShots();
-
                     // Update game logic here
                 }
                 if (gameTimer.ShouldRender()) {
