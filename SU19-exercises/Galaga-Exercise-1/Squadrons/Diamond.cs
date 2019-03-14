@@ -12,7 +12,7 @@ namespace Galaga_Exercise_1.Squadrons {
 
         public Diamond(Game game) {
             this.game = game;
-            this.MaxEnemies = 3;
+            this.MaxEnemies = 11;
             this.enemies = new EntityContainer<Enemy>();
         }
 
