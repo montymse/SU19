@@ -12,54 +12,57 @@ using  DIKUArcade.Graphics;
 using DIKUArcade.Physics;
 
 namespace Galaga_Exercise_1 {
-    public class Game  : IGameEventProcessor<object> {
+    public class Game : IGameEventProcessor<object> {
         private Window win;
         private DIKUArcade.Timers.GameTimer gameTimer;
         private Player player;
         private GameEventBus<object> eventBus;
-        
+
         public List<Image> enemyStrides;
 
         public List<Enemy> enemies;
-        
+
         private List<Image> explosionStrides;
-        
+
         private AnimationContainer explosions;
 
         private Score score;
         public List<PlayerShot> playerShots { get; private set; }
-        
+
         public Game() {
-            win = new Window("Window-name",500, 500);
-            gameTimer = new GameTimer(60,60);
-            
-            player = new Player(this, new DynamicShape(new Vec2F(0.45f, 0.1f), 
-                new Vec2F(0.1f, 0.1f)), new Image(Path.Combine("Assets", "Images", 
+            win = new Window("Window-name", 500, 500);
+            gameTimer = new GameTimer(60, 60);
+
+            player = new Player(this, new DynamicShape(new Vec2F(0.45f, 0.1f),
+                new Vec2F(0.1f, 0.1f)), new Image(Path.Combine("Assets", "Images",
                 "Player.png")));
             explosionStrides = ImageStride.CreateStrides(8,
                 Path.Combine("Assets", "Images", "Explosion.png"));
             explosions = new AnimationContainer(500);
-            
-             score= new Score(new Vec2F(0.8f, 0.7f), 
+
+            score = new Score(new Vec2F(0.8f, 0.7f),
                 new Vec2F(0.2f, 0.2f));
-            
+
             eventBus = new GameEventBus<object>();
             eventBus.InitializeEventBus(new List<GameEventType>() {
                 GameEventType.InputEvent, // key press / key release
                 GameEventType.WindowEvent, // messages to the window
+
             });
             win.RegisterEventBus(eventBus);
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.WindowEvent, this);
-            
+
             enemyStrides = ImageStride.CreateStrides(4,
-            Path.Combine("Assets", "Images", "BlueMonster.png"));
+                Path.Combine("Assets", "Images", "BlueMonster.png"));
             enemies = new List<Enemy>();
             AddEnemies();
-            
+
             playerShots = new List<PlayerShot>();
         }
+
         private int explosionLength = 500;
+
         public void AddExplosion(float posX, float posY,
             float extentX, float extentY) {
             explosions.AddAnimation(
@@ -72,36 +75,40 @@ namespace Galaga_Exercise_1 {
             for (int i = 1; i < 10; i++) {
                 xposition = i * 0.09f;
                 enemies.Add(new Enemy(this, new DynamicShape(new Vec2F(xposition, 0.9f),
-                    new Vec2F(0.1f, 0.1f)),new ImageStride(80, enemyStrides)));
+                    new Vec2F(0.1f, 0.1f)), new ImageStride(80, enemyStrides)));
             }
         }
+
         public void IterateShots() {
             foreach (var shot in playerShots) {
                 shot.Shape.Move();
-            if (shot.Shape.Position.Y > 1.0f) {
-                shot.DeleteEntity();
-            }
+                if (shot.Shape.Position.Y > 1.0f) {
+                    shot.DeleteEntity();
+                }
+
                 foreach (var enemy in enemies) {
-                    if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {
+                    if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape)
+                        .Collision) {
                         score.AddPoint();
                         explosions.RenderAnimations();
                         AddExplosion(enemy.Shape.Position.X, enemy.Shape.Position.Y,
                             enemy.Shape.Extent.X, enemy.Shape.Extent.Y);
-                        
+
                         shot.DeleteEntity();
                         enemy.DeleteEntity();
                     }
                 }
             }
-            
+
             List<Enemy> newEnemies = new List<Enemy>();
             foreach (Enemy enemy in enemies) {
                 if (!enemy.IsDeleted()) {
                     newEnemies.Add(enemy);
                 }
             }
+
             enemies = newEnemies;
-            
+
             List<PlayerShot> newPlayerShots = new List<PlayerShot>();
             foreach (PlayerShot shot in playerShots) {
                 if (!shot.IsDeleted()) {
@@ -111,8 +118,9 @@ namespace Galaga_Exercise_1 {
 
             playerShots = newPlayerShots;
         }
+
         public void GameLoop() {
-            while(win.IsRunning()) {
+            while (win.IsRunning()) {
                 gameTimer.MeasureTime();
                 while (gameTimer.ShouldUpdate()) {
                     // Update game logic here
@@ -121,6 +129,7 @@ namespace Galaga_Exercise_1 {
                     eventBus.ProcessEvents();
                     IterateShots();
                 }
+
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
                     // Render gameplay entities here
@@ -134,8 +143,10 @@ namespace Galaga_Exercise_1 {
                     foreach (PlayerShot shot in playerShots) {
                         shot.RenderEntity();
                     }
+
                     win.SwapBuffers();
                 }
+
                 if (gameTimer.ShouldReset()) {
                     // 1 second has passed - display last captured ups and fps
                     win.Title = "Galaga | UPS: " + gameTimer.CapturedUpdates +
@@ -143,7 +154,7 @@ namespace Galaga_Exercise_1 {
                 }
             }
         }
-        private void KeyPress(string key) {
+ private void KeyPress(string key) {
             switch(key) {
             case "KEY_ESCAPE":
                 eventBus.RegisterEvent(
@@ -214,6 +225,7 @@ namespace Galaga_Exercise_1 {
                 }
             }
         }
-    }
-        
-    }
+
+            }
+        }
+    
