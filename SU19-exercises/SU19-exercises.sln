@@ -2,9 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIKUArcade", "..\DIKUArcade\DIKUArcade\DIKUArcade.csproj", "{A1E4E4DF-0967-4096-9E3C-FBC29B7D07DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaga-Exercise-1", "Galaga-Exercise-1\Galaga-Exercise-1.csproj", "{4CF537B6-3118-4277-A986-C73D673A3184}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaga-Exercise-2", "Galaga-Exercise-2\Galaga-Exercise-2.csproj", "{4CF537B6-3118-4277-A986-C73D673A3184}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaga-Exercise-2", "Galaga-Exercise-2\Galaga-Exercise-2.csproj", "{49988AE6-9D38-4EC3-A1F4-0D895859C720}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaga-Exercise-1", "Galaga-Exercise-1\Galaga-Exercise-1.csproj", "{49988AE6-9D38-4EC3-A1F4-0D895859C720}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -10,6 +10,8 @@ using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using  DIKUArcade.Graphics;
 using DIKUArcade.Physics;
+using Galaga_Exercise_1.MovementStrategy;
+using Galaga_Exercise_1.Squadrons;
 
 namespace Galaga_Exercise_1 {
     public class Game : IGameEventProcessor<object> {
@@ -27,12 +29,24 @@ namespace Galaga_Exercise_1 {
         private AnimationContainer explosions;
 
         private Score score;
+
+        private Triangle t;
+        private Square s;
+        private Diamond d;
+        
+        private Down down;
+        private ZigZagDown zzdown;
         public List<PlayerShot> playerShots { get; private set; }
 
         public Game() {
             win = new Window("Window-name", 500, 500);
             gameTimer = new GameTimer(60, 60);
-
+            t = new Triangle(this);
+            s = new Square(this);
+            d = new Diamond(this);
+            down = new Down();
+            zzdown = new ZigZagDown(0.0003f,0.05f,0.045f);
+            
             player = new Player(this, new DynamicShape(new Vec2F(0.45f, 0.1f),
                 new Vec2F(0.1f, 0.1f)), new Image(Path.Combine("Assets", "Images",
                 "Player.png")));
@@ -47,11 +61,13 @@ namespace Galaga_Exercise_1 {
             eventBus.InitializeEventBus(new List<GameEventType>() {
                 GameEventType.InputEvent, // key press / key release
                 GameEventType.WindowEvent, // messages to the window
+                GameEventType.PlayerEvent, // Move the player
 
             });
             win.RegisterEventBus(eventBus);
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.WindowEvent, this);
+            eventBus.Subscribe(GameEventType.PlayerEvent, this);
 
             enemyStrides = ImageStride.CreateStrides(4,
                 Path.Combine("Assets", "Images", "BlueMonster.png"));
@@ -71,12 +87,15 @@ namespace Galaga_Exercise_1 {
         }
 
         public void AddEnemies() {
-            float xposition;
+            d.CreateEnemies(enemyStrides);
+            // d.CreateEnemies(enemyStrides);
+            // t.CreateEnemies(enemyStrides);
+            /* float xposition;
             for (int i = 1; i < 10; i++) {
                 xposition = i * 0.09f;
                 enemies.Add(new Enemy(this, new DynamicShape(new Vec2F(xposition, 0.9f),
                     new Vec2F(0.1f, 0.1f)), new ImageStride(80, enemyStrides)));
-            }
+            } */
         }
 
         public void IterateShots() {
@@ -128,12 +147,16 @@ namespace Galaga_Exercise_1 {
                     win.PollEvents();
                     eventBus.ProcessEvents();
                     IterateShots();
+                    zzdown.MoveEnemies(d.enemies);
                 }
 
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
                     // Render gameplay entities here
-                    player.RenderEntity();
+                    d.enemies.RenderEntities();
+                    s.enemies.RenderEntities();
+                    t.enemies.RenderEntities();
+                    player.Entity.RenderEntity();
                     score.RenderScore();
                     explosions.RenderAnimations();
                     foreach (Enemy item in enemies) {
@@ -154,8 +177,8 @@ namespace Galaga_Exercise_1 {
                 }
             }
         }
- private void KeyPress(string key) {
-            switch(key) {
+                private void KeyPress(string key) {
+            switch (key) {
             case "KEY_ESCAPE":
                 eventBus.RegisterEvent(
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
@@ -164,46 +187,74 @@ namespace Galaga_Exercise_1 {
                 break;
 
             case "KEY_A":
-                player.Direction(new Vec2F(-0.01f,0.00f));
+                
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "LEFT",
+                        "", ""));
                 break;
             case "KEY_D":
-                player.Direction(new Vec2F(0.01f,0.00f));
+                
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "RIGHT",
+                        "", ""));
                 break;
             case "KEY_LEFT":
-                player.Direction(new Vec2F(-0.01f,0.00f));
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "LEFT",
+                        "", ""));
                 break;
             case "KEY_RIGHT":
-                player.Direction(new Vec2F(0.01f,0.00f));
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "RIGHT",
+                        "", ""));
                 break;
             case "KEY_SPACE":
                 player.Shoot();
                 break;
             }
         }
-        
+
         public void KeyRelease(string key) {
             switch (key) {
             case "KEY_A":
-                player.Direction(new Vec2F(0.00f,0.00f));
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "RELEASE",
+                        "", ""));
                 break;
             case "KEY_D":
-                player.Direction(new Vec2F(0.00f,0.00f));
+                
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "RELEASE",
+                        "", ""));
                 break;
             case "KEY_LEFT":
-                player.Direction(new Vec2F(0.00f,0.00f));
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "RELEASE",
+                        "", ""));
                 break;
             case "KEY_RIGHT":
-                player.Direction(new Vec2F(0.00f,0.00f));
+                
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "RELEASE",
+                        "", ""));
                 break;
             case "KEY_SPACE":
                 player.Shoot();
                 break;
             }
-                         
 
-           
+
+
         }
-        
+
         public void ProcessEvent(GameEventType eventType,
             GameEvent<object> gameEvent) {
             if (eventType == GameEventType.WindowEvent) {
@@ -211,10 +262,25 @@ namespace Galaga_Exercise_1 {
                 case "CLOSE_WINDOW":
                     win.CloseWindow();
                     break;
-                default:
-                    break;
                 }
-            } else if (eventType == GameEventType.InputEvent) {
+            }
+
+            else if (eventType == GameEventType.PlayerEvent) {
+                    switch (gameEvent.Message) {
+                    case "LEFT":
+                        player.Left();
+                        break;
+                    case "RIGHT":
+                        player.Right();
+                        break;
+                    case "RELEASE":
+                        player.Release();
+                        break;
+
+                    }
+                    
+
+                } else if (eventType == GameEventType.InputEvent) {
                 switch (gameEvent.Parameter1) {
                 case "KEY_PRESS":
                     KeyPress(gameEvent.Message);
@@ -224,8 +290,9 @@ namespace Galaga_Exercise_1 {
                     break;
                 }
             }
+
+
         }
 
-            }
-        }
-    
+    }
+}
