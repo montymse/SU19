@@ -7,7 +7,8 @@ using DIKUArcade.Math;
 namespace Galaga_Exercise_1.Squadrons {
     public class Triangle : ISquadrons {
         
-        public EntityContainer<Enemy> enemies { get; }
+        //Setter added to allow for enemy deletion
+        public EntityContainer<Enemy> enemies { get; set; }
         public int MaxEnemies { get; }
         private Game game;
 
