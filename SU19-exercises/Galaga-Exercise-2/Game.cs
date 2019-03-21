@@ -87,15 +87,7 @@ namespace Galaga_Exercise_1 {
         }
 
         public void AddEnemies() {
-            d.CreateEnemies(enemyStrides);
-            // d.CreateEnemies(enemyStrides);
-            // t.CreateEnemies(enemyStrides);
-            /* float xposition;
-            for (int i = 1; i < 10; i++) {
-                xposition = i * 0.09f;
-                enemies.Add(new Enemy(this, new DynamicShape(new Vec2F(xposition, 0.9f),
-                    new Vec2F(0.1f, 0.1f)), new ImageStride(80, enemyStrides)));
-            } */
+            d.CreateEnemies(enemyStrides);           
         }
 
         public void IterateShots() {
@@ -104,29 +96,26 @@ namespace Galaga_Exercise_1 {
                 if (shot.Shape.Position.Y > 1.0f) {
                     shot.DeleteEntity();
                 }
+            }
 
-                foreach (var enemy in enemies) {
-                    if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape)
+            d.enemies.Iterate(IterateShot);
+        }
+     
+        public void IterateShot(Entity ent) {
+            foreach (var shot in playerShots) {
+                   
+                  if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), ent.Shape)
                         .Collision) {
                         score.AddPoint();
                         explosions.RenderAnimations();
-                        AddExplosion(enemy.Shape.Position.X, enemy.Shape.Position.Y,
-                            enemy.Shape.Extent.X, enemy.Shape.Extent.Y);
+                        AddExplosion(ent.Shape.Position.X, ent.Shape.Position.Y,
+                            ent.Shape.Extent.X, ent.Shape.Extent.Y);
 
                         shot.DeleteEntity();
-                        enemy.DeleteEntity();
-                    }
-                }
+                        ent.DeleteEntity();
+                  }           
+                
             }
-
-            List<Enemy> newEnemies = new List<Enemy>();
-            foreach (Enemy enemy in enemies) {
-                if (!enemy.IsDeleted()) {
-                    newEnemies.Add(enemy);
-                }
-            }
-
-            enemies = newEnemies;
 
             List<PlayerShot> newPlayerShots = new List<PlayerShot>();
             foreach (PlayerShot shot in playerShots) {
@@ -159,7 +148,7 @@ namespace Galaga_Exercise_1 {
                     player.Entity.RenderEntity();
                     score.RenderScore();
                     explosions.RenderAnimations();
-                    foreach (Enemy item in enemies) {
+                    foreach (Entity item in d.enemies) {
                         item.RenderEntity();
                     }
 
@@ -247,7 +236,6 @@ namespace Galaga_Exercise_1 {
                         "", ""));
                 break;
             case "KEY_SPACE":
-                player.Shoot();
                 break;
             }
 

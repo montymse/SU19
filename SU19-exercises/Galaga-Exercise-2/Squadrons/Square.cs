@@ -8,12 +8,14 @@ namespace Galaga_Exercise_1.Squadrons {
           
         public EntityContainer<Enemy> enemies { get; }
         public int MaxEnemies { get; }
+        public List<Enemy> listenemy;
         private Game game;
 
         public Square(Game game) {
             this.game = game;
             this.MaxEnemies = 9;
             this.enemies = new EntityContainer<Enemy>(MaxEnemies);
+            listenemy=new List<Enemy>();
         }
         public void CreateEnemies(List<Image> enemyStrides) {
             for (int i = 1; i < 4; i++) {

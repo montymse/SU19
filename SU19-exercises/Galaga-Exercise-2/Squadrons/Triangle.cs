@@ -10,11 +10,15 @@ namespace Galaga_Exercise_1.Squadrons {
         public EntityContainer<Enemy> enemies { get; }
         public int MaxEnemies { get; }
         private Game game;
+        public List<Enemy> listenemy;
+
 
         public Triangle(Game game) {
             this.game = game;
             this.MaxEnemies = 3;
             this.enemies = new EntityContainer<Enemy>(MaxEnemies);
+            listenemy=new List<Enemy>();
+
         }
         public void CreateEnemies(List<Image> enemyStrides) {
             enemies.AddDynamicEntity(new Enemy(game,new DynamicShape(new Vec2F(0.6f, 0.9f),
