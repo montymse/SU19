@@ -6,7 +6,8 @@ using DIKUArcade.Math;
 namespace Galaga_Exercise_1.Squadrons {
     public class Square {
           
-        public EntityContainer<Enemy> enemies { get; }
+        //Setter added to allow for enemy deletion
+        public EntityContainer<Enemy> enemies { get; set; }
         public int MaxEnemies { get; }
         public List<Enemy> listenemy;
         private Game game;
