@@ -24,17 +24,19 @@ namespace Galaga_Exercise_3_TESTS {
         
         [Test]
         public void TransformStateToStringGameRunningTest() {
-            Assert.AreEqual(GameStateType.GameRunning, StateTransformer.TransformStringToState("GAME_RUNNING"));
+            Assert.AreEqual(StateTransformer.TransformStateToString(GameStateType.GameRunning), "GAME_RUNNING");
         }
+        
         
         [Test]
         public void TransformStateToStringGamePausedTest() {
-            Assert.AreEqual(GameStateType.GamePaused, StateTransformer.TransformStringToState("GAME_PAUSED"));
+            Assert.AreEqual(StateTransformer.TransformStateToString(GameStateType.GamePaused), "GAME_PAUSED");
         }
+        
         
         [Test]
         public void TransformStateToStringMainMenuTest() {
-            Assert.AreEqual(GameStateType.MainMenu, StateTransformer.TransformStringToState("GAME_MAINMENU"));
+            Assert.AreEqual(StateTransformer.TransformStateToString(GameStateType.MainMenu), "GAME_MAINMENU");
         }
     }
 }
