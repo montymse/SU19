@@ -17,7 +17,7 @@ namespace Galaga_Exercise_1 {
             Entity= new Entity(shape,image);
         }
 
-        public void Direction(Vec2F dir) {
+        private void Direction(Vec2F dir) {
             this.Entity.Shape.AsDynamicShape().Direction = dir;
         }
         
