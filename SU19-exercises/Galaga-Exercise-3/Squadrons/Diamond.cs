@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
+using DIKUArcade.State;
 
 namespace Galaga_Exercise_3.Squadrons {
     public class Diamond {
@@ -9,9 +10,9 @@ namespace Galaga_Exercise_3.Squadrons {
         //Setter added to allow for enemy deletion
         public EntityContainer<Enemy> enemies { get; set; }
         public int MaxEnemies { get; }
-        private Game game;
+        private IGameState game;
 
-        public Diamond(Game game) {
+        public Diamond(IGameState game) {
             this.game = game;
             this.MaxEnemies = 11;
             this.enemies = new EntityContainer<Enemy>();

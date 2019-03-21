@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Galaga_Exercise_3_TESTS")]
+[assembly: AssemblyTitle("Galaga_exercise_3_tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Galaga_Exercise_3_TESTS")]
+[assembly: AssemblyProduct("Galaga_exercise_3_tests")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("C0E2B6EC-9ED2-4B25-B4E2-3C70FA67A71D")]
+[assembly: Guid("6B51F179-6D37-491A-94A3-7D124398E273")]
 
 // Version information for an assembly consists of the following four values:
 //

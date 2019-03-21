@@ -1,12 +1,14 @@
-using System;
 
 namespace Galaga_Exercise_1.GameStateType {
-    public enum GameStateType {
-        GameRunning,
-        GamePaused,
-        MainMenu
-    }
+    using System;
+
+    
     public class StateTransformer {
+        public enum GameStateType {
+            GameRunning,
+            GamePaused,
+            MainMenu
+        }
 
         public static GameStateType TransformStringToState(string state) {
 
@@ -43,7 +45,6 @@ namespace Galaga_Exercise_1.GameStateType {
                 break;
             }        
         }
-        
         
     }
 }

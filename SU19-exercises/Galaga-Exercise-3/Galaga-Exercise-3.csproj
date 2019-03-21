@@ -46,7 +46,11 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GalagaBus.cs" />
-    <Compile Include="GameStateType\GameStateType.cs" />
+    <Compile Include="GameStates\GamePaused.cs" />
+    <Compile Include="GameStates\GameRunning.cs" />
+    <Compile Include="GameStates\GameStateType.cs" />
+    <Compile Include="GameStates\MainMenu.cs" />
+    <Compile Include="GameStates\StateMachine.cs" />
     <Compile Include="MovementStrategy\Down.cs" />
     <Compile Include="MovementStrategy\IMovementStrategy.cs" />
     <Compile Include="MovementStrategy\NoMove.cs" />
