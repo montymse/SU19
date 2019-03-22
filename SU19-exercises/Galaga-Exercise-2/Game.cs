@@ -139,6 +139,7 @@ namespace Galaga_Exercise_1 {
                     eventBus.ProcessEvents();
                     IterateShots();
                     zzdown.MoveEnemies(d.enemies);
+                    
                 }
 
                 if (gameTimer.ShouldRender()) {
@@ -181,11 +182,11 @@ namespace Galaga_Exercise_1 {
                 player.Shoot();
                 break;
             case "KEY_A": case "KEY_D": case "KEY_LEFT": case "KEY_RIGHT":
-                eventBus.RegisterEvent(
-                    GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this,
-                        key == "KEY_A" || key == "KEY_LEFT" ? "LEFT" : "RIGHT",
-                        "", ""));
+                player.ProcessEvent(GameEventType.PlayerEvent,GameEventFactory<object>.CreateGameEventForAllProcessors(
+                    GameEventType.PlayerEvent, this,
+                    key == "KEY_A" || key == "KEY_LEFT" ? "LEFT" : "RIGHT",
+                    "", ""));
+                
                 break;
             }
         }
@@ -193,7 +194,7 @@ namespace Galaga_Exercise_1 {
         public void KeyRelease(string key) {
             switch (key) {
             case "KEY_A": case "KEY_D": case "KEY_LEFT": case "KEY_RIGHT":
-                eventBus.RegisterEvent(
+                player.ProcessEvent(GameEventType.PlayerEvent,
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
                         GameEventType.PlayerEvent, this, "RELEASE",
                         "", ""));
