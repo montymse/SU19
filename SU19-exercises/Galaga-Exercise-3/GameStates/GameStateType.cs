@@ -1,5 +1,5 @@
 
-namespace Galaga_Exercise_1.GameStateType {
+namespace Galaga_Exercise_3.GameStateType {
     using System;
 
     

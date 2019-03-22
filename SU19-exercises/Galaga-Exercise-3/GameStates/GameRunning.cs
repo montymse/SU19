@@ -12,7 +12,7 @@ using Galaga_Exercise_3;
 using Galaga_Exercise_3.MovementStrategy;
 using Galaga_Exercise_3.Squadrons;
 
-namespace Galaga_Exercise_1.GameStates {
+namespace Galaga_Exercise_3.GameStates {
     public class GameRunning : IGameState {
         private static GameRunning instance = null;
         public static Player player;

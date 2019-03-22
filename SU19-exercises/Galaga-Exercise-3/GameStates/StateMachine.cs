@@ -1,8 +1,8 @@
 using System;
 using DIKUArcade.EventBus;
 using DIKUArcade.State;
-using Galaga_Exercise_1.GameStates;
-using Galaga_Exercise_1.GameStateType;
+using Galaga_Exercise_3.GameStates;
+using Galaga_Exercise_3.GameStateType;
 
 namespace GalagaGame.GalagaState {
     public class StateMachine : IGameEventProcessor<object> {

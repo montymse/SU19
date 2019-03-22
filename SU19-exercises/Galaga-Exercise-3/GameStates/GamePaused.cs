@@ -5,7 +5,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.State;
 
-namespace Galaga_Exercise_1.GameStates {
+namespace Galaga_Exercise_3.GameStates {
     public class GamePaused : IGameState {
         private static GamePaused instance = null;
         private Entity pauseImage;

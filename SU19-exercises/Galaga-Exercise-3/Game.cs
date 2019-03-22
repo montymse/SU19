@@ -10,9 +10,8 @@ using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using DIKUArcade.Physics;
-using DIKUArcade.State;
 using GalagaGame.GalagaState;
-using Galaga_Exercise_1.GameStates;
+using Galaga_Exercise_3.GameStates;
 using Galaga_Exercise_3.MovementStrategy;
 using Galaga_Exercise_3.Squadrons;
 
@@ -20,13 +19,20 @@ namespace Galaga_Exercise_3 {
     public class Game : IGameEventProcessor<object> {
         private Window win;
         private DIKUArcade.Timers.GameTimer gameTimer;
-        private GameEventBus<object> eventBus;
         public StateMachine stateMachine;
+        
+        
+        private GameEventBus<object> eventBus;
 
 
+       
         public Game() {
             win = new Window("Window-name", 500, 500);
+            gameTimer = new GameTimer(60, 60);
             stateMachine = new StateMachine();
+
+            
+            
             eventBus = new GameEventBus<object>();
             eventBus.InitializeEventBus(new List<GameEventType>() {
                 GameEventType.InputEvent, // key press / key release
@@ -44,29 +50,26 @@ namespace Galaga_Exercise_3 {
                 gameTimer.MeasureTime();
                 while (gameTimer.ShouldUpdate()) {
                     // Update game logic here
-                    win.PollEvents();
-                    eventBus.ProcessEvents();
                     stateMachine.ActiveState.UpdateGameLogic();
+
                 }
 
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
                     // Render gameplay entities here
-
                     stateMachine.ActiveState.RenderState();
+
                     win.SwapBuffers();
                 }
-            
 
                 if (gameTimer.ShouldReset()) {
                     // 1 second has passed - display last captured ups and fps
                     win.Title = "Galaga | UPS: " + gameTimer.CapturedUpdates +
                                 ", FPS: " + gameTimer.CapturedFrames;
                 }
-                
             }
-            
         }
+        
         
 
         private void KeyPress(string key) {
@@ -81,11 +84,11 @@ namespace Galaga_Exercise_3 {
                 GameRunning.player.Shoot();
                 break;
             case "KEY_A": case "KEY_D": case "KEY_LEFT": case "KEY_RIGHT":
-                eventBus.RegisterEvent(
-                    GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this,
-                        key == "KEY_A" || key == "KEY_LEFT" ? "LEFT" : "RIGHT",
-                        "", ""));
+                GameRunning.player.ProcessEvent(GameEventType.PlayerEvent,GameEventFactory<object>.CreateGameEventForAllProcessors(
+                    GameEventType.PlayerEvent, this,
+                    key == "KEY_A" || key == "KEY_LEFT" ? "LEFT" : "RIGHT",
+                    "", ""));
+                
                 break;
             }
         }
@@ -93,7 +96,7 @@ namespace Galaga_Exercise_3 {
         public void KeyRelease(string key) {
             switch (key) {
             case "KEY_A": case "KEY_D": case "KEY_LEFT": case "KEY_RIGHT":
-                eventBus.RegisterEvent(
+                GameRunning.player.ProcessEvent(GameEventType.PlayerEvent,
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
                         GameEventType.PlayerEvent, this, "RELEASE",
                         "", ""));
@@ -111,18 +114,7 @@ namespace Galaga_Exercise_3 {
                     win.CloseWindow();
                     break;
                 }
-            } else if (eventType == GameEventType.PlayerEvent) {
-                switch (gameEvent.Message) {
-                case "LEFT":
-                    GameRunning.player.Left();
-                    break;
-                case "RIGHT":
-                    GameRunning.player.Right();
-                    break;
-                case "RELEASE":
-                    GameRunning.player.Release();
-                    break;
-                }
+                
             } else if (eventType == GameEventType.InputEvent) {
                 switch (gameEvent.Parameter1) {
                 case "KEY_PRESS":
@@ -133,6 +125,7 @@ namespace Galaga_Exercise_3 {
                     break;
                 }
             }
+            
+            }
         }
     }
-}

@@ -4,17 +4,16 @@ using DIKUArcade.Entities;
 using DIKUArcade.EventBus;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using DIKUArcade.State;
-using Galaga_Exercise_1.GameStates;
+using Galaga_Exercise_3.GameStates;
 
 namespace Galaga_Exercise_3 {
-   
+    
         public class Player : IGameEventProcessor<object> {
         public Entity Entity { get; private set;} 
-        private IGameState game;
+        private Game game;
         
         
-        public Player(IGameState game, DynamicShape shape, IBaseImage image)  {
+        public Player(Game game, DynamicShape shape, IBaseImage image)  {
             this.game = game;
             Entity= new Entity(shape,image);
         }
@@ -53,8 +52,21 @@ namespace Galaga_Exercise_3 {
                 new Vec2F(0.008f,0.027f)),x));
         }
 
-        public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
-            throw new System.NotImplementedException();
+        public void ProcessEvent(GameEventType eventType,
+            GameEvent<object> gameEvent) {
+             if (eventType == GameEventType.PlayerEvent) {
+                switch (gameEvent.Message) {
+                case "LEFT":
+                    Left();
+                    break;
+                case "RIGHT":
+                    Right();
+                    break;
+                case "RELEASE":
+                    Release();
+                    break;
+                }
+            } 
         }
     }
 }
