@@ -51,8 +51,21 @@ namespace Galaga_Exercise_1 {
                 new Vec2F(0.008f,0.027f)),x));
         }
 
-        public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
-            throw new System.NotImplementedException();
+        public void ProcessEvent(GameEventType eventType,
+            GameEvent<object> gameEvent) {
+             if (eventType == GameEventType.PlayerEvent) {
+                switch (gameEvent.Message) {
+                case "LEFT":
+                    Left();
+                    break;
+                case "RIGHT":
+                    Right();
+                    break;
+                case "RELEASE":
+                    Release();
+                    break;
+                }
+            } 
         }
     }
 }

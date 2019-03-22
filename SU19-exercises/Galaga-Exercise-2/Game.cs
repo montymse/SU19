@@ -211,18 +211,7 @@ namespace Galaga_Exercise_1 {
                     win.CloseWindow();
                     break;
                 }
-            } else if (eventType == GameEventType.PlayerEvent) {
-                switch (gameEvent.Message) {
-                case "LEFT":
-                    player.Left();
-                    break;
-                case "RIGHT":
-                    player.Right();
-                    break;
-                case "RELEASE":
-                    player.Release();
-                    break;
-                }
+                
             } else if (eventType == GameEventType.InputEvent) {
                 switch (gameEvent.Parameter1) {
                 case "KEY_PRESS":
@@ -233,6 +222,7 @@ namespace Galaga_Exercise_1 {
                     break;
                 }
             }
+            
+            }
         }
     }
-}
