@@ -125,36 +125,8 @@ namespace Galaga_Exercise_1.GameStates {
         }
 
         public void GameLoop() {
-                while (gameTimer.ShouldUpdate()) {
-                    // Update game logic here
-                    player.Move();
-                    IterateShots();
-                    zzdown.MoveEnemies(d.enemies);
-                }
-
-                if (gameTimer.ShouldRender()) {
-                    // Render gameplay entities here
-                    d.enemies.RenderEntities();
-                    s.enemies.RenderEntities();
-                    t.enemies.RenderEntities();
-                    player.Entity.RenderEntity();
-                    score.RenderScore();
-                    explosions.RenderAnimations();
-                    foreach (Enemy item in enemies) {
-                        item.RenderEntity();
-                    }
-
-                    foreach (PlayerShot shot in playerShots) {
-                        shot.RenderEntity();
-                    }
-
-                }
-
-                if (gameTimer.ShouldReset()) {
-                    // 1 second has passed - display last captured ups and fps
-                }
-            }
-        
+            throw new System.NotImplementedException();
+        }
           
 
         public void InitializeGameState() {
@@ -162,11 +134,26 @@ namespace Galaga_Exercise_1.GameStates {
         }
 
         public void UpdateGameLogic() {
-            throw new System.NotImplementedException();
-        }
+            player.Move();
+            IterateShots();
+            zzdown.MoveEnemies(d.enemies);        }
 
         public void RenderState() {
-            throw new System.NotImplementedException();
+            
+            
+            d.enemies.RenderEntities();
+            s.enemies.RenderEntities();
+            t.enemies.RenderEntities();
+            player.Entity.RenderEntity();
+            score.RenderScore();
+            explosions.RenderAnimations();
+            foreach (Enemy item in enemies) {
+                item.RenderEntity();
+            }
+
+            foreach (PlayerShot shot in playerShots) {
+                shot.RenderEntity();
+            }
         }
 
         public void HandleKeyEvent(string keyValue, string keyAction) {
