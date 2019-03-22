@@ -4,16 +4,17 @@ using DIKUArcade.Entities;
 using DIKUArcade.EventBus;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
+using DIKUArcade.State;
 using Galaga_Exercise_3.GameStates;
 
 namespace Galaga_Exercise_3 {
     
         public class Player : IGameEventProcessor<object> {
         public Entity Entity { get; private set;} 
-        private Game game;
+        private IGameState game;
         
         
-        public Player(Game game, DynamicShape shape, IBaseImage image)  {
+        public Player(IGameState game, DynamicShape shape, IBaseImage image)  {
             this.game = game;
             Entity= new Entity(shape,image);
         }

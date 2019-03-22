@@ -15,13 +15,8 @@ namespace GalagaGame.GalagaState {
         private int maxMenuButtons;
 
     public MainMenu() {
-       backGroundImage=new Entity(new StationaryShape(0,0,500,500),new Image(Path.Combine("Assets", "Images",
-           "TitleImage.png")));
-       menuButtons = new[] {
-           new Text("new game", new Vec2F(0.6f, 0.6f), new Vec2F(0.2f, 0.2f)),
-           new Text("quit", new Vec2F(0.4f, 0.4f), new Vec2F(0.2f, 0.2f))
-       };
-       activeMenuButton = 0;
+     InitializeGameState();
+     
     }
     
     public static MainMenu GetInstance() {
@@ -33,7 +28,13 @@ namespace GalagaGame.GalagaState {
     }
 
     public void InitializeGameState() {
-        throw new System.NotImplementedException();
+        backGroundImage=new Entity(new StationaryShape(0,0,500,500),new Image(Path.Combine("Assets", "Images",
+            "TitleImage.png")));
+        menuButtons = new[] {
+            new Text("new game", new Vec2F(0.6f, 0.6f), new Vec2F(0.2f, 0.2f)),
+            new Text("quit", new Vec2F(0.4f, 0.4f), new Vec2F(0.2f, 0.2f))
+        };
+        activeMenuButton = 0;
     }
 
     public void UpdateGameLogic() {
@@ -51,7 +52,9 @@ namespace GalagaGame.GalagaState {
     }
 
     public void HandleKeyEvent(string keyValue, string keyAction) {
-        switch (keyAction) {
+        switch (keyValue) {
+        case "KEY_PRESS":
+            switch (keyAction) {
             case "KEY_UP":
                 if (activeMenuButton == 0) {
                     activeMenuButton = 1;
@@ -75,20 +78,26 @@ namespace GalagaGame.GalagaState {
                         "CHANGE_STATE",
                         "GAME_RUNNING", "");
                 } else
-                    {
-                        GameEventFactory<object>.CreateGameEventForAllProcessors(
-                            GameEventType.WindowEvent,
-                            this,
-                            "CLOSE_WINDOW",
-                            "", "");
-                    }
+                {
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.WindowEvent,
+                        this,
+                        "CLOSE_WINDOW",
+                        "", "");
+                }
                 
                 break;
             
             default:
-                    break;
+                break;
             
+            }
+            break;
+        
+        case "KEY_RELEASE":
+            break;
         }
+        
     }
          }
 }

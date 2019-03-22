@@ -108,14 +108,7 @@ namespace Galaga_Exercise_3 {
 
         public void ProcessEvent(GameEventType eventType,
             GameEvent<object> gameEvent) {
-            if (eventType == GameEventType.WindowEvent) {
-                switch (gameEvent.Message) {
-                case "CLOSE_WINDOW":
-                    win.CloseWindow();
-                    break;
-                }
-                
-            } else if (eventType == GameEventType.InputEvent) {
+            if (eventType == GameEventType.InputEvent) {
                 switch (gameEvent.Parameter1) {
                 case "KEY_PRESS":
                     KeyPress(gameEvent.Message);

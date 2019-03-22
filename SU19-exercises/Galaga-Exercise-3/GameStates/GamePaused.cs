@@ -13,13 +13,7 @@ namespace Galaga_Exercise_3.GameStates {
         private int activePauseButton;
         private int maxMenuButtons;
         public GamePaused() {
-            this.pauseImage = new Entity(new StationaryShape(0,0,500,500),
-                new Image(Path.Combine("Assets", "Images", "SpaceBackground.png")));
-            this.pauseButtons = new[] {
-                new Text("Continue", new Vec2F(0.6f, 0.6f), new Vec2F(0.2f, 0.2f)),
-                new Text("Main Menu", new Vec2F(0.4f, 0.4f), new Vec2F(0.2f, 0.2f))
-            };
-            this.activePauseButton = 0;
+           InitializeGameState();
         }
 
         public static GamePaused GetInstance() {
@@ -31,7 +25,13 @@ namespace Galaga_Exercise_3.GameStates {
         }
 
         public void InitializeGameState() {
-            throw new System.NotImplementedException();
+            pauseImage = new Entity(new StationaryShape(0,0,500,500),
+                new Image(Path.Combine("Assets", "Images", "SpaceBackground.png")));
+            pauseButtons = new[] {
+                new Text("Continue", new Vec2F(0.6f, 0.6f), new Vec2F(0.2f, 0.2f)),
+                new Text("Main Menu", new Vec2F(0.4f, 0.4f), new Vec2F(0.2f, 0.2f))
+            };
+            activePauseButton = 0;
         }
 
         public void UpdateGameLogic() {

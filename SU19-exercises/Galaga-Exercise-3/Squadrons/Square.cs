@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
+using DIKUArcade.State;
 
 namespace Galaga_Exercise_3.Squadrons {
     public class Square {
@@ -10,9 +11,9 @@ namespace Galaga_Exercise_3.Squadrons {
         public EntityContainer<Enemy> enemies { get; set; }
         public int MaxEnemies { get; }
         public List<Enemy> listenemy;
-        private Game game;
+        private IGameState game;
 
-        public Square(Game game) {
+        public Square(IGameState game) {
             this.game = game;
             this.MaxEnemies = 9;
             this.enemies = new EntityContainer<Enemy>(MaxEnemies);

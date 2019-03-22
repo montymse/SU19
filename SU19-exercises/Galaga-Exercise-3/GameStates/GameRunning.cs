@@ -16,16 +16,15 @@ namespace Galaga_Exercise_3.GameStates {
     public class GameRunning : IGameState {
         private static GameRunning instance = null;
         public static Player player;
-        private GameEventBus<object> eventBus;
 
         public List<Image> enemyStrides;
-        private DIKUArcade.Timers.GameTimer gameTimer;
 
 
         public List<Enemy> enemies;
 
 
         private List<Image> explosionStrides;
+
 
         private AnimationContainer explosions;
 
@@ -40,30 +39,8 @@ namespace Galaga_Exercise_3.GameStates {
         public static List<PlayerShot> playerShots { get; private set; }
         
         public GameRunning() {
-        
-        gameTimer = new GameTimer(60, 60);
-            t = new Triangle(this);
-            s = new Square(this);
-            d = new Diamond(this);
-            down = new Down();
-            zzdown = new ZigZagDown(0.0003f, 0.05f, 0.045f);
-            
-            player = new Player(this, new DynamicShape(new Vec2F(0.45f, 0.1f),
-                new Vec2F(0.1f, 0.1f)), new Image(Path.Combine("Assets", "Images",
-                "Player.png")));
-            explosionStrides = ImageStride.CreateStrides(8,
-                Path.Combine("Assets", "Images", "Explosion.png"));
-            explosions = new AnimationContainer(500);
+            InitializeGameState();
 
-            score = new Score(new Vec2F(0.8f, 0.7f),
-                new Vec2F(0.2f, 0.2f));
-
-            enemyStrides = ImageStride.CreateStrides(4,
-                Path.Combine("Assets", "Images", "BlueMonster.png"));
-            enemies = new List<Enemy>();
-            AddEnemies();
-
-            playerShots = new List<PlayerShot>();
         }
 
         private int explosionLength = 500;
@@ -130,13 +107,38 @@ namespace Galaga_Exercise_3.GameStates {
           
 
         public void InitializeGameState() {
-            throw new System.NotImplementedException();
+            t = new Triangle(this);
+            s = new Square(this);
+            d = new Diamond(this);
+            down = new Down();
+            zzdown = new ZigZagDown(0.0003f, 0.05f, 0.045f);
+            
+            player = new Player(this, new DynamicShape(new Vec2F(0.45f, 0.1f),
+                new Vec2F(0.1f, 0.1f)), new Image(Path.Combine("Assets", "Images",
+                "Player.png")));
+            explosionStrides = ImageStride.CreateStrides(8,
+                Path.Combine("Assets", "Images", "Explosion.png"));
+            explosions = new AnimationContainer(500);
+
+            score = new Score(new Vec2F(0.8f, 0.7f),
+                new Vec2F(0.2f, 0.2f));
+
+            enemyStrides = ImageStride.CreateStrides(4,
+                Path.Combine("Assets", "Images", "BlueMonster.png"));
+            enemies = new List<Enemy>();
+            AddEnemies();
+
+            playerShots = new List<PlayerShot>();
+            
+           
+            
         }
 
         public void UpdateGameLogic() {
             player.Move();
             IterateShots();
-            zzdown.MoveEnemies(d.enemies);        }
+            zzdown.MoveEnemies(d.enemies);        
+        }
 
         public void RenderState() {
             
