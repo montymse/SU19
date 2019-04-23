@@ -15,34 +15,25 @@ namespace Galaga_Exercise_3.GameStateType {
             switch (state) {
                 case "GAME_RUNNING":
                     return GameStateType.GameRunning;
-                    break;
                 case "GAME_PAUSED":
                     return GameStateType.GamePaused;
-                    break;
                 case "GAME_MAINMENU":
                     return GameStateType.MainMenu;
-                    break;
                 default:
                     throw new ArgumentException("ERROR");
-                    break;  
             } 
         }
 
         public static string TransformStateToString(GameStateType state) {
             switch (state) {
-            case GameStateType.GameRunning:
-                return "GAME_RUNNING";
-                break;
-
-            case GameStateType.GamePaused:
-                return "GAME_PAUSED";
-                break;
-            case GameStateType.MainMenu:
-                return "GAME_MAINMENU";
-                break;
-            default:
-                throw new ArgumentException("ERROR");
-                break;
+                case GameStateType.GameRunning:
+                    return "GAME_RUNNING";
+                case GameStateType.GamePaused:
+                    return "GAME_PAUSED";
+                case GameStateType.MainMenu:
+                    return "GAME_MAINMENU";
+                default:
+                    throw new ArgumentException("ERROR");
             }        
         }
         

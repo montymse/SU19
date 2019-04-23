@@ -35,7 +35,6 @@ namespace Galaga_Exercise_3.GameStates {
         }
 
         public void UpdateGameLogic() {
-            throw new System.NotImplementedException();
         }
 
         public void RenderState() {

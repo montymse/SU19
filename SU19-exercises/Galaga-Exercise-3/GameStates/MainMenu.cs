@@ -38,7 +38,6 @@ namespace GalagaGame.GalagaState {
     }
 
     public void UpdateGameLogic() {
-        throw new System.NotImplementedException();
     }
 
     public void RenderState() {
