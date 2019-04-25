@@ -19,8 +19,8 @@ namespace SpaceTaxi_1 {
 
             while (match.Success) {
                     listResult.Add(new Tuple<string, string>(
-                        rxCharacter.Match(rx.Match(filestring).Value).Value,
-                        rxImage.Match(rx.Match(filestring).Value).Value
+                        rxCharacter.Match(match.Value).Value,
+                        rxImage.Match(match.Value).Value
                         ));
                     match=match.NextMatch();
 
