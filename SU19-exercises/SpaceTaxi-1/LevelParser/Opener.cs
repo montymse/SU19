@@ -13,9 +13,9 @@ namespace SpaceTaxi_1 {
         }
 
         public static string[] CutStringLevel(string[] text) {
-            string[] level = new string[23];
+            string[] level = new string[24];
             
-            for (int i = 0; i < 22; i++) {
+            for (int i = 0; i < 23; i++) {
                 level[i] = text[i];   
             }
 
