@@ -1,7 +1,14 @@
+using System;
+
 namespace SpaceTaxi_1 {
     public class Opener {
-        public static string[] FileToString(string file) {
+        public static string[] FileToStringList(string file) {
             string[] text = System.IO.File.ReadAllLines(file);
+            return text;
+        }
+        
+        public static string FileToString(string file) {
+            string text = System.IO.File.ReadAllText(file);
             return text;
         }
 
@@ -14,5 +21,7 @@ namespace SpaceTaxi_1 {
 
             return level;
         }
+        
+        
     }
 }
