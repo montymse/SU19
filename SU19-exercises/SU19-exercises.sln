@@ -2,13 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIKUArcade", "..\DIKUArcade\DIKUArcade\DIKUArcade.csproj", "{A1E4E4DF-0967-4096-9E3C-FBC29B7D07DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaga-Exercise-2", "Galaga-Exercise-2\Galaga-Exercise-2.csproj", "{4CF537B6-3118-4277-A986-C73D673A3184}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaga-Exercise-1", "Galaga-Exercise-1\Galaga-Exercise-1.csproj", "{49988AE6-9D38-4EC3-A1F4-0D895859C720}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaga-Exercise-3", "Galaga-Exercise-3\Galaga-Exercise-3.csproj", "{4CF537B6-3118-4277-A986-C73D673A3184}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaga-Exercise-3-Tests", "Galaga-Exercise-3-Tests\Galaga-Exercise-3-Tests.csproj", "{19C87834-8216-481A-8839-40D79BEB6488}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceTaxi-1", "SpaceTaxi-1\SpaceTaxi-1.csproj", "{6B6B73FE-D105-4F0E-9B51-069B6FD6328F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,13 +14,9 @@ Global
 		{A1E4E4DF-0967-4096-9E3C-FBC29B7D07DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1E4E4DF-0967-4096-9E3C-FBC29B7D07DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1E4E4DF-0967-4096-9E3C-FBC29B7D07DD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49988AE6-9D38-4EC3-A1F4-0D895859C720}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49988AE6-9D38-4EC3-A1F4-0D895859C720}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49988AE6-9D38-4EC3-A1F4-0D895859C720}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49988AE6-9D38-4EC3-A1F4-0D895859C720}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19C87834-8216-481A-8839-40D79BEB6488}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19C87834-8216-481A-8839-40D79BEB6488}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19C87834-8216-481A-8839-40D79BEB6488}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19C87834-8216-481A-8839-40D79BEB6488}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B6B73FE-D105-4F0E-9B51-069B6FD6328F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B6B73FE-D105-4F0E-9B51-069B6FD6328F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B6B73FE-D105-4F0E-9B51-069B6FD6328F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B6B73FE-D105-4F0E-9B51-069B6FD6328F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
