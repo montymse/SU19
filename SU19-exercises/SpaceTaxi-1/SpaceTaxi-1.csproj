@@ -45,6 +45,7 @@
     <Compile Include="LevelParser\Comparer.cs" />
     <Compile Include="LevelParser\ImageList.cs" />
     <Compile Include="LevelParser\Opener.cs" />
+    <Compile Include="LevelParser\Parser.cs" />
     <Compile Include="LevelParser\Placement.cs" />
     <Compile Include="Taxi\Orientation.cs" />
     <Compile Include="Taxi\Player.cs" />

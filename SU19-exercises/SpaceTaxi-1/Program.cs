@@ -2,27 +2,32 @@
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Text.RegularExpressions;
+using DIKUArcade.Entities;
 
 namespace SpaceTaxi_1 {
     internal class Program {
         public static void Main(string[] args) {
-            /*  var game = new Game();
-              game.GameLoop();*/
+             //var game = new Game();
+              //game.GameLoop();
+              
+              Parser parse = new Parser("../../Levels/short-n-sweet.txt");
+              foreach (Entity elm in parse.CreateEntityList()) {
+                  if (elm != null) {
+                      Console.WriteLine(elm);
+                  }
+              }
 
-            List<Tuple<string, string>> list = ImageList.StringToImageList(Opener.FileToString(
-                "/Users/Muse/Desktop/su19-mikaelMuseFrederik/SU19-exercises/SpaceTaxi-1/Levels/short-n-sweet.txt")
-            );
+           // List<Tuple<string, string>> list = ImageList.StringToImageList(Opener.FileToString(
+           //     "../../Levels/short-n-sweet.txt")
+           // );
 
-            string[] s = Opener.CutStringLevel(
-                    Opener.FileToStringList(
-                        "/Users/Muse/Desktop/su19-mikaelMuseFrederik/SU19-exercises/SpaceTaxi-1/Levels/short-n-sweet.txt"))
-                ;
-            int z = 0;
-            foreach (var elm in Placement.FindPlacement(s)) {
-                Console.WriteLine(elm);
-                z++;
-            }
-            Console.WriteLine(z);
+           // string[] s = Opener.CutStringLevel(Opener.FileToStringList("../../Levels/short-n-sweet.txt"));
+           // int z = 0;
+           // foreach (var elm in Placement.FindPlacement(s)) {
+           //     Console.WriteLine(elm);
+           //     z++;
+           // }
+           // Console.WriteLine(z);
 
 
             /*

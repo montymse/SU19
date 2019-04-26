@@ -19,10 +19,10 @@ namespace SpaceTaxi_1 {
         /// <param name="character">Character to compare</param>
         /// <returns>Character's correpsonding texture</returns>
         /// <exception cref="Exception">Thrown if character is not present in texture list</exception>
-        public string GetImageFileName(string character) {
+        public string GetImageFileName(char character) {
             //Find a match in the list. Return image filename when match is found
             foreach (Tuple<string,string> item in imgList) {
-                if (item.Item1.Contains(character)) {
+                if (item.Item1.Contains(character.ToString())) {
                     return item.Item2;
                 }
             }

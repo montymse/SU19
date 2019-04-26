@@ -15,6 +15,8 @@ namespace SpaceTaxi_1 {
         private GameTimer gameTimer;
         private Player player;
         private Window win;
+        
+        private List<Entity> textureList;
 
         public Game() {
             // window
@@ -44,6 +46,17 @@ namespace SpaceTaxi_1 {
             player = new Player();
             player.SetPosition(0.45f, 0.6f);
             player.SetExtent(0.1f, 0.1f);
+            
+            
+            //Add textures
+            textureList = new List<Entity>();
+            foreach (var elm in Placement.FindPlacement(Opener.CutStringLevel(Opener.FileToStringList("../../Levels/short-n-sweet.txt")))) {
+               //textureList.Add(new Entity(new DynamicShape(elm.Item1.Item1,elm.Item1.Item2,0.04f,0.04f),new Image("Assets/Images/" + elm.Item2.Remove(0,1))));
+               // Shape elmShape = new Shape();
+               // elmShape.Position = new Vec2F(elm.Item1.Item1,elm.Item1.Item2);
+               // textureList.Add(new Entity(elmShape,new Image("Assets/Images/" + elm.Item2.Remove(0,1))));
+                
+            }
 
             // event delegation
             eventBus.Subscribe(GameEventType.InputEvent, this);
@@ -64,6 +77,10 @@ namespace SpaceTaxi_1 {
                     win.Clear();
                     backGroundImage.RenderEntity();
                     player.RenderPlayer();
+
+                    foreach (Entity elm in textureList) {
+                        elm.RenderEntity();
+                    }
 
                     win.SwapBuffers();
                 }
