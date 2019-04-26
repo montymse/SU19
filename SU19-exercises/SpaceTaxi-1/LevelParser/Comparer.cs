@@ -9,8 +9,7 @@ namespace SpaceTaxi_1 {
         /// Used to extract filenames of textures.
         /// </summary>
         /// <param name="levelString">Level ASCII layout</param>
-        public Comparer(string levelString) {
-            this.imgList = ImageList.StringToImageList(levelString);
+        public Comparer() {
         }
         
         /// <summary>
@@ -19,11 +18,12 @@ namespace SpaceTaxi_1 {
         /// <param name="character">Character to compare</param>
         /// <returns>Character's correpsonding texture</returns>
         /// <exception cref="Exception">Thrown if character is not present in texture list</exception>
-        public string GetImageFileName(char character) {
+        public static string GetImageFileName(char character,string levelString) {
+            List<Tuple<string, string>> listResult = ImageList.StringToImageList(levelString);
             //Find a match in the list. Return image filename when match is found
-            foreach (Tuple<string,string> item in imgList) {
+            foreach (Tuple<string,string> item in listResult) {
                 if (item.Item1.Contains(character.ToString())) {
-                    return item.Item2;
+                    return item.Item2.Remove(0);
                 }
             }
             

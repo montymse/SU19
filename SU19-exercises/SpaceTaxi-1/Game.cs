@@ -49,7 +49,7 @@ namespace SpaceTaxi_1 {
             
             
             //Add textures
-            textureList = new List<Entity>();
+            textureList = Parser.CreateEntityList("../../Levels/short-n-sweet.txt");
             foreach (var elm in Placement.FindPlacement(Opener.CutStringLevel(Opener.FileToStringList("../../Levels/short-n-sweet.txt")))) {
                //textureList.Add(new Entity(new DynamicShape(elm.Item1.Item1,elm.Item1.Item2,0.04f,0.04f),new Image("Assets/Images/" + elm.Item2.Remove(0,1))));
                // Shape elmShape = new Shape();

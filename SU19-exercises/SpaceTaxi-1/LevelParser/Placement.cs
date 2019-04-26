@@ -47,11 +47,13 @@ namespace SpaceTaxi_1 {
                         places.Add(Convert(x, y, mapsize));
                     }
                 }
+                
             }
 
-            places.Reverse();
             return places;
         }
+        
         }
         
     }
+    
