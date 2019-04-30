@@ -49,8 +49,10 @@ namespace SpaceTaxi_1 {
             
             
             //Add textures
-            textureList = Parser.CreateEntityList("../../Levels/short-n-sweet.txt");          
+            textureList = Parser.CreateEntityList(Placement.FindPlacement(
+            "../../Levels/the-beach.txt"));     
 
+          
             // event delegation
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.WindowEvent, this);

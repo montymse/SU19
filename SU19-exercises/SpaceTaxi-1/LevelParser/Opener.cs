@@ -22,10 +22,5 @@ namespace SpaceTaxi_1 {
             return level;
         }
 
-        public static string CutString(string text) {
-            int a = text.IndexOf("Name", StringComparison.Ordinal);
-            return text.Substring(0, a - 1);
-        }
-
     }
 }

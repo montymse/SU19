@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game.cs" />
-    <Compile Include="LevelParser\Comparer.cs" />
     <Compile Include="LevelParser\ImageList.cs" />
     <Compile Include="LevelParser\Opener.cs" />
     <Compile Include="LevelParser\Parser.cs" />
