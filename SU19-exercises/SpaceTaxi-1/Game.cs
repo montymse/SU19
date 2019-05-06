@@ -37,7 +37,8 @@ namespace SpaceTaxi_1 {
 
             // game assets
             backGroundImage = new Entity(
-                new StationaryShape(new Vec2F(0.0f, 0.0f), new Vec2F(1.0f, 1.0f)),
+                new StationaryShape(new Vec2F(0.0f, 0.0f), 
+                    new Vec2F(1.0f, 1.0f)),
                 new Image(Path.Combine("Assets", "Images", "SpaceBackground.png"))
             );
             backGroundImage.RenderEntity();
@@ -50,7 +51,7 @@ namespace SpaceTaxi_1 {
             
             //Add textures
             textureList = Parser.CreateEntityList(Placement.FindPlacement(
-            "../../Levels/the-beach.txt"));     
+            "../../Levels/short-n-sweet.txt"));     
 
           
             // event delegation
@@ -64,6 +65,8 @@ namespace SpaceTaxi_1 {
                 gameTimer.MeasureTime();
 
                 while (gameTimer.ShouldUpdate()) {
+                    player.Move();
+
                     win.PollEvents();
                     eventBus.ProcessEvents();
                 }
@@ -93,7 +96,7 @@ namespace SpaceTaxi_1 {
             case "KEY_ESCAPE":
                 win.CloseWindow();
                 break;
-            case "KEY_F12":
+            case "KEY_Q":
                 Console.WriteLine("Saving screenshot");
                 win.SaveScreenShot();
                 break;
@@ -101,6 +104,11 @@ namespace SpaceTaxi_1 {
                 eventBus.RegisterEvent(
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
                         GameEventType.PlayerEvent, this, "BOOSTER_UPWARDS", "", ""));
+                break;
+            case "KEY_DOWN":
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "BOOSTER_DOWN", "", ""));
                 break;
             case "KEY_LEFT":
                 eventBus.RegisterEvent(
@@ -120,17 +128,26 @@ namespace SpaceTaxi_1 {
             case "KEY_LEFT":
                 eventBus.RegisterEvent(
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this, "STOP_ACCELERATE_LEFT", "", ""));
+                        GameEventType.PlayerEvent, this,
+                        "STOP_ACCELERATE_LEFT", "", ""));
                 break;
             case "KEY_RIGHT":
                 eventBus.RegisterEvent(
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this, "STOP_ACCELERATE_RIGHT", "", ""));
+                        GameEventType.PlayerEvent, this,
+                        "STOP_ACCELERATE_RIGHT", "", ""));
                 break;
             case "KEY_UP":
                 eventBus.RegisterEvent(
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this, "STOP_ACCELERATE_UP", "", ""));
+                        GameEventType.PlayerEvent, this,
+                        "STOP_ACCELERATE_UP", "", ""));
+                break;
+            case "KEY_DOWN":
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this,
+                        "STOP_ACCELERATE_DOWN", "", ""));
                 break;
             }
         }

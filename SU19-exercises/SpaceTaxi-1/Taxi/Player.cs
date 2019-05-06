@@ -3,6 +3,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.EventBus;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
+using DIKUArcade.Physics;
 
 namespace SpaceTaxi_1 {
     public class Player : IGameEventProcessor<object> {
@@ -41,12 +42,72 @@ namespace SpaceTaxi_1 {
             Entity.RenderEntity();
         }
 
-        public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
+
+        
+
+        public void Move() {   
+            if(this.Entity.Shape.Position.X > 0 && this.Entity.Shape.Position.X < 1-this.Entity.Shape.Extent.X
+            && this.Entity.Shape.Position.Y > 0 && this.Entity.Shape.Position.Y < 1-this.Entity.Shape.Extent.Y) {
+                this.Entity.Shape.Move(this.Entity.Shape.AsDynamicShape().Direction);
+            }
+            
+            else if(this.Entity.Shape.Position.X <= 0 + this.Entity.Shape.Extent.X && this.Entity.Shape.AsDynamicShape().Direction.X > 0) {
+                this.Entity.Shape.Move(this.Entity.Shape.AsDynamicShape().Direction);
+            }
+            else if(this.Entity.Shape.Position.X >= 1-this.Entity.Shape.Extent.X && this.Entity.Shape.AsDynamicShape().Direction.X < 0) {
+                this.Entity.Shape.Move(this.Entity.Shape.AsDynamicShape().Direction);
+            }
+            else if(this.Entity.Shape.Position.Y <= 0 + this.Entity.Shape.Extent.Y && this.Entity.Shape.AsDynamicShape().Direction.Y > 0) {
+                this.Entity.Shape.Move(this.Entity.Shape.AsDynamicShape().Direction);
+            }
+            else if(this.Entity.Shape.Position.Y >= 1-this.Entity.Shape.Extent.Y && this.Entity.Shape.AsDynamicShape().Direction.Y < 0) {
+                this.Entity.Shape.Move(this.Entity.Shape.AsDynamicShape().Direction);
+            }
+           
+            
+        }
+        
+        private void Direction(Vec2F dir) {
+            Entity.Shape.AsDynamicShape().Direction = dir;
+        }
+        public void Right() {
+            Direction(new Vec2F(0.01f, 0.00f));
+        }
+        public void Left() {
+            Direction(new Vec2F(-0.01f,0.00f));
+        }
+        public void Release() {
+            Direction(new Vec2F(0.00f,0.00f));
+        }
+        public void Up() {
+            Direction(new Vec2F(0.00f, 0.01f));
+        }
+        public void Down() {
+            Direction(new Vec2F(0.00f, -0.01f));
+        }
+
+        public void ProcessEvent(GameEventType eventType,
+            GameEvent<object> gameEvent) {
             if (eventType == GameEventType.PlayerEvent) {
                 switch (gameEvent.Message) {
-                // in the future, we will be handling movement here
+                case "BOOSTER_TO_LEFT":
+                    Left();
+                    break;
+                case "BOOSTER_TO_RIGHT":
+                    Right();
+                    break;
+                case "BOOSTER_UPWARDS":
+                    Up();
+                    break;
+                case "BOOSTER_DOWN":
+                    Down();
+                    break;
+                case "STOP_ACCELERATE_LEFT": case "STOP_ACCELERATE_UP" :
+                case "STOP_ACCELERATE_RIGHT" : case "STOP_ACCELERATE_DOWN" :
+                    Release();
+                    break;
                 }
-            }
+            } 
         }
     }
 }

@@ -8,7 +8,7 @@ namespace SpaceTaxi_1 {
 
 
         private static Tuple<float, float> CalculateMapSize(string[] text) {
-            return (new Tuple<float, float>((float) 1/text[0].Length, (float) 1/text.Length));
+            return (new Tuple<float, float>((float) 1/text[0].Length, (float) 1/(text.Length-1)));
 
         }
 
@@ -26,7 +26,8 @@ namespace SpaceTaxi_1 {
             List<Tuple<string, string>> textures =
                 ImageList.StringToImageList(Opener.FileToString(
                 textfile));
-            List<Tuple<Tuple<float, float>,string>> places = new List<Tuple<Tuple<float, float>, string>>();
+            List<Tuple<Tuple<float, float>,string>> places =
+                new List<Tuple<Tuple<float, float>, string>>();
             
            for (int y = 0; y < text.Length-1; y++) {
               for (int x = 0; x < text[y].Length; x++) {
@@ -34,7 +35,8 @@ namespace SpaceTaxi_1 {
                        foreach (Tuple<string,string> item in textures) {
                           if (item.Item1.Contains(text[y][x].ToString())) {
                               
-                             places.Add(new Tuple<Tuple<float, float>, string>(Convert(x, y, mapsize),item.Item2));
+                             places.Add(new Tuple<Tuple<float, float>,
+                                 string>(Convert(x, y, mapsize),item.Item2));
                           }
                       }
                   }
