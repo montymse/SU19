@@ -44,7 +44,6 @@ namespace SpaceTaxi_1 {
 
 
         
-//-Entity.Shape.Extent.X
         public void Move() {   
             if(Entity.Shape.Position.X > 0 && Entity.Shape.Position.X < 1-Entity.Shape.Extent.X
             && Entity.Shape.Position.Y > 0 && Entity.Shape.Position.Y < 1-Entity.Shape.Extent.Y) {
@@ -116,21 +115,26 @@ namespace SpaceTaxi_1 {
         private void Direction(Vec2F dir) {
             Entity.Shape.AsDynamicShape().Direction = dir;
         }
-        public void Right() {
-            Direction(new Vec2F(0.01f, 0.00f));
-        }
-        public void Left() {
-            Direction(new Vec2F(-0.01f,0.00f));
+
+
+        private void Booster(GameEvent<object> gameEvent) {
+            switch (gameEvent.Message) {
+            case "BOOSTER_TO_LEFT":
+                Direction(new Vec2F(-0.01f,0.00f));
+                break;
+            case "BOOSTER_TO_RIGHT":
+                Direction(new Vec2F(0.01f, 0.00f));
+                break;
+            case "BOOSTER_UPWARDS":
+                Direction(new Vec2F(0.00f, 0.01f));
+                break;
+
+            }
         }
        
-        public void Release() {
+        private void Release() {
             Direction(new Vec2F(0.0f,-0.001f));
-
-        
-            }
-        
-        public void Up() {
-            Direction(new Vec2F(0.00f, 0.01f));
+            
         }
        
 
@@ -138,17 +142,10 @@ namespace SpaceTaxi_1 {
             GameEvent<object> gameEvent) {
             if (eventType == GameEventType.PlayerEvent) {
                 switch (gameEvent.Message) {
-                case "BOOSTER_TO_LEFT":
-                    Left();
-                    break;
-                case "BOOSTER_TO_RIGHT":
-                    Right();
-                    break;
-                case "BOOSTER_UPWARDS":
-                    Up();
-                    break;
+                case "BOOSTER_TO_LEFT": case "BOOSTER_TO_RIGHT":  case "BOOSTER_UPWARDS":
+                    Booster(gameEvent);
                
-               
+                    break;
                 case "STOP_ACCELERATE_LEFT": case "STOP_ACCELERATE_UP" :
                 case "STOP_ACCELERATE_RIGHT" : 
                     Release();
