@@ -44,26 +44,72 @@ namespace SpaceTaxi_1 {
 
 
         
-
+//-Entity.Shape.Extent.X
         public void Move() {   
-            if(this.Entity.Shape.Position.X > 0 && this.Entity.Shape.Position.X < 1-this.Entity.Shape.Extent.X
-            && this.Entity.Shape.Position.Y > 0 && this.Entity.Shape.Position.Y < 1-this.Entity.Shape.Extent.Y) {
+            if(Entity.Shape.Position.X > 0 && Entity.Shape.Position.X < 1-Entity.Shape.Extent.X
+            && Entity.Shape.Position.Y > 0 && Entity.Shape.Position.Y < 1-Entity.Shape.Extent.Y) {
                 this.Entity.Shape.Move(this.Entity.Shape.AsDynamicShape().Direction);
             }
             
-            else if(this.Entity.Shape.Position.X <= 0 + this.Entity.Shape.Extent.X && this.Entity.Shape.AsDynamicShape().Direction.X > 0) {
-                this.Entity.Shape.Move(this.Entity.Shape.AsDynamicShape().Direction);
+            else if(Entity.Shape.Position.X <= 0  && 
+                    (Entity.Shape.AsDynamicShape().Direction.X > 0 || 
+                     Entity.Shape.AsDynamicShape().Direction.Y!=0 && 
+                     Entity.Shape.AsDynamicShape().Direction.X==0 )) {
+                Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
             }
-            else if(this.Entity.Shape.Position.X >= 1-this.Entity.Shape.Extent.X && this.Entity.Shape.AsDynamicShape().Direction.X < 0) {
-                this.Entity.Shape.Move(this.Entity.Shape.AsDynamicShape().Direction);
+            else if(Entity.Shape.Position.X >= 1-Entity.Shape.Extent.X &&
+                    (Entity.Shape.AsDynamicShape().Direction.X < 0 || 
+                     Entity.Shape.AsDynamicShape().Direction.Y!=0 &&
+                     Entity.Shape.AsDynamicShape().Direction.X==0
+                    )) {
+                Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
             }
-            else if(this.Entity.Shape.Position.Y <= 0 + this.Entity.Shape.Extent.Y && this.Entity.Shape.AsDynamicShape().Direction.Y > 0) {
-                this.Entity.Shape.Move(this.Entity.Shape.AsDynamicShape().Direction);
+            
+            else if(Entity.Shape.Position.Y <= 0  && 
+                    (Entity.Shape.AsDynamicShape().Direction.Y > 0 || 
+                     Entity.Shape.AsDynamicShape().Direction.X!=0 && 
+                     Entity.Shape.AsDynamicShape().Direction.Y==0 )) {
+                Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
             }
-            else if(this.Entity.Shape.Position.Y >= 1-this.Entity.Shape.Extent.Y && this.Entity.Shape.AsDynamicShape().Direction.Y < 0) {
-                this.Entity.Shape.Move(this.Entity.Shape.AsDynamicShape().Direction);
+            else if(Entity.Shape.Position.Y >= 1-Entity.Shape.Extent.Y &&
+                    (Entity.Shape.AsDynamicShape().Direction.Y < 0 || 
+                     Entity.Shape.AsDynamicShape().Direction.X!=0 &&
+                     Entity.Shape.AsDynamicShape().Direction.Y==0
+                    )) {
+                Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
             }
-           
+            /*
+            else if (Entity.Shape.Position.Y <= 0  &&
+                     Entity.Shape.Position.X <= 0  && 
+                     (Entity.Shape.AsDynamicShape().Direction.X > 0 || 
+                      Entity.Shape.AsDynamicShape().Direction.Y > 0)) {
+                Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
+
+            }
+            else if (Entity.Shape.Position.Y >= 1-Entity.Shape.Extent.Y &&
+                     Entity.Shape.Position.X >= 1-Entity.Shape.Extent.X && 
+                     (Entity.Shape.AsDynamicShape().Direction.X < 0 || 
+                      Entity.Shape.AsDynamicShape().Direction.Y < 0)) {
+                Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
+
+            }
+            
+            else if (Entity.Shape.Position.Y <= 0 + Entity.Shape.Extent.Y &&
+                     Entity.Shape.Position.X >= 1-Entity.Shape.Extent.X && 
+                     (Entity.Shape.AsDynamicShape().Direction.X > 0 || 
+                      Entity.Shape.AsDynamicShape().Direction.Y < 0)) {
+                Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
+
+            }
+            else if (Entity.Shape.Position.Y >= 1-Entity.Shape.Extent.Y &&
+                     Entity.Shape.Position.X <= 0 + Entity.Shape.Extent.X && 
+                     (Entity.Shape.AsDynamicShape().Direction.X < 0 || 
+                      Entity.Shape.AsDynamicShape().Direction.Y > 0)) {
+                Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
+
+            }*/
+            
+            
             
         }
         
@@ -76,15 +122,17 @@ namespace SpaceTaxi_1 {
         public void Left() {
             Direction(new Vec2F(-0.01f,0.00f));
         }
+       
         public void Release() {
-            Direction(new Vec2F(0.00f,0.00f));
-        }
+            Direction(new Vec2F(0.0f,-0.001f));
+
+        
+            }
+        
         public void Up() {
             Direction(new Vec2F(0.00f, 0.01f));
         }
-        public void Down() {
-            Direction(new Vec2F(0.00f, -0.01f));
-        }
+       
 
         public void ProcessEvent(GameEventType eventType,
             GameEvent<object> gameEvent) {
@@ -99,11 +147,10 @@ namespace SpaceTaxi_1 {
                 case "BOOSTER_UPWARDS":
                     Up();
                     break;
-                case "BOOSTER_DOWN":
-                    Down();
-                    break;
+               
+               
                 case "STOP_ACCELERATE_LEFT": case "STOP_ACCELERATE_UP" :
-                case "STOP_ACCELERATE_RIGHT" : case "STOP_ACCELERATE_DOWN" :
+                case "STOP_ACCELERATE_RIGHT" : 
                     Release();
                     break;
                 }
