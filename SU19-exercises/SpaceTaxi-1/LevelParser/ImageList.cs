@@ -7,6 +7,16 @@ namespace SpaceTaxi_1 {
     
     public class ImageList {
         
+        /// <summary>
+        /// StringToImageList uses regex expressions to match ASCII characters to a image file
+        /// </summary>
+        /// <param name="filestring"></param>
+        /// ASCII-based text file (as given in the project hand-out)
+        /// <returns>
+        /// A tuple list with the identifier character as the first element
+        /// and a image text file name as the second element
+        /// </returns>
+
         
         public static List<Tuple<string,string>> StringToImageList(string filestring) {
             

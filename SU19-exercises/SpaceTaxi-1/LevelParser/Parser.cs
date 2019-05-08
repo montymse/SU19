@@ -8,6 +8,17 @@ using DIKUArcade.Math;
 
 namespace SpaceTaxi_1 {
     public class Parser {
+        
+        /// <summary>
+        /// CreateEntityList creates a list of entities using the information that
+        /// FindPlacementAndImage returns. 
+        /// </summary>
+        /// <param name="list"></param>
+        /// a tuple containing a float tuple of positions as first element
+        /// and a string with image file name as the second element in the tuple
+        /// <returns>
+        /// A list of entities
+        /// </returns>
 
 
         public static List<Entity> CreateEntityList(List<Tuple<Tuple<float, float>,string>> list) {

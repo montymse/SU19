@@ -77,45 +77,30 @@ namespace SpaceTaxi_1 {
                     )) {
                 Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
             }
-            /*
-            else if (Entity.Shape.Position.Y <= 0  &&
-                     Entity.Shape.Position.X <= 0  && 
-                     (Entity.Shape.AsDynamicShape().Direction.X > 0 || 
-                      Entity.Shape.AsDynamicShape().Direction.Y > 0)) {
-                Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-
-            }
-            else if (Entity.Shape.Position.Y >= 1-Entity.Shape.Extent.Y &&
-                     Entity.Shape.Position.X >= 1-Entity.Shape.Extent.X && 
-                     (Entity.Shape.AsDynamicShape().Direction.X < 0 || 
-                      Entity.Shape.AsDynamicShape().Direction.Y < 0)) {
-                Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-
-            }
-            
-            else if (Entity.Shape.Position.Y <= 0 + Entity.Shape.Extent.Y &&
-                     Entity.Shape.Position.X >= 1-Entity.Shape.Extent.X && 
-                     (Entity.Shape.AsDynamicShape().Direction.X > 0 || 
-                      Entity.Shape.AsDynamicShape().Direction.Y < 0)) {
-                Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-
-            }
-            else if (Entity.Shape.Position.Y >= 1-Entity.Shape.Extent.Y &&
-                     Entity.Shape.Position.X <= 0 + Entity.Shape.Extent.X && 
-                     (Entity.Shape.AsDynamicShape().Direction.X < 0 || 
-                      Entity.Shape.AsDynamicShape().Direction.Y > 0)) {
-                Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-
-            }*/
-            
+          
             
             
         }
+        /// <summary>
+        /// Basic implementation of the player movement. It determines t
+        /// he direction of the entity to be the same as the vector given in the argument
+        /// </summary>
+        /// <param name="dir">
+        /// A vector holding information about the new direction of the entity
+        /// </param>
         
         private void Direction(Vec2F dir) {
             Entity.Shape.AsDynamicShape().Direction = dir;
         }
 
+        /// <summary>
+        /// Given a gameEvent it matches messages of the gameEvent using a switch statement
+        /// and finds the corresponding case and changes the direction of this entity 
+        /// </summary>
+        /// <param name="gameEvent">
+        /// Booster takes a gameEvent as argument, this is given by the processEvent method in which
+        /// Booster is called. 
+        /// </param>
 
         private void Booster(GameEvent<object> gameEvent) {
             switch (gameEvent.Message) {
@@ -131,12 +116,26 @@ namespace SpaceTaxi_1 {
 
             }
         }
+        
+        /// <summary>
+        /// Basic implementation of the player movement. It changes the direction of
+        /// the entity to go downwards.
+        /// </summary>
        
         private void Release() {
             Direction(new Vec2F(0.0f,-0.001f));
             
         }
        
+        /// <summary>
+        /// Basic implementation of the event processor. It holds the responsibility of moving
+        /// the player 
+        /// </summary>
+        /// <param name="eventType"></param>
+        /// The gameEventType 
+        /// <param name="gameEvent"></param>
+        /// The gameEvent
+        /// 
 
         public void ProcessEvent(GameEventType eventType,
             GameEvent<object> gameEvent) {
@@ -155,3 +154,37 @@ namespace SpaceTaxi_1 {
         }
     }
 }
+
+
+
+
+/*
+          else if (Entity.Shape.Position.Y <= 0  &&
+                   Entity.Shape.Position.X <= 0  && 
+                   (Entity.Shape.AsDynamicShape().Direction.X > 0 || 
+                    Entity.Shape.AsDynamicShape().Direction.Y > 0)) {
+              Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
+
+          }
+          else if (Entity.Shape.Position.Y >= 1-Entity.Shape.Extent.Y &&
+                   Entity.Shape.Position.X >= 1-Entity.Shape.Extent.X && 
+                   (Entity.Shape.AsDynamicShape().Direction.X < 0 || 
+                    Entity.Shape.AsDynamicShape().Direction.Y < 0)) {
+              Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
+
+          }
+          
+          else if (Entity.Shape.Position.Y <= 0 + Entity.Shape.Extent.Y &&
+                   Entity.Shape.Position.X >= 1-Entity.Shape.Extent.X && 
+                   (Entity.Shape.AsDynamicShape().Direction.X > 0 || 
+                    Entity.Shape.AsDynamicShape().Direction.Y < 0)) {
+              Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
+
+          }
+          else if (Entity.Shape.Position.Y >= 1-Entity.Shape.Extent.Y &&
+                   Entity.Shape.Position.X <= 0 + Entity.Shape.Extent.X && 
+                   (Entity.Shape.AsDynamicShape().Direction.X < 0 || 
+                    Entity.Shape.AsDynamicShape().Direction.Y > 0)) {
+              Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
+
+          }*/

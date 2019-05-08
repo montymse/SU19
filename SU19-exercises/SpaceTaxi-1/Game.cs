@@ -50,7 +50,7 @@ namespace SpaceTaxi_1 {
             
             
             //Add textures
-            textureList = Parser.CreateEntityList(Placement.FindPlacement(
+            textureList = Parser.CreateEntityList(Placement.FindPlacementAndImage(
             "../../Levels/short-n-sweet.txt"));     
 
           

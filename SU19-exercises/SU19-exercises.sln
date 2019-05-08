@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIKUArcade", "..\DIKUArcade
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceTaxi-1", "SpaceTaxi-1\SpaceTaxi-1.csproj", "{6B6B73FE-D105-4F0E-9B51-069B6FD6328F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSpaceTaxi", "TestSpaceTaxi\TestSpaceTaxi.csproj", "{16D41D06-8907-4060-B2B8-294B8AE2AE14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{6B6B73FE-D105-4F0E-9B51-069B6FD6328F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B6B73FE-D105-4F0E-9B51-069B6FD6328F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B6B73FE-D105-4F0E-9B51-069B6FD6328F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16D41D06-8907-4060-B2B8-294B8AE2AE14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16D41D06-8907-4060-B2B8-294B8AE2AE14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16D41D06-8907-4060-B2B8-294B8AE2AE14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16D41D06-8907-4060-B2B8-294B8AE2AE14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
