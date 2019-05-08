@@ -7,57 +7,45 @@ using DIKUArcade.EventBus;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Timers;
+using SpaceTaxi_1.GameStates;
 
 namespace SpaceTaxi_1 {
     public class Game : IGameEventProcessor<object> {
-        private Entity backGroundImage;
-        private GameEventBus<object> eventBus;
         private GameTimer gameTimer;
-        private Player player;
         private Window win;
+        public StateMachine stateMachine;
+
         
         private List<Entity> textureList;
 
         public Game() {
             // window
             win = new Window("Space Taxi Game v0.1", 500, AspectRatio.R1X1);
+            win.RegisterEventBus(GalagaBus.GetBus());
 
-            // event bus
-            eventBus = new GameEventBus<object>();
-            eventBus.InitializeEventBus(new List<GameEventType> {
-                GameEventType.InputEvent, // key press / key release
-                GameEventType.WindowEvent, // messages to the window, e.g. CloseWindow()
-                GameEventType.PlayerEvent // commands issued to the player object, e.g. move,
-                                          // destroy, receive health, etc.
+            //statemachine
+            stateMachine = new StateMachine();
+            GalagaBus.GetBus().InitializeEventBus(new List<GameEventType>()
+            {
+                GameEventType.WindowEvent,
+                GameEventType.InputEvent,
+                GameEventType.GameStateEvent,
+                GameEventType.PlayerEvent
+
             });
-            win.RegisterEventBus(eventBus);
+        
 
+            GalagaBus.GetBus().Subscribe(GameEventType.WindowEvent, this);
+            GalagaBus.GetBus().Subscribe(GameEventType.PlayerEvent, this);
+            GalagaBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
+            GalagaBus.GetBus().Subscribe(GameEventType.InputEvent, this);
+
+
+                      
             // game timer
             gameTimer = new GameTimer(60); // 60 UPS, no FPS limit
 
-            // game assets
-            backGroundImage = new Entity(
-                new StationaryShape(new Vec2F(0.0f, 0.0f), 
-                    new Vec2F(1.0f, 1.0f)),
-                new Image(Path.Combine("Assets", "Images", "SpaceBackground.png"))
-            );
-            backGroundImage.RenderEntity();
-
-            // game entities
-            player = new Player();
-            player.SetPosition(0.45f, 0.6f);
-            player.SetExtent(0.1f, 0.1f);
             
-            
-            //Add textures
-            textureList = Parser.CreateEntityList(Placement.FindPlacementAndImage(
-            "../../Levels/short-n-sweet.txt"));     
-
-          
-            // event delegation
-            eventBus.Subscribe(GameEventType.InputEvent, this);
-            eventBus.Subscribe(GameEventType.WindowEvent, this);
-            eventBus.Subscribe(GameEventType.PlayerEvent, player);
         }
 
         public void GameLoop() {
@@ -65,22 +53,19 @@ namespace SpaceTaxi_1 {
                 gameTimer.MeasureTime();
 
                 while (gameTimer.ShouldUpdate()) {
-                    player.Move();
 
                     win.PollEvents();
-                    eventBus.ProcessEvents();
+                    
+                    GalagaBus.GetBus().ProcessEvents();
+                    stateMachine.ActiveState.UpdateGameLogic();
                 }
 
                 if (gameTimer.ShouldRender()) {
-                    win.Clear();
-                    backGroundImage.RenderEntity();
-                    player.RenderPlayer();
-
-                    foreach (Entity elm in textureList) {
-                        elm.RenderEntity();
-                    }
+                    win.Clear();  
+                    stateMachine.ActiveState.RenderState();
 
                     win.SwapBuffers();
+                    
                 }
 
                 if (gameTimer.ShouldReset()) {
@@ -91,77 +76,47 @@ namespace SpaceTaxi_1 {
             }
         }
 
-        public void KeyPress(string key) {
-            switch (key) {
-            case "KEY_ESCAPE":
-                win.CloseWindow();
-                break;
-            case "KEY_Q":
-                Console.WriteLine("Saving screenshot");
-                win.SaveScreenShot();
-                break;
-            case "KEY_UP":
-                eventBus.RegisterEvent(
-                    GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this, "BOOSTER_UPWARDS", "", ""));
-                break;
-          
-            case "KEY_LEFT":
-                eventBus.RegisterEvent(
-                    GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this, "BOOSTER_TO_LEFT", "", ""));
-                break;
-            case "KEY_RIGHT":
-                eventBus.RegisterEvent(
-                    GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this, "BOOSTER_TO_RIGHT", "", ""));
-                break;
-         
-            }
-        }
+       
 
-        public void KeyRelease(string key) {
-            switch (key) {
-            case "KEY_LEFT":
-                eventBus.RegisterEvent(
-                    GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this,
-                        "STOP_ACCELERATE_LEFT", "", ""));
-                break;
-            case "KEY_RIGHT":
-                eventBus.RegisterEvent(
-                    GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this,
-                        "STOP_ACCELERATE_RIGHT", "", ""));
-                break;
-            case "KEY_UP":
-                eventBus.RegisterEvent(
-                    GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this,
-                        "STOP_ACCELERATE_UP", "", ""));
-                break;
-            
-            
-            }
-        }
-
-        public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
+        public void ProcessEvent(GameEventType eventType,
+            GameEvent<object> gameEvent) {
             if (eventType == GameEventType.WindowEvent) {
                 switch (gameEvent.Message) {
                 case "CLOSE_WINDOW":
                     win.CloseWindow();
                     break;
+                case "SAVE_SCREENSHOT":
+                    Console.WriteLine("Saving screenshot");
+                    win.SaveScreenShot();
+                    break;
                 }
-            } else if (eventType == GameEventType.InputEvent) {
+              
+            }
+
+            if (eventType == GameEventType.GameStateEvent) {
+                stateMachine.ProcessEvent(eventType,gameEvent);
+
+              }
+            
+            if (eventType == GameEventType.PlayerEvent) {
+            }
+            
+            else if (eventType == GameEventType.InputEvent) {
+
                 switch (gameEvent.Parameter1) {
                 case "KEY_PRESS":
-                    KeyPress(gameEvent.Message);
+                    stateMachine.ActiveState.HandleKeyEvent(gameEvent.Parameter1,
+                        gameEvent.Message);
                     break;
                 case "KEY_RELEASE":
-                    KeyRelease(gameEvent.Message);
+                    stateMachine.ActiveState.HandleKeyEvent(gameEvent.Parameter1,
+                        gameEvent.Message);
                     break;
                 }
             }
+            
         }
-    }
-}
+       
+            }
+        }
+    
