@@ -43,7 +43,7 @@ namespace SpaceTaxi_1 {
 
                       
             // game timer
-            gameTimer = new GameTimer(60); // 60 UPS, no FPS limit
+            gameTimer = new GameTimer(60, 60); // 60 UPS, 60 FPS limit
 
             
         }
@@ -56,6 +56,7 @@ namespace SpaceTaxi_1 {
 
                     win.PollEvents();
                     
+                    //TODO: Rename galagabus
                     GalagaBus.GetBus().ProcessEvents();
                     stateMachine.ActiveState.UpdateGameLogic();
                 }
