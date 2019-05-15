@@ -13,7 +13,6 @@ namespace TestSpaceTaxi.TestLevelParser {
         public void TestStringToImageList() {
             List<Tuple<string,string>> x = new List<Tuple<string, string>>();
             x.Add(new Tuple<string, string>("%)"," white-square.png"));
-
             x.Add(new Tuple<string, string>("#)"," ironstone-square.png"));
             x.Add(new Tuple<string, string>("1)"," neptune-square.png"));
             x.Add(new Tuple<string, string>("2)"," green-square.png"));
