@@ -11,6 +11,15 @@ namespace SpaceTaxi_1 {
     public class Player : IGameEventProcessor<object> {
         private readonly Image taxiBoosterOffImageLeft;
         private readonly Image taxiBoosterOffImageRight;
+        private ImageStride taxiBoosterOnRight;
+        private ImageStride taxiBoosterOnLeft;
+        private ImageStride taxiBoosterOnBottomRight;
+        private ImageStride taxiBoosterOnBottomLeft;
+        
+        //These two are used for animations
+        private bool LeftOrRightBoosterActive;
+        private bool BottomBoosterActive;
+        
         private readonly DynamicShape shape;
         private Orientation taxiOrientation;
         
