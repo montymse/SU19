@@ -147,10 +147,12 @@ namespace SpaceTaxi_1 {
             * 
             */
            
-           Entity.Shape.Position = Entity.Shape.Position + velocityVector * 0.0015f;
+           //Entity.Shape.Position = Entity.Shape.Position + velocityVector * 0.0015f;
+           Entity.Shape.AsDynamicShape().Direction = velocityVector * 0.0015f;
+           Entity.Shape.AsDynamicShape().Move();
            //Entity.Shape.Position = Entity.Shape.Position + new Vec2F(0.001f, 0.0f);
            velocityVector = velocityVector + gravityVector  * 0.0015f;
-           Console.WriteLine(velocityVector);
+           //Console.WriteLine(velocityVector);
            //Console.WriteLine(Entity.Shape.Position);
 
 
