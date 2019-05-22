@@ -32,6 +32,13 @@ namespace SpaceTaxi_1 {
                 new Image(Path.Combine("Assets", "Images", "Taxi_Thrust_None.png"));
             taxiBoosterOffImageRight =
                 new Image(Path.Combine("Assets", "Images", "Taxi_Thrust_None_Right.png"));
+            taxiBoosterOnLeft = new ImageStride(10, ImageStride.CreateStrides(
+                2,Path.Combine("Assets","Images","Taxi_Thrust_Back_Right.png")));
+            taxiBoosterOnRight = new ImageStride(10, ImageStride.CreateStrides(
+                2,Path.Combine("Assets","Images","Taxi_Thrust_Back.png")));
+    
+            BottomBoosterActive = false;
+            LeftOrRightBoosterActive = false;
 
             Entity = new Entity(shape, taxiBoosterOffImageLeft);
         }
@@ -191,11 +198,28 @@ namespace SpaceTaxi_1 {
             if (eventType == GameEventType.PlayerEvent) {
                 switch (gameEvent.Message) {
                 case "BOOSTER_TO_LEFT": case "BOOSTER_TO_RIGHT":  case "BOOSTER_UPWARDS":
-                    Booster(gameEvent);
-               
-                    break;
+                   Booster(gameEvent);
+                   
+                   //Handle animations
+                   switch (gameEvent.Message) {
+                       case "BOOSTER_TO_LEFT":
+                           taxiOrientation = Orientation.Left;
+                           LeftOrRightBoosterActive = true;
+                           break;
+                       case "BOOSTER_TO_RIGHT":
+                           taxiOrientation = Orientation.Right;
+                           LeftOrRightBoosterActive = true;
+                           break;
+                       case "BOOSTER_UPWARDS":
+                           BottomBoosterActive = true;
+                           break;
+                   }
+                   
+                   break;
                 case "STOP_ACCELERATE_LEFT": case "STOP_ACCELERATE_UP" :
                 case "STOP_ACCELERATE_RIGHT" : 
+                    LeftOrRightBoosterActive = false;
+                    BottomBoosterActive = false;
                     Release(gameEvent.Message);
                     break;
                 }
