@@ -13,6 +13,9 @@ namespace SpaceTaxi_1 {
         private readonly Image taxiBoosterOffImageRight;
         private ImageStride taxiBoosterOnRight;
         private ImageStride taxiBoosterOnLeft;
+        private ImageStride taxiBoosterOnBottomBackRight;
+        private ImageStride taxiBoosterOnBottomBackLeft;
+        private ImageStride taxiBoosterOnBottom;
         private ImageStride taxiBoosterOnBottomRight;
         private ImageStride taxiBoosterOnBottomLeft;
         
@@ -33,9 +36,17 @@ namespace SpaceTaxi_1 {
             taxiBoosterOffImageRight =
                 new Image(Path.Combine("Assets", "Images", "Taxi_Thrust_None_Right.png"));
             taxiBoosterOnLeft = new ImageStride(10, ImageStride.CreateStrides(
-                2,Path.Combine("Assets","Images","Taxi_Thrust_Back_Right.png")));
-            taxiBoosterOnRight = new ImageStride(10, ImageStride.CreateStrides(
                 2,Path.Combine("Assets","Images","Taxi_Thrust_Back.png")));
+            taxiBoosterOnRight = new ImageStride(10, ImageStride.CreateStrides(
+                2,Path.Combine("Assets","Images","Taxi_Thrust_Back_Right.png")));
+            taxiBoosterOnBottomBackLeft = new ImageStride(10, ImageStride.CreateStrides(
+                2,Path.Combine("Assets","Images","Taxi_Thrust_Bottom_Back.png")));
+            taxiBoosterOnBottomBackRight = new ImageStride(10, ImageStride.CreateStrides(
+                2,Path.Combine("Assets","Images","Taxi_Thrust_Bottom_Back_Right.png")));
+            taxiBoosterOnBottomLeft = new ImageStride(10, ImageStride.CreateStrides(
+                2,Path.Combine("Assets","Images","Taxi_Thrust_Bottom.png")));
+            taxiBoosterOnBottomRight = new ImageStride(10, ImageStride.CreateStrides(
+                2,Path.Combine("Assets","Images","Taxi_Thrust_Bottom_Right.png")));
     
             BottomBoosterActive = false;
             LeftOrRightBoosterActive = false;
@@ -57,9 +68,29 @@ namespace SpaceTaxi_1 {
 
         public void RenderPlayer() {
             //TODO: Next version needs animation. Skipped for clarity.
-            Entity.Image = taxiOrientation == Orientation.Left
-                ? taxiBoosterOffImageLeft
-                : taxiBoosterOffImageRight;
+           // Entity.Image = taxiOrientation == Orientation.Left
+           //     ? taxiBoosterOffImageLeft
+           //     : taxiBoosterOffImageRight;
+           // Entity.RenderEntity();
+            if (BottomBoosterActive && LeftOrRightBoosterActive) {
+                Entity.Image = taxiOrientation == Orientation.Left
+                    ? taxiBoosterOnBottomBackLeft
+                    : taxiBoosterOnBottomBackRight;
+            }
+            else if (BottomBoosterActive) {
+                Entity.Image = taxiOrientation == Orientation.Left
+                    ? taxiBoosterOnBottomLeft
+                    : taxiBoosterOnBottomRight;
+            }
+            else if (LeftOrRightBoosterActive) {
+                Entity.Image = taxiOrientation == Orientation.Left
+                    ? taxiBoosterOnLeft
+                    : taxiBoosterOnRight;
+            } else {
+                Entity.Image = taxiOrientation == Orientation.Left
+                    ? taxiBoosterOffImageLeft
+                    : taxiBoosterOffImageRight;
+            }
             Entity.RenderEntity();
         }
 
