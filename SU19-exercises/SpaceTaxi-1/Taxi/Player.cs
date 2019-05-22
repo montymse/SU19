@@ -97,39 +97,6 @@ namespace SpaceTaxi_1 {
 
         
         public void Move() {   
-           // if(Entity.Shape.Position.X > 0 && Entity.Shape.Position.X < 1-Entity.Shape.Extent.X
-           // && Entity.Shape.Position.Y > 0 && Entity.Shape.Position.Y < 1-Entity.Shape.Extent.Y) {
-           //     this.Entity.Shape.Move(this.Entity.Shape.AsDynamicShape().Direction);
-           // }
-           // 
-           // else if(Entity.Shape.Position.X <= 0  && 
-           //         (Entity.Shape.AsDynamicShape().Direction.X > 0 || 
-           //          Entity.Shape.AsDynamicShape().Direction.Y!=0 && 
-           //          Entity.Shape.AsDynamicShape().Direction.X==0 )) {
-           //     Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-           // }
-           // else if(Entity.Shape.Position.X >= 1-Entity.Shape.Extent.X &&
-           //         (Entity.Shape.AsDynamicShape().Direction.X < 0 || 
-           //          Entity.Shape.AsDynamicShape().Direction.Y!=0 &&
-           //          Entity.Shape.AsDynamicShape().Direction.X==0
-           //         )) {
-           //     Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-           // }
-           // 
-           // else if(Entity.Shape.Position.Y <= 0  && 
-           //         (Entity.Shape.AsDynamicShape().Direction.Y > 0 || 
-           //          Entity.Shape.AsDynamicShape().Direction.X!=0 && 
-           //          Entity.Shape.AsDynamicShape().Direction.Y==0 )) {
-           //     Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-           // }
-           // else if(Entity.Shape.Position.Y >= 1-Entity.Shape.Extent.Y &&
-           //         (Entity.Shape.AsDynamicShape().Direction.Y < 0 || 
-           //          Entity.Shape.AsDynamicShape().Direction.X!=0 &&
-           //          Entity.Shape.AsDynamicShape().Direction.Y==0
-           //         )) {
-           //     Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-           // }
-           
            /*
             * 
             * This way of handling physics was inspired by/stolen from the YouTube video
@@ -260,37 +227,3 @@ namespace SpaceTaxi_1 {
         }
     }
 }
-
-
-
-
-/*
-          else if (Entity.Shape.Position.Y <= 0  &&
-                   Entity.Shape.Position.X <= 0  && 
-                   (Entity.Shape.AsDynamicShape().Direction.X > 0 || 
-                    Entity.Shape.AsDynamicShape().Direction.Y > 0)) {
-              Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-
-          }
-          else if (Entity.Shape.Position.Y >= 1-Entity.Shape.Extent.Y &&
-                   Entity.Shape.Position.X >= 1-Entity.Shape.Extent.X && 
-                   (Entity.Shape.AsDynamicShape().Direction.X < 0 || 
-                    Entity.Shape.AsDynamicShape().Direction.Y < 0)) {
-              Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-
-          }
-          
-          else if (Entity.Shape.Position.Y <= 0 + Entity.Shape.Extent.Y &&
-                   Entity.Shape.Position.X >= 1-Entity.Shape.Extent.X && 
-                   (Entity.Shape.AsDynamicShape().Direction.X > 0 || 
-                    Entity.Shape.AsDynamicShape().Direction.Y < 0)) {
-              Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-
-          }
-          else if (Entity.Shape.Position.Y >= 1-Entity.Shape.Extent.Y &&
-                   Entity.Shape.Position.X <= 0 + Entity.Shape.Extent.X && 
-                   (Entity.Shape.AsDynamicShape().Direction.X < 0 || 
-                    Entity.Shape.AsDynamicShape().Direction.Y > 0)) {
-              Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-
-          }*/

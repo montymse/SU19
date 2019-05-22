@@ -12,12 +12,14 @@ namespace SpaceTaxi_1.GameStates {
         private static GameRunning instance = null;
 
         private Entity backGroundImage;
-        private static Player player;
+        private Player player;
         private List<Entity> textureList;
+        private Collision col;
 
 
         public GameRunning() {
             InitializeGameState();
+            col=new Collision();
 
         }
 
@@ -55,6 +57,7 @@ namespace SpaceTaxi_1.GameStates {
 
         public void UpdateGameLogic() {
             player.Move();
+            col.CollisionDetect(textureList,player);
         }
 
         public void RenderState() {
@@ -88,7 +91,7 @@ namespace SpaceTaxi_1.GameStates {
 
                     break;
                 case "KEY_UP":
-                    GameRunning.player.ProcessEvent(GameEventType.PlayerEvent,
+                    player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "BOOSTER_UPWARDS",
@@ -96,14 +99,14 @@ namespace SpaceTaxi_1.GameStates {
                     break;
 
                 case "KEY_LEFT":
-                    GameRunning.player.ProcessEvent(GameEventType.PlayerEvent,
+                    player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "BOOSTER_TO_LEFT",
                             "", ""));
                     break;
                 case "KEY_RIGHT":
-                    GameRunning.player.ProcessEvent(GameEventType.PlayerEvent,
+                    player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "BOOSTER_TO_RIGHT",
@@ -116,7 +119,7 @@ namespace SpaceTaxi_1.GameStates {
             case "KEY_RELEASE":
                 switch (keyAction) {
                 case "KEY_LEFT":
-                    GameRunning.player.ProcessEvent(GameEventType.PlayerEvent,
+                    player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "STOP_ACCELERATE_LEFT",
@@ -124,7 +127,7 @@ namespace SpaceTaxi_1.GameStates {
                 
                     break;
                 case "KEY_RIGHT":
-                    GameRunning.player.ProcessEvent(GameEventType.PlayerEvent,
+                    player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "STOP_ACCELERATE_RIGHT",
@@ -132,7 +135,7 @@ namespace SpaceTaxi_1.GameStates {
                  
                     break;
                 case "KEY_UP":
-                    GameRunning.player.ProcessEvent(GameEventType.PlayerEvent,
+                    player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "STOP_ACCELERATE_UP",

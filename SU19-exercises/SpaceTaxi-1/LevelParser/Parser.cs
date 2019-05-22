@@ -27,7 +27,7 @@ namespace SpaceTaxi_1 {
             foreach (var item in list) {
                 textureList.Add(new Entity(
                     
-                    new DynamicShape(new Vec2F(item.Item1.Item1, item.Item1.Item2),
+                    new StationaryShape(new Vec2F(item.Item1.Item1, item.Item1.Item2),
                         new Vec2F(0.025f, 0.043f)), 
                     new Image("Assets/Images/" + item.Item2.Remove(0, 1))));
             }
