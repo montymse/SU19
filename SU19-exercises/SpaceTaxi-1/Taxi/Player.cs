@@ -20,7 +20,7 @@ namespace SpaceTaxi_1 {
         private ImageStride taxiBoosterOnBottomRight;
         private ImageStride taxiBoosterOnBottomLeft;
         
-        //These two are used for animations
+        //Booster flags
         private bool LeftOrRightBoosterActive;
         private bool BottomBoosterActive;
         
@@ -31,13 +31,16 @@ namespace SpaceTaxi_1 {
         
         private Vec2F gravityVector = new Vec2F(0.0f,-40f);
         private Vec2F velocityVector = new Vec2F(0.0f,0.0f);
+        
 
         public Player() {
             shape = new DynamicShape(new Vec2F(), new Vec2F());
+            
             taxiBoosterOffImageLeft =
                 new Image(Path.Combine("Assets", "Images", "Taxi_Thrust_None.png"));
             taxiBoosterOffImageRight =
                 new Image(Path.Combine("Assets", "Images", "Taxi_Thrust_None_Right.png"));
+            
             taxiBoosterOnLeft = new ImageStride(10, ImageStride.CreateStrides(
                 2,Path.Combine("Assets","Images","Taxi_Thrust_Back.png")));
             taxiBoosterOnRight = new ImageStride(10, ImageStride.CreateStrides(
@@ -90,6 +93,7 @@ namespace SpaceTaxi_1 {
                     ? taxiBoosterOnLeft
                     : taxiBoosterOnRight;
             } else {
+                //No booster is active
                 Entity.Image = taxiOrientation == Orientation.Left
                     ? taxiBoosterOffImageLeft
                     : taxiBoosterOffImageRight;
@@ -100,42 +104,32 @@ namespace SpaceTaxi_1 {
 
         
         public void Move() {   
-           // if(Entity.Shape.Position.X > 0 && Entity.Shape.Position.X < 1-Entity.Shape.Extent.X
-           // && Entity.Shape.Position.Y > 0 && Entity.Shape.Position.Y < 1-Entity.Shape.Extent.Y) {
-           //     this.Entity.Shape.Move(this.Entity.Shape.AsDynamicShape().Direction);
-           // }
-           // 
-           // else if(Entity.Shape.Position.X <= 0  && 
-           //         (Entity.Shape.AsDynamicShape().Direction.X > 0 || 
-           //          Entity.Shape.AsDynamicShape().Direction.Y!=0 && 
-           //          Entity.Shape.AsDynamicShape().Direction.X==0 )) {
-           //     Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-           // }
-           // else if(Entity.Shape.Position.X >= 1-Entity.Shape.Extent.X &&
-           //         (Entity.Shape.AsDynamicShape().Direction.X < 0 || 
-           //          Entity.Shape.AsDynamicShape().Direction.Y!=0 &&
-           //          Entity.Shape.AsDynamicShape().Direction.X==0
-           //         )) {
-           //     Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-           // }
-           // 
-           // else if(Entity.Shape.Position.Y <= 0  && 
-           //         (Entity.Shape.AsDynamicShape().Direction.Y > 0 || 
-           //          Entity.Shape.AsDynamicShape().Direction.X!=0 && 
-           //          Entity.Shape.AsDynamicShape().Direction.Y==0 )) {
-           //     Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-           // }
-           // else if(Entity.Shape.Position.Y >= 1-Entity.Shape.Extent.Y &&
-           //         (Entity.Shape.AsDynamicShape().Direction.Y < 0 || 
-           //          Entity.Shape.AsDynamicShape().Direction.X!=0 &&
-           //          Entity.Shape.AsDynamicShape().Direction.Y==0
-           //         )) {
-           //     Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-           // }
+            
+           //Engage the thrusters
+           Booster();
            
-           //Booster
+          /*
+           * 
+           * This way of handling physics was inspired by/stolen from the YouTube video
+           * "Math for Game Developers - Jumping and Gravity (Time Delta, Game Loop)", by Jorge Rodriguez
+           * https://youtu.be/c4b9lCfSDQM
+           * 
+           * 0.0015f is used as a placeholder for DeltaTime, as the deltaTime fields have been made
+           * inaccessible for some reason.
+           *
+           * -Mikael
+           * 
+           */
            
-           
+           Entity.Shape.AsDynamicShape().Direction = velocityVector * 0.0015f;
+           Entity.Shape.AsDynamicShape().Move();
+           velocityVector = velocityVector + gravityVector  * 0.0015f;
+        }
+        
+        /// <summary>
+        /// Activates the booster
+        /// </summary>
+        private void Booster() {
             if (BottomBoosterActive && LeftOrRightBoosterActive) {
                 velocityVector += taxiOrientation == Orientation.Left
                     ? new Vec2F(-BoostPower, BoostPower)
@@ -149,90 +143,11 @@ namespace SpaceTaxi_1 {
                     ? new Vec2F(-BoostPower, 0.0f)
                     : new Vec2F(BoostPower, 0.0f);
             }
-           
-           /*
-            * 
-            * This way of handling physics was inspired by/stolen from the YouTube video
-            * "Math for Game Developers - Jumping and Gravity (Time Delta, Game Loop)", by Jorge Rodriguez
-            * https://youtu.be/c4b9lCfSDQM
-            * 
-            * 0.0015f is used as a placeholder for DeltaTime, as I have yet to find a way to pass this value
-            * to the Move() method.
-            *
-            * -Mikael
-            * 
-            */
-           
-           Entity.Shape.AsDynamicShape().Direction = velocityVector * 0.0015f;
-           Entity.Shape.AsDynamicShape().Move();
-           velocityVector = velocityVector + gravityVector  * 0.0015f;
-           
-           Console.WriteLine(velocityVector);
-        }
-        /// <summary>
-        /// Basic implementation of the player movement. It determines t
-        /// he direction of the entity to be the same as the vector given in the argument
-        /// </summary>
-        /// <param name="dir">
-        /// A vector holding information about the new direction of the entity
-        /// </param>
-        
-        private void Direction(Vec2F dir) {
-            Entity.Shape.AsDynamicShape().Direction = dir;
-        }
-
-        /// <summary>
-        /// Given a gameEvent it matches messages of the gameEvent using a switch statement
-        /// and finds the corresponding case and changes the direction of this entity 
-        /// </summary>
-        /// <param name="gameEvent">
-        /// Booster takes a gameEvent as argument, this is given by the processEvent method in which
-        /// Booster is called. 
-        /// </param>
-
-        private void Booster(GameEvent<object> gameEvent) {
-            switch (gameEvent.Message) {
-            case "BOOSTER_TO_LEFT":
-                //Direction(new Vec2F(-0.01f,0.00f));
-                velocityVector += new Vec2F(-1f,0.0f);
-                break;
-            case "BOOSTER_TO_RIGHT":
-                //Direction(new Vec2F(0.01f, 0.00f));
-                velocityVector += new Vec2F(1f, 0.0f);
-
-                break;
-            case "BOOSTER_UPWARDS":
-                //Direction(new Vec2F(0.00f, 0.01f));
-                velocityVector += new Vec2F(0.0f, 1f);
-
-                break;
-
-            }
         }
         
-        /// <summary>
-        /// Basic implementation of the player movement. It changes the direction of
-        /// the entity to go downwards.
-        /// </summary>
-       
-        private void Release(string gameEventMsg) {
-            //Direction(new Vec2F(0.0f,-0.001f));
-            switch (gameEventMsg) {
-                case "STOP_ACCELERATE_LEFT":
-                    //velocityVector.X = 0.0f;
-                    break;
-                case "STOP_ACCELERATE_RIGHT":
-                    //velocityVector.X = 0.0f;
-                    break;
-                case "STOP_ACCELERATE_UP":
-                    //velocityVector.Y = 0.0f;
-                    break;
-            }
-        }
        
         /// <summary>
-        /// Basic implementation of the event processor. It holds the responsibility of moving
-        /// the player 
+        /// Event processor. It changes the booster flags and taxi orientation based on user input 
         /// </summary>
         /// <param name="eventType"></param>
         /// The gameEventType 
@@ -244,68 +159,25 @@ namespace SpaceTaxi_1 {
             GameEvent<object> gameEvent) {
             if (eventType == GameEventType.PlayerEvent) {
                 switch (gameEvent.Message) {
-                case "BOOSTER_TO_LEFT": case "BOOSTER_TO_RIGHT":  case "BOOSTER_UPWARDS":
-                   
-                   //Handle animations
-                   switch (gameEvent.Message) {
-                       case "BOOSTER_TO_LEFT":
-                           taxiOrientation = Orientation.Left;
-                           LeftOrRightBoosterActive = true;
-                           break;
-                       case "BOOSTER_TO_RIGHT":
-                           taxiOrientation = Orientation.Right;
-                           LeftOrRightBoosterActive = true;
-                           break;
-                       case "BOOSTER_UPWARDS":
-                           BottomBoosterActive = true;
-                           break;
-                   }
-                   
-                   //Booster(gameEvent);
-                   
-                   break;
-                case "STOP_ACCELERATE_LEFT": case "STOP_ACCELERATE_UP" :
-                case "STOP_ACCELERATE_RIGHT" : 
-                    LeftOrRightBoosterActive = false;
-                    BottomBoosterActive = false;
-                    Release(gameEvent.Message);
-                    break;
+                    case "BOOSTER_TO_LEFT":
+                        taxiOrientation = Orientation.Left;
+                        LeftOrRightBoosterActive = true;
+                        break;
+                    case "BOOSTER_TO_RIGHT":
+                        taxiOrientation = Orientation.Right;
+                        LeftOrRightBoosterActive = true;
+                        break;
+                    case "BOOSTER_UPWARDS":
+                        BottomBoosterActive = true;
+                        break;
+                    case "STOP_ACCELERATE_LEFT": case "STOP_ACCELERATE_RIGHT" : 
+                        LeftOrRightBoosterActive = false;
+                        break;
+                    case "STOP_ACCELERATE_UP" :
+                        BottomBoosterActive = false;
+                        break;
                 }
             } 
         }
     }
 }
-
-
-
-
-/*
-          else if (Entity.Shape.Position.Y <= 0  &&
-                   Entity.Shape.Position.X <= 0  && 
-                   (Entity.Shape.AsDynamicShape().Direction.X > 0 || 
-                    Entity.Shape.AsDynamicShape().Direction.Y > 0)) {
-              Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-
-          }
-          else if (Entity.Shape.Position.Y >= 1-Entity.Shape.Extent.Y &&
-                   Entity.Shape.Position.X >= 1-Entity.Shape.Extent.X && 
-                   (Entity.Shape.AsDynamicShape().Direction.X < 0 || 
-                    Entity.Shape.AsDynamicShape().Direction.Y < 0)) {
-              Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-
-          }
-          
-          else if (Entity.Shape.Position.Y <= 0 + Entity.Shape.Extent.Y &&
-                   Entity.Shape.Position.X >= 1-Entity.Shape.Extent.X && 
-                   (Entity.Shape.AsDynamicShape().Direction.X > 0 || 
-                    Entity.Shape.AsDynamicShape().Direction.Y < 0)) {
-              Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-
-          }
-          else if (Entity.Shape.Position.Y >= 1-Entity.Shape.Extent.Y &&
-                   Entity.Shape.Position.X <= 0 + Entity.Shape.Extent.X && 
-                   (Entity.Shape.AsDynamicShape().Direction.X < 0 || 
-                    Entity.Shape.AsDynamicShape().Direction.Y > 0)) {
-              Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
-
-          }*/

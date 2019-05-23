@@ -45,8 +45,8 @@ namespace SpaceTaxi_1 {
         //Collision with an obstacle. Taxi dies. 
         public void CollisionDetect(List<Entity> Entities, Player player) {
             foreach (var elm in Entities) {
-                Console.WriteLine("elm, {0}",elm.Shape.Position);
-                Console.WriteLine("player: {0}",player.Entity.Shape.Position);
+                //Console.WriteLine("elm, {0}",elm.Shape.Position);
+                //Console.WriteLine("player: {0}",player.Entity.Shape.Position);
                 
                 if (CollisionDetection.Aabb(player.Entity.Shape.AsDynamicShape(),elm.Shape)
                     .Collision) {
