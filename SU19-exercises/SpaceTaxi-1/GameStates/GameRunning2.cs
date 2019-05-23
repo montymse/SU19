@@ -11,8 +11,8 @@ using DIKUArcade.State;
 using DIKUArcade.Timers;
 
 namespace SpaceTaxi_1.GameStates {
-    public class GameRunning : IGameState {
-        private static GameRunning instance = null;
+    public class GameRunning2 : IGameState {
+        private static GameRunning2 instance = null;
 
         private Entity backGroundImage;
         private Player player;
@@ -20,18 +20,13 @@ namespace SpaceTaxi_1.GameStates {
         private Collision col;
 
 
-        public GameRunning() {
+        public GameRunning2() {
             InitializeGameState();
         }
 
-        public static GameRunning GetInstance0() {
+        public static GameRunning2 GetInstance() {
 
-            return GameRunning.instance = new GameRunning();
-        }
-
-        public static GameRunning GetInstance() {
-
-            return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
+            return GameRunning2.instance ?? (GameRunning2.instance = new GameRunning2());
         }
 
         public void GameLoop() { }
@@ -53,7 +48,7 @@ namespace SpaceTaxi_1.GameStates {
             col=new Collision();
             
             parser=new Parser(Placement.FindPlacementAndImage(
-                "../../Levels/short-n-sweet.txt"
+                "../../Levels/the-beach.txt"
             ));
                
             //Add textures
@@ -93,12 +88,11 @@ namespace SpaceTaxi_1.GameStates {
                 case "KEY_ESCAPE":
                     GalagaBus.GetBus().RegisterEvent(
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
-                            GameEventType.GameStateEvent,
+                            GameEventType.WindowEvent,
                             this,
-                            "CHANGE_STATE",
-                            "GAME_PAUSED", ""));
+                            "CLOSE_WINDOW",
+                            "", ""));
                     break;
-                
                 case "KEY_SPACE":
 
                     GalagaBus.GetBus().RegisterEvent(
@@ -118,7 +112,7 @@ namespace SpaceTaxi_1.GameStates {
                             "", ""));
 
                     break;
-                case "KEY_UP": case "KEY_W":
+                case "KEY_UP":
                     player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
@@ -126,14 +120,14 @@ namespace SpaceTaxi_1.GameStates {
                             "", ""));
                     break;
 
-                case "KEY_LEFT": case "KEY_A":
+                case "KEY_LEFT":
                     player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "BOOSTER_TO_LEFT",
                             "", ""));
                     break;
-                case "KEY_RIGHT": case "KEY_D":
+                case "KEY_RIGHT":
                     player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
@@ -146,7 +140,7 @@ namespace SpaceTaxi_1.GameStates {
                 break;
             case "KEY_RELEASE":
                 switch (keyAction) {
-                case "KEY_LEFT": case "KEY_A":
+                case "KEY_LEFT":
                     player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
@@ -154,7 +148,7 @@ namespace SpaceTaxi_1.GameStates {
                             "", ""));
                 
                     break;
-                case "KEY_RIGHT": case "KEY_D":
+                case "KEY_RIGHT":
                     player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
@@ -162,7 +156,7 @@ namespace SpaceTaxi_1.GameStates {
                             "", ""));
                  
                     break;
-                case "KEY_UP": case "KEY_W":
+                case "KEY_UP":
                     player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,

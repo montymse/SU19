@@ -41,7 +41,7 @@ O) olive-green-square.png
 S) salt-box-square.png
 M) minsk-square.png
 
-a) emperor-square.png
+a) ironstone-square.png
 b) emperor-lower-right.png
 c) emperor-lower-left.png
 d) emperor-upper-left.png

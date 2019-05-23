@@ -7,8 +7,7 @@ namespace SpaceTaxi_1.GameStates {
         public IGameState ActiveState { get; private set; }
 
         public StateMachine() {
-        
-            ActiveState = MainMenu.GetInstance();
+            ActiveState = GameRunning.GetInstance();
             GalagaBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
             GalagaBus.GetBus().Subscribe(GameEventType.InputEvent, this);
         }
@@ -38,7 +37,7 @@ namespace SpaceTaxi_1.GameStates {
             if (eventType == GameEventType.GameStateEvent) {
                 
                 switch (gameEvent.Parameter1) {
-                case "GAME_RUNNING": 
+                case "GAME_RUNNING":
                     SwitchState((StateTransformer.TransformStringToState(gameEvent.Parameter1)));
                     break;
                 case "GAME_PAUSED": 

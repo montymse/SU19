@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 namespace SpaceTaxi_1 {
     public class Placement {
-
+    
     /// <summary>
     /// CalculateMapSize takes a string array as argument (intended to be the type of string[]
     /// that CutStringLevel gives), and it uses the string array to convert to x- and y-coordinates,
