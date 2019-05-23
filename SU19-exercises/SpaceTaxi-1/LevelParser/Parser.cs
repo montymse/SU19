@@ -8,6 +8,16 @@ using DIKUArcade.Math;
 
 namespace SpaceTaxi_1 {
     public class Parser {
+
+        private List<Tuple<Tuple<float, float>, string>> list;
+
+        public EntityContainer<Entity> textureList { get; set; }
+
+        public Parser(List<Tuple<Tuple<float, float>, string>> list) {
+            this.textureList = new EntityContainer<Entity>();
+
+            this.list = list;
+        }
         
         /// <summary>
         /// CreateEntityList creates a list of entities using the information that
@@ -20,22 +30,15 @@ namespace SpaceTaxi_1 {
         /// A list of entities
         /// </returns>
 
-
-        public static List<Entity> CreateEntityList(List<Tuple<Tuple<float, float>,string>> list) {
-            List<Entity> textureList = new List<Entity>();
+        public void CreateEntityList() {
 
             foreach (var item in list) {
-                textureList.Add(new Entity(
+                textureList.AddDynamicEntity(new Entity(
                     
-                    new StationaryShape(new Vec2F(item.Item1.Item1, item.Item1.Item2),
+                    new DynamicShape(new Vec2F(item.Item1.Item1, item.Item1.Item2),
                         new Vec2F(0.025f, 0.043f)), 
                     new Image("Assets/Images/" + item.Item2.Remove(0, 1))));
             }
-
-
-
-            return textureList;
-
 
         }
     }

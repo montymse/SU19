@@ -5,6 +5,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.EventBus;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
+using DIKUArcade.Physics;
 using DIKUArcade.State;
 
 namespace SpaceTaxi_1.GameStates {
@@ -13,15 +14,42 @@ namespace SpaceTaxi_1.GameStates {
 
         private Entity backGroundImage;
         private Player player;
-        private List<Entity> textureList;
+        
+        
+        private List<Image> explosionStrides;
+        private AnimationContainer explosions;
+        private int explosionLength;
+        private Parser parser;
+        
+        
         private Collision col;
 
 
         public GameRunning() {
             InitializeGameState();
-            col=new Collision();
+            
 
         }
+        
+
+        public void IterateShots() {
+
+
+            foreach (Entity elm in parser.textureList) {
+                if (CollisionDetection.Aabb(player.Entity.Shape.AsDynamicShape(),
+                        elm.Shape.AsDynamicShape())
+                    .Collision) {
+                    explosions.RenderAnimations();
+                    AddExplosion(elm.Shape.Position.X, elm.Shape.Position.Y,
+                        elm.Shape.Extent.X, elm.Shape.Extent.Y);
+
+                    player.Entity.DeleteEntity();
+                }
+            }
+
+
+        }
+
 
         public static GameRunning GetInstance0() {
 
@@ -48,25 +76,52 @@ namespace SpaceTaxi_1.GameStates {
             player = new Player();
             player.SetPosition(0.45f, 0.6f);
             player.SetExtent(0.1f, 0.1f);
+            player.Entity.Shape.AsDynamicShape().Direction=new Vec2F(0.0f,0.0f);
 
-
-            //Add textures
-            textureList = Parser.CreateEntityList(Placement.FindPlacementAndImage(
+            col=new Collision();
+            
+            parser=new Parser(Placement.FindPlacementAndImage(
                 "../../Levels/short-n-sweet.txt"));
+          
+            
+            explosionStrides = ImageStride.CreateStrides(8,
+                Path.Combine("Assets", "Images", "Explosion.png"));
+            explosions = new AnimationContainer(500);
+            explosionLength = 500;
+            
+            
+            //Add textures
+            parser.CreateEntityList();
+            
+            
+        }
+        
+        public void AddExplosion(float posX, float posY,
+            float extentX, float extentY) {
+            explosions.AddAnimation(
+                new StationaryShape(posX, posY, extentX, extentY), explosionLength,
+                new ImageStride(explosionLength / 8, explosionStrides));
         }
 
+      
+
         public void UpdateGameLogic() {
+            IterateShots();
+           
             player.Move();
-            col.CollisionDetect(textureList,player);
+            
         }
 
         public void RenderState() {
             backGroundImage.RenderEntity();
-            player.RenderPlayer();
 
-            foreach (Entity elm in textureList) {
-                elm.RenderEntity();
+           while (!player.Entity.IsDeleted()) {
+                player.RenderPlayer();
             }
+            explosions.RenderAnimations();
+
+            parser.textureList.RenderEntities();
+     
         }
 
         public void HandleKeyEvent(string keyValue, string keyAction) {
