@@ -18,7 +18,7 @@ namespace SpaceTaxi_1 {
         /// FileToStringList will use the ASCII-based text file, that are given in the
         /// project hand-out
         /// </remarks>
-        private static string[] FileToStringList(string file) {
+        public static string[] FileToStringList(string file) {
             string[] text = System.IO.File.ReadAllLines(file);
             return text;
         }
