@@ -1,12 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Timers;
 using DIKUArcade.Entities;
 using DIKUArcade.EventBus;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using DIKUArcade.Physics;
-using DIKUArcade.Timers;
 
 namespace SpaceTaxi_1 {
     public class Player : IGameEventProcessor<object> {
@@ -29,8 +26,8 @@ namespace SpaceTaxi_1 {
         private readonly DynamicShape shape;
         private Orientation taxiOrientation;
         
-        private Vec2F gravityVector = new Vec2F(0.0f,-40f);
-        private Vec2F velocityVector = new Vec2F(0.0f,0.0f);
+        public Vec2F gravityVector = new Vec2F(0.0f,-40f);
+        public Vec2F velocityVector = new Vec2F(0.0f,0.0f);
         
 
         public Player() {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Remoting.Activation;
 using DIKUArcade.Entities;
 using DIKUArcade.EventBus;
 using DIKUArcade.Graphics;
@@ -11,70 +12,81 @@ using DIKUArcade.Timers;
 namespace SpaceTaxi_1 {
     public class Collision {
         private List<Image> explosionStrides;
-        private AnimationContainer explosions;
-        private Text GameOver;
-        private TimedEvent TimeOfCollision;
+        public AnimationContainer explosions;
+        public Text GameOver;
+        private int explosionLength;
+        
 
 
         public Collision() {
-            
+
             explosionStrides = ImageStride.CreateStrides(8,
                 Path.Combine("Assets", "Images", "Explosion.png"));
             explosions = new AnimationContainer(500);
+            explosionLength = 500;
+
             GameOver=new Text("Game's Over", new Vec2F(0.42f, 0.5f),
                 new Vec2F(0.3f, 0.3f));
-            GameOver.SetText("Game's Over");
+            GameOver.SetText("Game's Over\nPress Space");
             GameOver.SetColor(new Vec3I(0, 255, 0));
-            TimeOfCollision = new TimedEvent(TimeSpanType.Seconds, 3, 
-                "Game's over", "","");
+            
         }
-        
-        
-        private int explosionLength = 500;
 
-        public void AddExplosion(float posX, float posY,
+        private void AddExplosion(float posX, float posY,
             float extentX, float extentY) {
             explosions.AddAnimation(
                 new StationaryShape(posX, posY, extentX, extentY), explosionLength,
                 new ImageStride(explosionLength / 8, explosionStrides));
         }
-        
-        
-        //Landing on platform. If 
 
-        //Collision with an obstacle. Taxi dies. 
-        public void CollisionDetect(List<Entity> Entities, Player player) {
-            foreach (var elm in Entities) {
-                //Console.WriteLine("elm, {0}",elm.Shape.Position);
-                //Console.WriteLine("player: {0}",player.Entity.Shape.Position);
-                
-                if (CollisionDetection.Aabb(player.Entity.Shape.AsDynamicShape(),elm.Shape)
-                    .Collision) {
-                    Console.WriteLine("COLLIDEDEEED");
-                    //Viser eksplosion
-                    explosions.RenderAnimations();
-                    AddExplosion(player.Entity.Shape.Position.X, player.Entity.Shape.Position.Y,
-                        player.Entity.Shape.Extent.X, player.Entity.Shape.Extent.Y);
 
-                    //Slette spiler
-                    player.Entity.DeleteEntity();
-                    
-                    //Skriver Game Over på skærm
-                    GameOver.RenderText();
-                    //Genstarter timer
-                    TimeOfCollision.ResetTimer();
-                    
-                    //3 sekunder efter at have skrevet Game Over så går vi over til Main Menu  
-                    if (TimeOfCollision.HasExpired()) {
-                        GalagaBus.GetBus().RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
-                            GameEventType.GameStateEvent,
-                            this,
-                            "CHANGE_STATE",
-                            "GAME_MAINMENU", ""));              
-                    }
-                    
+        public void Collisions(EntityContainer<Entity> Entities, Player player) {
+            if (player.Entity.Shape.Position.Y >= 1f) {
+              //PLAYER LEAVES THROUGH THE PORTAL
+            } else
+                {
+                    CollisionDetect(Entities,player);
                 }
-            }
+            
+                
+        }
+
+        private void CollisionDetect(EntityContainer<Entity> Entities, Player player) {
+            
+                
+            foreach (Entity elm in Entities) {
+
+                CollisionData col =
+                    CollisionDetection.Aabb(player.Entity.Shape.AsDynamicShape(),
+                    elm.Shape.AsDynamicShape());
+
+                if (col.Collision) {
+                    //Landing
+                    if (col.CollisionDir==CollisionDirection.CollisionDirDown &&
+                        player.velocityVector.Y>=-3f) {
+                        player.velocityVector.Y = 40f*0.0015f;
+
+
+                    //Collision with an obstacle. Taxi dies. 
+                    } else {
+                        Tuple<float, float> position = new Tuple<float, float>(player.Entity.Shape.Position.X, player.Entity.Shape.Position.Y);
+                        Tuple<float, float> extent = new Tuple<float, float>(player.Entity.Shape.Extent.X, player.Entity.Shape.Extent.Y);
+
+                        AddExplosion(position.Item1,position.Item2, 
+                          extent.Item1, extent.Item2);
+
+                        
+                       
+
+                        player.Entity.DeleteEntity();
+                    }
+                        
+                        
+                                    
+                        
+                    }
+                }
+            
         }
         
     }
