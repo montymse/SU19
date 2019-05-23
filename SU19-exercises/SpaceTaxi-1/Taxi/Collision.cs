@@ -8,6 +8,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Physics;
 using DIKUArcade.Timers;
+using SpaceTaxi_1.GameStates;
 
 namespace SpaceTaxi_1 {
     public class Collision {
@@ -42,7 +43,8 @@ namespace SpaceTaxi_1 {
 
         public void Collisions(EntityContainer<Entity> Entities, Player player) {
             if (player.Entity.Shape.Position.Y >= 1f) {
-              //PLAYER LEAVES THROUGH THE PORTAL
+            //GameRunning.GetInstance("../../Levels/the-beach.txt").InitializeGameState();
+                GameRunning.GetInstance().ChangeLevel();
             } else
                 {
                     CollisionDetect(Entities,player);

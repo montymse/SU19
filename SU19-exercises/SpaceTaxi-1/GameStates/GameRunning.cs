@@ -19,14 +19,12 @@ namespace SpaceTaxi_1.GameStates {
         private Parser parser;
         private Collision col;
 
+        private int ActiveLevel = 0;
+        private string ActiveLevelPath = "../../Levels/short-n-sweet.txt";
+
 
         public GameRunning() {
             InitializeGameState();
-        }
-
-        public static GameRunning GetInstance0() {
-
-            return GameRunning.instance = new GameRunning();
         }
 
         public static GameRunning GetInstance() {
@@ -52,8 +50,11 @@ namespace SpaceTaxi_1.GameStates {
 
             col=new Collision();
             
+           // parser=new Parser(Placement.FindPlacementAndImage(
+           //     "../../Levels/short-n-sweet.txt"
+           // ));
             parser=new Parser(Placement.FindPlacementAndImage(
-                "../../Levels/short-n-sweet.txt"
+                ActiveLevelPath
             ));
                
             //Add textures
@@ -84,6 +85,17 @@ namespace SpaceTaxi_1.GameStates {
            }
 
      
+        }
+
+        public void ChangeLevel() {
+            if (ActiveLevel == 0) {
+                ActiveLevel = 1;
+                ActiveLevelPath = "../../Levels/the-beach.txt";
+            } else {
+                ActiveLevel = 0;
+                ActiveLevelPath = "../../Levels/short-n-sweet.txt";
+            }
+            InitializeGameState();
         }
 
         public void HandleKeyEvent(string keyValue, string keyAction) {
