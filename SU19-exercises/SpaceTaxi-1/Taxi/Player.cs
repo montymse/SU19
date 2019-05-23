@@ -26,8 +26,9 @@ namespace SpaceTaxi_1 {
         private readonly DynamicShape shape;
         private Orientation taxiOrientation;
         
-        public Vec2F gravityVector = new Vec2F(0.0f,-40f);
-        public Vec2F velocityVector = new Vec2F(0.0f,0.0f);
+        //public Vec2F gravityVector = new Vec2F(0.0f,-40f);
+        //public Vec2F velocityVector = new Vec2F(0.0f,0.0f);
+        public Physics physics;
         
 
         public Player() {
@@ -53,6 +54,8 @@ namespace SpaceTaxi_1 {
     
             BottomBoosterActive = false;
             LeftOrRightBoosterActive = false;
+            
+            physics = new Physics(40);
 
             Entity = new Entity(shape, taxiBoosterOffImageLeft);
         }
@@ -105,40 +108,28 @@ namespace SpaceTaxi_1 {
            //Engage the thrusters
            Booster();
            
-          /*
-           * 
-           * This way of handling physics was inspired by/stolen from the YouTube video
-           * "Math for Game Developers - Jumping and Gravity (Time Delta, Game Loop)", by Jorge Rodriguez
-           * https://youtu.be/c4b9lCfSDQM
-           * 
-           * 0.0015f is used as a placeholder for DeltaTime, as the deltaTime fields have been made
-           * inaccessible for some reason.
-           *
-           * -Mikael
-           * 
-           */
-           
-           Entity.Shape.AsDynamicShape().Direction = velocityVector * 0.0015f;
-           Entity.Shape.AsDynamicShape().Move();
-           velocityVector = velocityVector + gravityVector  * 0.0015f;
+          Entity.Shape.AsDynamicShape().Direction = physics.GetVelocity();
+          Entity.Shape.AsDynamicShape().Move();
+          physics.UpdateVelocity();
         }
         
         /// <summary>
         /// Activates the booster
         /// </summary>
         private void Booster() {
-            if (BottomBoosterActive && LeftOrRightBoosterActive) {
-                velocityVector += taxiOrientation == Orientation.Left
-                    ? new Vec2F(-BoostPower, BoostPower)
-                    : new Vec2F(BoostPower, BoostPower);
+            if (LeftOrRightBoosterActive) {
+               switch (taxiOrientation) {
+                   case Orientation.Left:
+                       physics.ApplyForce(Physics.ForceDirection.Left,BoostPower);
+                       break;
+                   case Orientation.Right:
+                       physics.ApplyForce(Physics.ForceDirection.Right,BoostPower);
+                       break;
+               }
             }
-            else if (BottomBoosterActive) {
-                velocityVector += new Vec2F(0.0f, BoostPower);
-            }
-            else if (LeftOrRightBoosterActive) {
-                velocityVector += taxiOrientation == Orientation.Left
-                    ? new Vec2F(-BoostPower, 0.0f)
-                    : new Vec2F(BoostPower, 0.0f);
+            if (BottomBoosterActive) {
+                //velocityVector += new Vec2F(0.0f, BoostPower);
+               physics.ApplyForce(Physics.ForceDirection.Up,BoostPower);
             }
         }
         
