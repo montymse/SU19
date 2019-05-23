@@ -55,6 +55,20 @@ namespace SpaceTaxi_1.GameStates {
 
         public void UpdateGameLogic() {
             player.Move();
+            
+            //TODO: TEMPORARY STUFF. REMOVE LATER
+           // DIKUArcade.Physics.CollisionData data = DIKUArcade.Physics.CollisionDetection.Aabb(GameRunning.player.Entity.Shape
+           //     .AsDynamicShape(), textureList[1].Shape.AsDynamicShape());
+
+           // bool noo = false;
+           // if (!noo) {
+           //     Console.WriteLine($"PlayerPos: {GameRunning.player.Entity.Shape.AsDynamicShape().Position} ; TexPos: {textureList[1].Shape.Position}");
+           // }
+
+           // if (data.Collision) {
+           //     Console.WriteLine(data.Collision);
+           //     noo = true;
+           // }
         }
 
         public void RenderState() {

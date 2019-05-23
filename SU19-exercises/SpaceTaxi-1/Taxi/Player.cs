@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Timers;
 using DIKUArcade.Entities;
 using DIKUArcade.EventBus;
 using DIKUArcade.Graphics;
@@ -23,10 +24,12 @@ namespace SpaceTaxi_1 {
         private bool LeftOrRightBoosterActive;
         private bool BottomBoosterActive;
         
+        private float BoostPower = 0.2f;
+        
         private readonly DynamicShape shape;
         private Orientation taxiOrientation;
         
-        private Vec2F gravityVector = new Vec2F(0.0f,-1.5f);
+        private Vec2F gravityVector = new Vec2F(0.0f,-40f);
         private Vec2F velocityVector = new Vec2F(0.0f,0.0f);
 
         public Player() {
@@ -130,15 +133,28 @@ namespace SpaceTaxi_1 {
            //     Entity.Shape.Move(Entity.Shape.AsDynamicShape().Direction);
            // }
            
+           //Booster
+           
+           
+            if (BottomBoosterActive && LeftOrRightBoosterActive) {
+                velocityVector += taxiOrientation == Orientation.Left
+                    ? new Vec2F(-BoostPower, BoostPower)
+                    : new Vec2F(BoostPower, BoostPower);
+            }
+            else if (BottomBoosterActive) {
+                velocityVector += new Vec2F(0.0f, BoostPower);
+            }
+            else if (LeftOrRightBoosterActive) {
+                velocityVector += taxiOrientation == Orientation.Left
+                    ? new Vec2F(-BoostPower, 0.0f)
+                    : new Vec2F(BoostPower, 0.0f);
+            }
+           
            /*
             * 
             * This way of handling physics was inspired by/stolen from the YouTube video
             * "Math for Game Developers - Jumping and Gravity (Time Delta, Game Loop)", by Jorge Rodriguez
             * https://youtu.be/c4b9lCfSDQM
-            * 
-            * I would like values to continuously be added to the velocity vector as the buttons are being held.
-            * Right now the values are only being added on button press, meaning that one has to keep
-            * tapping the arrow keys in order to accelerate.
             * 
             * 0.0015f is used as a placeholder for DeltaTime, as I have yet to find a way to pass this value
             * to the Move() method.
@@ -147,15 +163,11 @@ namespace SpaceTaxi_1 {
             * 
             */
            
-           //Entity.Shape.Position = Entity.Shape.Position + velocityVector * 0.0015f;
            Entity.Shape.AsDynamicShape().Direction = velocityVector * 0.0015f;
            Entity.Shape.AsDynamicShape().Move();
-           //Entity.Shape.Position = Entity.Shape.Position + new Vec2F(0.001f, 0.0f);
            velocityVector = velocityVector + gravityVector  * 0.0015f;
-           //Console.WriteLine(velocityVector);
-           //Console.WriteLine(Entity.Shape.Position);
-
-
+           
+           Console.WriteLine(velocityVector);
         }
         /// <summary>
         /// Basic implementation of the player movement. It determines t
@@ -186,11 +198,13 @@ namespace SpaceTaxi_1 {
                 break;
             case "BOOSTER_TO_RIGHT":
                 //Direction(new Vec2F(0.01f, 0.00f));
-                velocityVector += new Vec2F(1f,0.0f);
+                velocityVector += new Vec2F(1f, 0.0f);
+
                 break;
             case "BOOSTER_UPWARDS":
                 //Direction(new Vec2F(0.00f, 0.01f));
-                velocityVector += new Vec2F(0.0f,1f);
+                velocityVector += new Vec2F(0.0f, 1f);
+
                 break;
 
             }
@@ -211,7 +225,7 @@ namespace SpaceTaxi_1 {
                     //velocityVector.X = 0.0f;
                     break;
                 case "STOP_ACCELERATE_UP":
-                    velocityVector.Y = 0.0f;
+                    //velocityVector.Y = 0.0f;
                     break;
             }
         }
@@ -231,7 +245,6 @@ namespace SpaceTaxi_1 {
             if (eventType == GameEventType.PlayerEvent) {
                 switch (gameEvent.Message) {
                 case "BOOSTER_TO_LEFT": case "BOOSTER_TO_RIGHT":  case "BOOSTER_UPWARDS":
-                   Booster(gameEvent);
                    
                    //Handle animations
                    switch (gameEvent.Message) {
@@ -247,6 +260,8 @@ namespace SpaceTaxi_1 {
                            BottomBoosterActive = true;
                            break;
                    }
+                   
+                   //Booster(gameEvent);
                    
                    break;
                 case "STOP_ACCELERATE_LEFT": case "STOP_ACCELERATE_UP" :
