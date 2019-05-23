@@ -115,7 +115,7 @@ namespace SpaceTaxi_1.GameStates {
         public void RenderState() {
             backGroundImage.RenderEntity();
 
-           while (!player.Entity.IsDeleted()) {
+           if (!player.Entity.IsDeleted()) {
                 player.RenderPlayer();
             }
             explosions.RenderAnimations();
