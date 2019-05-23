@@ -8,6 +8,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Timers;
 using SpaceTaxi_1.GameStates;
+using SpaceTaxi_1.Customer;
 
 namespace SpaceTaxi_1 {
     public class Game : IGameEventProcessor<object> {
