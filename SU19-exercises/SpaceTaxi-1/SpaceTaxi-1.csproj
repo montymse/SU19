@@ -53,6 +53,7 @@
     <Compile Include="LevelParser\Opener.cs" />
     <Compile Include="LevelParser\Parser.cs" />
     <Compile Include="LevelParser\Placement.cs" />
+    <Compile Include="Taxi\Collision.cs" />
     <Compile Include="Taxi\Orientation.cs" />
     <Compile Include="Taxi\Player.cs" />
     <Compile Include="Program.cs" />

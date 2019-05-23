@@ -12,12 +12,14 @@ namespace SpaceTaxi_1.GameStates {
         private static GameRunning instance = null;
 
         private Entity backGroundImage;
-        private static Player player;
+        private Player player;
         private List<Entity> textureList;
+        private Collision col;
 
 
         public GameRunning() {
             InitializeGameState();
+            col=new Collision();
 
         }
 
@@ -55,20 +57,7 @@ namespace SpaceTaxi_1.GameStates {
 
         public void UpdateGameLogic() {
             player.Move();
-            
-            //TODO: TEMPORARY STUFF. REMOVE LATER
-           // DIKUArcade.Physics.CollisionData data = DIKUArcade.Physics.CollisionDetection.Aabb(GameRunning.player.Entity.Shape
-           //     .AsDynamicShape(), textureList[1].Shape.AsDynamicShape());
-
-           // bool noo = false;
-           // if (!noo) {
-           //     Console.WriteLine($"PlayerPos: {GameRunning.player.Entity.Shape.AsDynamicShape().Position} ; TexPos: {textureList[1].Shape.Position}");
-           // }
-
-           // if (data.Collision) {
-           //     Console.WriteLine(data.Collision);
-           //     noo = true;
-           // }
+            col.CollisionDetect(textureList,player);
         }
 
         public void RenderState() {
@@ -102,7 +91,7 @@ namespace SpaceTaxi_1.GameStates {
 
                     break;
                 case "KEY_UP":
-                    GameRunning.player.ProcessEvent(GameEventType.PlayerEvent,
+                    player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "BOOSTER_UPWARDS",
@@ -110,14 +99,14 @@ namespace SpaceTaxi_1.GameStates {
                     break;
 
                 case "KEY_LEFT":
-                    GameRunning.player.ProcessEvent(GameEventType.PlayerEvent,
+                    player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "BOOSTER_TO_LEFT",
                             "", ""));
                     break;
                 case "KEY_RIGHT":
-                    GameRunning.player.ProcessEvent(GameEventType.PlayerEvent,
+                    player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "BOOSTER_TO_RIGHT",
@@ -130,7 +119,7 @@ namespace SpaceTaxi_1.GameStates {
             case "KEY_RELEASE":
                 switch (keyAction) {
                 case "KEY_LEFT":
-                    GameRunning.player.ProcessEvent(GameEventType.PlayerEvent,
+                    player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "STOP_ACCELERATE_LEFT",
@@ -138,7 +127,7 @@ namespace SpaceTaxi_1.GameStates {
                 
                     break;
                 case "KEY_RIGHT":
-                    GameRunning.player.ProcessEvent(GameEventType.PlayerEvent,
+                    player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "STOP_ACCELERATE_RIGHT",
@@ -146,7 +135,7 @@ namespace SpaceTaxi_1.GameStates {
                  
                     break;
                 case "KEY_UP":
-                    GameRunning.player.ProcessEvent(GameEventType.PlayerEvent,
+                    player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "STOP_ACCELERATE_UP",
