@@ -47,18 +47,17 @@ namespace SpaceTaxi_1 {
             }
         }
 
-        public bool CollisionDetectCustomer(CustomerEntity customer, Player player) {
+       /* public bool CollisionDetectCustomer(Entity customer, Player player) {
             CollisionData col =
                 CollisionDetection.Aabb(player.Entity.Shape.AsDynamicShape(),
-                    customer.customer.Shape.AsDynamicShape());
-            Console.WriteLine("is grounded? {0}",player.physics.IsGrounded);
+                    customer.Shape.AsDynamicShape());
             Console.WriteLine("collided? {0}"
             ,col.Collision);
-            
-        
 
-            return player.physics.IsGrounded && col.Collision;
-        }
+
+
+            return player.physics.IsGrounded; //&& col.Collision;
+        }*/
 
 
         private void CollisionDetect(EntityContainer<Entity> Entities, Player player) {
@@ -77,6 +76,7 @@ namespace SpaceTaxi_1 {
                          )
                     {
                         player.physics.IsGrounded = true;
+
 
 
 

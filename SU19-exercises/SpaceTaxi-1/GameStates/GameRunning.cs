@@ -19,6 +19,7 @@ namespace SpaceTaxi_1.GameStates {
         private Player player;
         private Parser parser;
         private Collision col;
+        private CustomerPoints score;
         private CustomerEntity customer;
 
         private int ActiveLevel = 0;
@@ -69,11 +70,33 @@ namespace SpaceTaxi_1.GameStates {
             
             customer=new CustomerEntity(ActiveLevelPath);
             
-              
+            score= new CustomerPoints();
+
         }
+
+
+        private void TaxiTour() {
+            Console.WriteLine(customer.Entity.Shape.Position.Y - player.Entity.Shape.Position.Y);
+            if (player.physics.IsGrounded && 
+                Math.Abs(customer.Entity.Shape.Position.Y - player.Entity.Shape.Position.Y) < 0.05
+                && customer.CountHasExpired()) {
+                customer.pickedUp = true;
+                customer.timeToDrop.ResetTimer();
+            }
+
+            if (customer.pickedUp && customer.TimeToDropHasExpired())
+             {
+                 player.Entity.DeleteEntity();
+
+            }
+            
+        }
+        
+        
 
         public void UpdateGameLogic() {
             col.Collisions(parser.textureList,player);
+            TaxiTour();
 
             if (!player.Entity.IsDeleted()) {
                 player.Move();
@@ -83,15 +106,15 @@ namespace SpaceTaxi_1.GameStates {
 
         public void RenderState() {
             backGroundImage.RenderEntity();
-            
+            score.RenderScore();
             parser.textureList.RenderEntities();
 
            if (!player.Entity.IsDeleted()) {
                 player.RenderPlayer();
             }
 
-           if (!col.CollisionDetectCustomer(customer, player) && customer.CountHasExpired()) {
-               customer.customer.RenderEntity();
+           if (!customer.pickedUp && customer.CountHasExpired()) {
+               customer.Entity.RenderEntity();
            }
 
 

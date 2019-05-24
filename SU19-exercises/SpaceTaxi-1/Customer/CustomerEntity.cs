@@ -16,9 +16,11 @@ namespace SpaceTaxi_1.Customer {
         private string destination; //
         private string timelimit; //
         public string points; //
-        public Entity customer; //
+        public Entity Entity; //
         private TimedEvent countTime; //
-        private TimedEvent timeToDrop; //
+        public TimedEvent timeToDrop; //
+        public bool pickedUp=false;
+        
 
 
         public CustomerEntity(string filename) {
@@ -34,12 +36,16 @@ namespace SpaceTaxi_1.Customer {
                 "", "", "");
             timeToDrop = new TimedEvent(TimeSpanType.Seconds, Int32.Parse(timelimit),
                 "", "", "");
-            customer = new Entity(new DynamicShape(new Vec2F(
+            Entity = new Entity(new DynamicShape(new Vec2F(
                         CustomerInfo.PickupPosition(this.filename).Item1,
                         CustomerInfo.PickupPosition(this.filename).Item2),
                     new Vec2F(0.1f, 0.1f)),
                 new Image(Path.Combine("Assets", "Images", "CustomerStandRight.png")));
-            customer.Shape.AsDynamicShape().Direction=new Vec2F(0,0);
+            Entity.Shape.AsDynamicShape().Direction=new Vec2F(0,0);
+            
+            countTime.ResetTimer();
+            timeToDrop.ResetTimer();
+            
         }
 
 
