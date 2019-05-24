@@ -14,7 +14,7 @@ namespace SpaceTaxi_1.Customer {
         private string counter; //
         private string platform;
         private string destination; //
-        private string timelimit; //
+        public string timelimit; //
         public string points; //
         public Entity Entity; //
         private TimedEvent countTime; //

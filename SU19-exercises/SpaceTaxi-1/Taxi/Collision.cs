@@ -71,8 +71,7 @@ namespace SpaceTaxi_1 {
                     //Landing
                     if (col.CollisionDir == CollisionDirection.CollisionDirDown 
                          && player.Entity.Shape.AsDynamicShape().Direction.Y >= -0.005f 
-                         || col.CollisionDir == CollisionDirection.CollisionDirUnchecked  
-                         && player.Entity.Shape.AsDynamicShape().Direction.Y >= -0.005f
+                         
                          )
                     {
                         player.physics.IsGrounded = true;

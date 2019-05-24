@@ -70,18 +70,20 @@ namespace SpaceTaxi_1.GameStates {
             
             customer=new CustomerEntity(ActiveLevelPath);
             
-            score= new CustomerPoints();
+            score= new CustomerPoints(customer);
+            
 
         }
 
 
         private void TaxiTour() {
-            Console.WriteLine(customer.Entity.Shape.Position.Y - player.Entity.Shape.Position.Y);
             if (player.physics.IsGrounded && 
                 Math.Abs(customer.Entity.Shape.Position.Y - player.Entity.Shape.Position.Y) < 0.05
                 && customer.CountHasExpired()) {
                 customer.pickedUp = true;
                 customer.timeToDrop.ResetTimer();
+                
+                
             }
 
             if (customer.pickedUp && customer.TimeToDropHasExpired())
@@ -109,6 +111,7 @@ namespace SpaceTaxi_1.GameStates {
             score.RenderScore();
             parser.textureList.RenderEntities();
 
+            
            if (!player.Entity.IsDeleted()) {
                 player.RenderPlayer();
             }
