@@ -35,7 +35,7 @@ namespace SpaceTaxi_1.Customer {
         }
 
 
-        public static Tuple<int, int> PickupPosition(string filename) {
+        private static Tuple<int, int> PickPosition(string filename) {
             Tuple<int, int> x = new Tuple<int, int>(0,0);
             string[] file = Opener.CutStringLevel(filename);
             for (int i = 0; i < file.Length-1; i++) {
@@ -45,8 +45,7 @@ namespace SpaceTaxi_1.Customer {
                     {
                         
                         if (file[i][j] == (char) CustomerInfo.SplitCustomerInfo(filename)[3].ToCharArray()[0]) {
-                            Console.WriteLine(file[i][j].ToString());
-                            x = new Tuple<int, int>(i, j);
+                            x = new Tuple<int, int>(j, i);
                         }
                     }
 
@@ -55,5 +54,19 @@ namespace SpaceTaxi_1.Customer {
 
             return x;
         }
+
+
+        public static Tuple<float, float> PickupPosition(string filename) {
+            Tuple<int, int> x = PickPosition(filename);
+            string[] map = Opener.CutStringLevel(filename);
+            int xaxispos = (x.Item1+map[x.Item2].IndexOf('J'))/2;
+            float xpos = ((float) 1/map[0].Length)*xaxispos;
+            float ypos = 1f-((x.Item2)*((float) 1/(map.Length-1)));
+            Tuple<float, float> z=new Tuple<float, float>(xpos,ypos);
+            return z;
+
+        }
+        
     }
+    
 }

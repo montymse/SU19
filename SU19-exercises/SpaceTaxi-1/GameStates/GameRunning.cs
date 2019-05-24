@@ -9,6 +9,7 @@ using DIKUArcade.Math;
 using DIKUArcade.Physics;
 using DIKUArcade.State;
 using DIKUArcade.Timers;
+using SpaceTaxi_1.Customer;
 
 namespace SpaceTaxi_1.GameStates {
     public class GameRunning : IGameState {
@@ -18,6 +19,7 @@ namespace SpaceTaxi_1.GameStates {
         private Player player;
         private Parser parser;
         private Collision col;
+        private CustomerEntity customer;
 
         private int ActiveLevel = 0;
         private string ActiveLevelPath = "../../Levels/short-n-sweet.txt";
@@ -66,6 +68,8 @@ namespace SpaceTaxi_1.GameStates {
             //Add textures
             parser.CreateEntityList();
             
+            customer=new CustomerEntity(ActiveLevelPath);
+            
               
         }
 
@@ -82,6 +86,10 @@ namespace SpaceTaxi_1.GameStates {
            if (!player.Entity.IsDeleted()) {
                 player.RenderPlayer();
             }
+
+           if (customer.CountHasExpired()) {
+               customer.customer.RenderEntity();
+           }
 
            if (player.Entity.IsDeleted()) {
                col.explosions.RenderAnimations();
