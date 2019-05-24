@@ -5,6 +5,7 @@ namespace SpaceTaxi_1.GameStates {
         
             public enum GameStateType {
                 GameRunning,
+                GameRunning2,
                 GamePaused,
                 MainMenu
             }

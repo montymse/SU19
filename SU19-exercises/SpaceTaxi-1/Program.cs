@@ -9,10 +9,20 @@ using SpaceTaxi_1.Customer;
 namespace SpaceTaxi_1 {
     internal class Program {
         public static void Main(string[] args) {
-            var game = new Game();
-            game.GameLoop();
-            
-  
+        //    var game = new Game();
+       //     game.GameLoop();
+
+       foreach (var elm in CustomerInfo.SplitCustomerInfo("../../Levels/the-beach.txt")) {
+           Console.WriteLine(elm);
+
+       }
+
+          Console.WriteLine(CustomerInfo.SplitCustomerInfo("../../Levels/the-beach.txt")[3].ToCharArray()[0]);
+
+       Console.WriteLine(       CustomerInfo.PickupPosition("../../Levels/the-beach.txt"));
+
+
+
 /*
               foreach (var elm in ImageList.StringToImageList( Opener.FileToString("../../Levels/the-beach.txt")))
                {
@@ -32,9 +42,9 @@ namespace SpaceTaxi_1 {
                   Console.WriteLine(elm);
 
               }
-           */   
+           */
 
-     
+
         }
     }
 }

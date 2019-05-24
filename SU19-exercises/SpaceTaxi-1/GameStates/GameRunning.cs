@@ -27,6 +27,12 @@ namespace SpaceTaxi_1.GameStates {
             InitializeGameState();
         }
 
+
+        public static GameRunning GetInstance0() {
+             GameRunning.instance=new GameRunning();
+             return GameRunning.instance;
+        }
+
         public static GameRunning GetInstance() {
 
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());

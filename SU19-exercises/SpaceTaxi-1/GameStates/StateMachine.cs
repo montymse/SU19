@@ -34,7 +34,9 @@ namespace SpaceTaxi_1.GameStates {
                 
                 switch (gameEvent.Parameter1) {
                 case "GAME_RUNNING":
+                    
                     SwitchState((StateTransformer.TransformStringToState(gameEvent.Parameter1)));
+                    
                     break;
                 case "GAME_PAUSED": 
                     SwitchState((StateTransformer.TransformStringToState(gameEvent.Parameter1)));

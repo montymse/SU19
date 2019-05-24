@@ -5,7 +5,7 @@ namespace SpaceTaxi_1 {
         private Vec2F Gravity;
         private Vec2F Velocity;
         private float DeltaTime;
-        public bool IsGrounded;
+        public static bool IsGrounded;
         
         public enum ForceDirection {
             Up,
