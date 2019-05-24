@@ -54,7 +54,6 @@ namespace SpaceTaxi_1.GameStates {
             player = new Player();
             player.SetPosition(0.45f, 0.6f);
             player.SetExtent(0.1f, 0.1f);
-            player.Entity.Shape.AsDynamicShape().Direction=new Vec2F(0.0f,0.0f);
 
             col=new Collision();
             
@@ -91,9 +90,10 @@ namespace SpaceTaxi_1.GameStates {
                 player.RenderPlayer();
             }
 
-           if (customer.CountHasExpired()) {
+           if (!col.CollisionDetectCustomer(customer, player) && customer.CountHasExpired()) {
                customer.customer.RenderEntity();
            }
+
 
            if (player.Entity.IsDeleted()) {
                col.explosions.RenderAnimations();

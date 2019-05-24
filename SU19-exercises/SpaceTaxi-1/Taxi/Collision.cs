@@ -8,6 +8,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Physics;
 using DIKUArcade.Timers;
+using SpaceTaxi_1.Customer;
 using SpaceTaxi_1.GameStates;
 
 namespace SpaceTaxi_1 {
@@ -46,35 +47,43 @@ namespace SpaceTaxi_1 {
             }
         }
 
+        public bool CollisionDetectCustomer(CustomerEntity customer, Player player) {
+            CollisionData col =
+                CollisionDetection.Aabb(player.Entity.Shape.AsDynamicShape(),
+                    customer.customer.Shape.AsDynamicShape());
+            Console.WriteLine("is grounded? {0}",player.physics.IsGrounded);
+            Console.WriteLine("collided? {0}"
+            ,col.Collision);
+            
+        
+
+            return player.physics.IsGrounded && col.Collision;
+        }
+
+
         private void CollisionDetect(EntityContainer<Entity> Entities, Player player) {
             foreach (Entity elm in Entities) {
                 CollisionData col =
                     CollisionDetection.Aabb(player.Entity.Shape.AsDynamicShape(),
                         elm.Shape.AsDynamicShape());
 
-                if (col.CollisionDir==CollisionDirection.CollisionDirLeft) {
-                    Console.WriteLine("X: {0} and Y: {1}",player.Entity.Shape.AsDynamicShape().Direction.X,player.Entity.Shape.AsDynamicShape().Direction.Y);
-                }
-
-               // if (col.CollisionDir==CollisionDirection.CollisionDirRight) {
-              //      Console.WriteLine("X: {0} and Y: {1}",player.Entity.Shape.AsDynamicShape().Direction.X,player.Entity.Shape.AsDynamicShape().Direction.Y);
-              //  }
+               
                 if (col.Collision) {
                     //Landing
                     if (col.CollisionDir == CollisionDirection.CollisionDirDown 
                          && player.Entity.Shape.AsDynamicShape().Direction.Y >= -0.005f 
-                    
-                         
-                         
-                   ) {
+                         || col.CollisionDir == CollisionDirection.CollisionDirUnchecked  
+                         && player.Entity.Shape.AsDynamicShape().Direction.Y >= -0.005f
+                         )
+                    {
                         player.physics.IsGrounded = true;
-                        
-                        
 
 
 
                         //Collision with an obstacle. Taxi dies. 
                     } else {
+                        Console.WriteLine(col.CollisionDir);
+                        
                         Tuple<float, float> position =
                             new Tuple<float, float>(player.Entity.Shape.Position.X,
                                 player.Entity.Shape.Position.Y);

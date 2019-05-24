@@ -39,6 +39,7 @@ namespace SpaceTaxi_1.Customer {
                         CustomerInfo.PickupPosition(this.filename).Item2),
                     new Vec2F(0.1f, 0.1f)),
                 new Image(Path.Combine("Assets", "Images", "CustomerStandRight.png")));
+            customer.Shape.AsDynamicShape().Direction=new Vec2F(0,0);
         }
 
 
