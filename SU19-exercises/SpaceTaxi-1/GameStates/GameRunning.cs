@@ -31,7 +31,7 @@ namespace SpaceTaxi_1.GameStates {
 
 
         public static GameRunning GetInstance0() {
-             GameRunning.instance=new GameRunning();
+            GameRunning.instance = null;
              return GameRunning.instance;
         }
 
@@ -74,8 +74,12 @@ namespace SpaceTaxi_1.GameStates {
         }
 
         public void UpdateGameLogic() {
-            col.Collisions(parser.textureList,player);           
-            player.Move();
+            col.Collisions(parser.textureList,player);
+
+            if (!player.Entity.IsDeleted()) {
+                player.Move();
+
+            }
         }
 
         public void RenderState() {
@@ -126,7 +130,7 @@ namespace SpaceTaxi_1.GameStates {
                     break;
                 
                 case "KEY_SPACE":
-
+                    GameRunning.GetInstance0();
                     GalagaBus.GetBus().RegisterEvent(
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.GameStateEvent,

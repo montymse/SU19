@@ -80,8 +80,8 @@ namespace SpaceTaxi_1.GameStates {
                             this,
                             "CHANGE_STATE",
                             "GAME_RUNNING", ""));
-                    } else
-                    {
+                    } else {
+                        GameRunning.GetInstance0();
                         GalagaBus.GetBus().RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.GameStateEvent,
                             this,
