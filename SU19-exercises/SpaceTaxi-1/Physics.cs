@@ -13,19 +13,15 @@ namespace SpaceTaxi_1 {
             Left,
             Right
         }
-
-      /*
-       * 
-       * This way of handling physics was inspired by/stolen from the YouTube video
-       * "Math for Game Developers - Jumping and Gravity (Time Delta, Game Loop)", by Jorge Rodriguez
-       * https://youtu.be/c4b9lCfSDQM
-       * 
-       * 0.0015f is used as a placeholder for DeltaTime, as the deltaTime fields have been made
-       * inaccessible for some reason.
-       *
-       * -Mikael
-       * 
-       */
+        
+        /// <remarks>
+        /// This way of handling physics was inspired by/stolen from the YouTube video
+        /// "Math for Game Developers - Jumping and Gravity (Time Delta, Game Loop)", by Jorge Rodriguez
+        /// https://youtu.be/c4b9lCfSDQM
+        /// 0.0015f is used as a placeholder for DeltaTime, as the deltaTime fields have been made
+        /// inaccessible for some reason.
+        /// </remarks>
+      
         public Physics(float weight) {
             Gravity = new Vec2F(0,-weight);
             Velocity = new Vec2F(0,0);
@@ -35,14 +31,30 @@ namespace SpaceTaxi_1 {
 
             IsGrounded = false;
         }
+        
+        /// <summary>
+        ///  Gets the velocity with the place holder deltatime
+        /// </summary>
+        /// <returns>
+        /// the product of the velocity of the player and deltatime
+        /// </returns>
 
         public Vec2F GetVelocity() {
             return Velocity * DeltaTime;
         }
+        /// <summary>
+        /// Gets the velocity
+        /// </summary>
+        /// <returns>
+        /// Returns the velocity (without deltatime)
+        /// </returns>
 
         public Vec2F GetRawVelocity() {
             return Velocity;
         }
+        /// <summary>
+        /// Updates the velocity of the player
+        /// </summary>
 
         public void UpdateVelocity() {
             Velocity += !IsGrounded ? Gravity * DeltaTime : new Vec2F(0, 0);
@@ -50,6 +62,16 @@ namespace SpaceTaxi_1 {
             if (IsGrounded && Velocity.Y > 0) IsGrounded = false;
         }
 
+        
+        /// <summary>
+        ///  Applies forces the velocity
+        /// </summary>
+        /// <param name="dir">
+        ///  direction
+        /// </param>
+        /// <param name="power">
+        ///  the force/power added to the velocity in that direction
+        /// </param>
         public void ApplyForce(ForceDirection dir, float power) {
             switch (dir) {
                 case ForceDirection.Up:

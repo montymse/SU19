@@ -30,6 +30,20 @@ namespace SpaceTaxi_1 {
             GameOver.SetText("Game's Over\nPress Space");
             GameOver.SetColor(new Vec3I(0, 255, 0));
         }
+        
+        /// <summary>
+        /// Adds explosion upon collision
+        /// </summary>
+        /// <param name="posX"></param>
+        /// Position x of explosion
+        /// <param name="posY"></param>
+        /// Position y of explosion
+        /// <param name="extentX">
+        /// Extend x of explosion
+        /// </param>
+        /// <param name="extentY">
+        ///Extend y of explosion
+        /// </param>
 
         private void AddExplosion(float posX, float posY,
             float extentX, float extentY) {
@@ -38,6 +52,15 @@ namespace SpaceTaxi_1 {
                 new ImageStride(explosionLength / 8, explosionStrides));
         }
 
+        /// <summary>
+        /// Handles the collisions and the level changing
+        /// </summary>
+        /// <param name="Entities">
+        /// List of entities
+        /// </param>
+        /// <param name="player">
+        /// Player
+        /// </param>
 
         public void Collisions(EntityContainer<Entity> Entities, Player player) {
             if (player.Entity.Shape.Position.Y >= 1f) {
@@ -47,17 +70,16 @@ namespace SpaceTaxi_1 {
             }
         }
 
-       /* public bool CollisionDetectCustomer(Entity customer, Player player) {
-            CollisionData col =
-                CollisionDetection.Aabb(player.Entity.Shape.AsDynamicShape(),
-                    customer.Shape.AsDynamicShape());
-            Console.WriteLine("collided? {0}"
-            ,col.Collision);
-
-
-
-            return player.physics.IsGrounded; //&& col.Collision;
-        }*/
+        /// <summary>
+        /// Handles the collision between entities and player
+        /// </summary>
+        /// <param name="Entities">
+        /// List of entities
+        /// </param>
+        /// <param name="player">
+        /// Player
+        /// </param>
+       
 
 
         private void CollisionDetect(EntityContainer<Entity> Entities, Player player) {
@@ -79,7 +101,7 @@ namespace SpaceTaxi_1 {
 
 
 
-                        //Collision with an obstacle. Taxi dies. 
+                     //Collision with an obstacle. Taxi dies. 
                     } else {
                         Console.WriteLine(col.CollisionDir);
                         
@@ -102,10 +124,19 @@ namespace SpaceTaxi_1 {
         
     }
     
-    /*
-     *
-     *  || col.CollisionDir == CollisionDirection.CollisionDirUnchecked  
-                         && player.Entity.Shape.AsDynamicShape().Direction.Y >= 0.05f 
-                         && player.Entity.Shape.AsDynamicShape().Direction.X <= 1f
-     */
+    
 }
+
+
+
+/* public bool CollisionDetectCustomer(Entity customer, Player player) {
+            CollisionData col =
+                CollisionDetection.Aabb(player.Entity.Shape.AsDynamicShape(),
+                    customer.Shape.AsDynamicShape());
+            Console.WriteLine("collided? {0}"
+            ,col.Collision);
+
+
+
+            return player.physics.IsGrounded; //&& col.Collision;
+        }*/

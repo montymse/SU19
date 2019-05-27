@@ -9,6 +9,18 @@ namespace SpaceTaxi_1.GameStates {
                 GamePaused,
                 MainMenu
             }
+            
+            
+            /// <summary>
+            /// Transforms a string to a state
+            /// </summary>
+            /// <param name="state">
+            /// Takes a case of string 
+            /// </param>
+            /// <returns>
+            /// Returns the corresponding gamestate
+            /// </returns>
+            /// <exception cref="ArgumentException"></exception>
             public static GameStateType TransformStringToState(string state) {
 
                 switch (state) {
@@ -23,6 +35,16 @@ namespace SpaceTaxi_1.GameStates {
                 } 
             }
 
+            /// <summary>
+            /// Transforms a state to a string
+            /// </summary>
+            /// <param name="state">
+            /// Takes a case of string 
+            /// </param>
+            /// <returns>
+            /// Returns the corresponding string
+            /// </returns>
+            /// <exception cref="ArgumentException"></exception>
             public static string TransformStateToString(GameStateType state) {
                 switch (state) {
                 case GameStateType.GameRunning:

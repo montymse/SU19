@@ -30,6 +30,12 @@ namespace SpaceTaxi_1.GameStates {
             InitializeGameState();
         }
 
+        /// <summary>
+        /// This function is used to reset the gamerunning instance. 
+        /// </summary>
+        /// <returns>
+        /// Sets gamerunning to null and returns.
+        /// </returns>
 
         public static GameRunning GetInstance0() {
             GameRunning.instance = null;
@@ -58,9 +64,6 @@ namespace SpaceTaxi_1.GameStates {
 
             col=new Collision();
             
-           // parser=new Parser(Placement.FindPlacementAndImage(
-           //     "../../Levels/short-n-sweet.txt"
-           // ));
             parser=new Parser(Placement.FindPlacementAndImage(
                 ActiveLevelPath
             ));
@@ -74,6 +77,11 @@ namespace SpaceTaxi_1.GameStates {
             
 
         }
+        
+        /// <summary>
+        /// Handles the customers taxi tour
+        /// (the timers and the customer getting picked up)
+        /// </summary>
 
 
         private void TaxiTour() {
@@ -130,6 +138,10 @@ namespace SpaceTaxi_1.GameStates {
 
      
         }
+        
+        /// <summary>
+        /// The function changes between the two levels
+        /// </summary>
 
         public void ChangeLevel() {
             if (ActiveLevel == 0) {

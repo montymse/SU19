@@ -12,6 +12,14 @@ namespace SpaceTaxi_1.GameStates {
             GalagaBus.GetBus().Subscribe(GameEventType.InputEvent, this);
         }
 
+        
+        /// <summary>
+        /// Switches between the states
+        /// </summary>
+        /// <param name="stateType">
+        /// Takes a gamestate as a argument and switches the activestate
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void SwitchState(StateTransformer.GameStateType stateType) {
             switch (stateType) {
             case StateTransformer.GameStateType.GameRunning:
@@ -28,6 +36,15 @@ namespace SpaceTaxi_1.GameStates {
             }
         }
 
+        /// <summary>
+        /// Handles the gameevents of the GameStateEvent
+        /// </summary>
+        /// <param name="eventType">
+        ///  The event type
+        /// </param>
+        /// <param name="gameEvent">
+        ///  The game event
+        /// </param>
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
 
             if (eventType == GameEventType.GameStateEvent) {

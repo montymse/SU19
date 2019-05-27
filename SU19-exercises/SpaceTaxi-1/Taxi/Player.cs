@@ -71,13 +71,13 @@ namespace SpaceTaxi_1 {
             shape.Extent.X = width;
             shape.Extent.Y = height;
         }
+        
+        /// <summary>
+        /// Renders the player with correct orientation
+        /// </summary>
 
         public void RenderPlayer() {
-            //TODO: Next version needs animation. Skipped for clarity.
-           // Entity.Image = taxiOrientation == Orientation.Left
-           //     ? taxiBoosterOffImageLeft
-           //     : taxiBoosterOffImageRight;
-           // Entity.RenderEntity();
+          
             if (BottomBoosterActive && LeftOrRightBoosterActive) {
                 Entity.Image = taxiOrientation == Orientation.Left
                     ? taxiBoosterOnBottomBackLeft
@@ -101,7 +101,9 @@ namespace SpaceTaxi_1 {
             Entity.RenderEntity();
         }
 
-
+        /// <summary>
+        /// Moves the player around in with the given velocity and direction
+        /// </summary>
         
         public void Move() {   
             
@@ -137,11 +139,12 @@ namespace SpaceTaxi_1 {
         /// <summary>
         /// Event processor. It changes the booster flags and taxi orientation based on user input 
         /// </summary>
-        /// <param name="eventType"></param>
-        /// The gameEventType 
-        /// <param name="gameEvent"></param>
+        /// <param name="eventType">
+        /// The gameEventType
+        /// </param>
+        /// <param name="gameEvent">
         /// The gameEvent
-        /// 
+        /// </param>
 
         public void ProcessEvent(GameEventType eventType,
             GameEvent<object> gameEvent) {
