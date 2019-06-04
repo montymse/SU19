@@ -62,7 +62,7 @@ namespace SpaceTaxi_1.GameStates {
             player.SetPosition(0.45f, 0.6f);
             player.SetExtent(0.1f, 0.1f);
 
-            col=new Collision();
+            col=new Collision(ActiveLevelPath);
             
             parser=new Parser(Placement.FindPlacementAndImage(
                 ActiveLevelPath
