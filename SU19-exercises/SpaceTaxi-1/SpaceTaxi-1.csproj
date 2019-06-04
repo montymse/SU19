@@ -47,7 +47,7 @@
     <Compile Include="Customer\CustomerInfo.cs" />
     <Compile Include="Customer\CustomerEntity.cs" />
     <Compile Include="Customer\CustomerPoints.cs" />
-    <Compile Include="GalagaBus.cs" />
+    <Compile Include="SpaceTaxiBus.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameStates\GamePaused.cs" />
     <Compile Include="GameStates\GameRunning.cs" />

@@ -8,8 +8,9 @@ namespace SpaceTaxi_1.GameStates {
 
         public StateMachine() {
             ActiveState = MainMenu.GetInstance();
-            GalagaBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
-            GalagaBus.GetBus().Subscribe(GameEventType.InputEvent, this);
+            SpaceTaxiBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
+            
+            SpaceTaxiBus.GetBus().Subscribe(GameEventType.InputEvent, this);
         }
 
         

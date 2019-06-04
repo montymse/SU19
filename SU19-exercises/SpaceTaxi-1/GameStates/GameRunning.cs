@@ -159,7 +159,7 @@ namespace SpaceTaxi_1.GameStates {
             case "KEY_PRESS":
                 switch (keyAction) {
                 case "KEY_ESCAPE":
-                    GalagaBus.GetBus().RegisterEvent(
+                    SpaceTaxiBus.GetBus().RegisterEvent(
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.GameStateEvent,
                             this,
@@ -169,7 +169,7 @@ namespace SpaceTaxi_1.GameStates {
                 
                 case "KEY_SPACE":
                     GameRunning.GetInstance0();
-                    GalagaBus.GetBus().RegisterEvent(
+                    SpaceTaxiBus.GetBus().RegisterEvent(
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.GameStateEvent,
                             this,
@@ -178,7 +178,7 @@ namespace SpaceTaxi_1.GameStates {
                 
                     break;
                 case "KEY_Q":
-                    GalagaBus.GetBus().RegisterEvent(
+                    SpaceTaxiBus.GetBus().RegisterEvent(
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.WindowEvent,
                             this,

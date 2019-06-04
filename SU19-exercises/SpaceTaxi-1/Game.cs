@@ -22,11 +22,11 @@ namespace SpaceTaxi_1 {
         public Game() {
             // window
             win = new Window("Space Taxi Game v0.1", 500, AspectRatio.R1X1);
-            win.RegisterEventBus(GalagaBus.GetBus());
+            win.RegisterEventBus(SpaceTaxiBus.GetBus());
 
             //statemachine
             stateMachine = new StateMachine();
-            GalagaBus.GetBus().InitializeEventBus(new List<GameEventType>()
+            SpaceTaxiBus.GetBus().InitializeEventBus(new List<GameEventType>()
             {
                 GameEventType.WindowEvent,
                 GameEventType.InputEvent,
@@ -36,10 +36,10 @@ namespace SpaceTaxi_1 {
             });
         
 
-            GalagaBus.GetBus().Subscribe(GameEventType.WindowEvent, this);
-            GalagaBus.GetBus().Subscribe(GameEventType.PlayerEvent, this);
-            GalagaBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
-            GalagaBus.GetBus().Subscribe(GameEventType.InputEvent, this);
+            SpaceTaxiBus.GetBus().Subscribe(GameEventType.WindowEvent, this);
+            SpaceTaxiBus.GetBus().Subscribe(GameEventType.PlayerEvent, this);
+            SpaceTaxiBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
+            SpaceTaxiBus.GetBus().Subscribe(GameEventType.InputEvent, this);
 
 
                       
@@ -57,8 +57,7 @@ namespace SpaceTaxi_1 {
 
                     win.PollEvents();
                     
-                    //TODO: Rename galagabus
-                    GalagaBus.GetBus().ProcessEvents();
+                    SpaceTaxiBus.GetBus().ProcessEvents();
                     stateMachine.ActiveState.UpdateGameLogic();
                 }
 

@@ -1,11 +1,11 @@
 using DIKUArcade.EventBus;
 
 namespace SpaceTaxi_1 {
-    public static class GalagaBus {
+    public static class SpaceTaxiBus {
         private static GameEventBus<object> eventBus;
 
         public static GameEventBus<object> GetBus() {
-            return GalagaBus.eventBus ?? (GalagaBus.eventBus =
+            return SpaceTaxiBus.eventBus ?? (SpaceTaxiBus.eventBus =
                        new GameEventBus<object>());
         }
     }
