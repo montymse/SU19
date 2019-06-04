@@ -60,7 +60,7 @@ namespace SpaceTaxi_1.GameStates {
             // game entities
             player = new Player();
             player.SetPosition(0.45f, 0.6f);
-            player.SetExtent(0.1f, 0.1f);
+            player.SetExtent(0.06f, 0.06f);
 
             col=new Collision(ActiveLevelPath);
             
@@ -90,20 +90,17 @@ namespace SpaceTaxi_1.GameStates {
                 && customer.CountHasExpired()) {
                 customer.pickedUp = true;
                 customer.timeToDrop.ResetTimer();
-                
-                
+                        
             }
 
             if (customer.pickedUp && customer.TimeToDropHasExpired())
              {
                  player.Entity.DeleteEntity();
 
-            }
-            
+            }   
         }
-        
-        
 
+        
         public void UpdateGameLogic() {
             col.Collisions(parser.textureList,player);
             TaxiTour();

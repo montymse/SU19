@@ -19,7 +19,7 @@ namespace SpaceTaxi_1.Customer {
         public Entity Entity; //
         private TimedEvent countTime; //
         public TimedEvent timeToDrop; //
-        public bool pickedUp=false;
+        public bool pickedUp = false;
         
 
 
@@ -39,7 +39,7 @@ namespace SpaceTaxi_1.Customer {
             Entity = new Entity(new DynamicShape(new Vec2F(
                         CustomerInfo.PickupPosition(this.filename).Item1,
                         CustomerInfo.PickupPosition(this.filename).Item2),
-                    new Vec2F(0.1f, 0.1f)),
+                    new Vec2F(0.06f, 0.06f)),
                 new Image(Path.Combine("Assets", "Images", "CustomerStandRight.png")));
             Entity.Shape.AsDynamicShape().Direction=new Vec2F(0,0);
             
