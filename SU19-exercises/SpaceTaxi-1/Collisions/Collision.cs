@@ -8,6 +8,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Physics;
 using DIKUArcade.Timers;
+using SpaceTaxi_1.Collisions;
 using SpaceTaxi_1.Customer;
 using SpaceTaxi_1.GameStates;
 
@@ -17,9 +18,12 @@ namespace SpaceTaxi_1 {
         public AnimationContainer explosions;
         public Text GameOver;
         private int explosionLength;
+        private Parser Activeplatforms;
 
 
-        public Collision() {
+        public Collision(string activelevel) {
+            Activeplatforms=new Parser(CollisionPlatforms.GetPlatform(activelevel));
+            Activeplatforms.CreateEntityList();
             explosionStrides = ImageStride.CreateStrides(8,
                 Path.Combine("Assets", "Images", "Explosion.png"));
             explosions = new AnimationContainer(500);
@@ -30,6 +34,8 @@ namespace SpaceTaxi_1 {
             GameOver.SetText("Game's Over\nPress Space");
             GameOver.SetColor(new Vec3I(0, 255, 0));
         }
+
+        
         
         /// <summary>
         /// Adds explosion upon collision
@@ -70,6 +76,20 @@ namespace SpaceTaxi_1 {
             }
         }
 
+        private bool collisionPlatform(Player player) {
+            foreach (Entity elm in Activeplatforms.textureList) {
+                CollisionData col =
+                    CollisionDetection.Aabb(player.Entity.Shape.AsDynamicShape(),
+                        elm.Shape.AsDynamicShape());
+                if (col.Collision) {
+                    return col.Collision;
+                }
+                
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Handles the collision between entities and player
         /// </summary>
@@ -91,8 +111,8 @@ namespace SpaceTaxi_1 {
                
                 if (col.Collision) {
                     //Landing
-                    if (col.CollisionDir == CollisionDirection.CollisionDirDown 
-                         && player.Entity.Shape.AsDynamicShape().Direction.Y >= -0.005f 
+                    if (collisionPlatform(player) && 
+                        player.Entity.Shape.AsDynamicShape().Direction.Y >= -0.005f 
                          
                          )
                     {
@@ -102,6 +122,7 @@ namespace SpaceTaxi_1 {
 
 
                      //Collision with an obstacle. Taxi dies. 
+                     
                     } else {
                         Console.WriteLine(col.CollisionDir);
                         

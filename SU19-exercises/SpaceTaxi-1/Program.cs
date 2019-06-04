@@ -11,7 +11,9 @@ namespace SpaceTaxi_1 {
         public static void Main(string[] args) {
            var game = new Game();
            game.GameLoop();
+          
 
+        
        /*  foreach (var elm in CustomerInfo.SplitCustomerInfo("../../Levels/the-beach.txt")) {
              Console.WriteLine(elm);
   

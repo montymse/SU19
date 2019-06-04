@@ -18,7 +18,7 @@ namespace SpaceTaxi_1 {
     /// <returns>
     /// Returns a tuple with a x-coordinate and a y-coordinate
     /// </returns>
-        private static Tuple<float, float> CalculateMapSize(string[] text) {
+        public static Tuple<float, float> CalculateMapSize(string[] text) {
             return (new Tuple<float, float>((float) 1/text[0].Length, (float) 1/(text.Length-1)));
 
         }
@@ -36,7 +36,7 @@ namespace SpaceTaxi_1 {
     /// Position of a ASCII symbol in a ASCII drawing of the map layout
     /// </returns>
 
-        private static Tuple<float, float> Convert(int x, int y, Tuple<float, float> map) {
+        public static Tuple<float, float> Convert(int x, int y, Tuple<float, float> map) {
             return new Tuple<float, float>( x*map.Item1, 1f-((y+1)*map.Item2));
 
         }
