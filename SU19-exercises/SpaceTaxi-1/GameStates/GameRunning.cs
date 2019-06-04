@@ -100,20 +100,10 @@ namespace SpaceTaxi_1.GameStates {
             }   
         }
 
-        private void DropOff() {
-            // TODO: add specific platform for dropoff
-            if (player.physics.IsGrounded && customer.pickedUp) {
-                // customer.pickedUp = false;
-                score.AddPoint("200");
-            }
-        }
         
-        
-
         public void UpdateGameLogic() {
             col.Collisions(parser.textureList,player);
             TaxiTour();
-            DropOff();
 
             if (!player.Entity.IsDeleted()) {
                 player.Move();
