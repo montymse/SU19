@@ -60,7 +60,7 @@ namespace SpaceTaxi_1.GameStates {
             // game entities
             player = new Player();
             player.SetPosition(0.45f, 0.6f);
-            player.SetExtent(0.1f, 0.1f);
+            player.SetExtent(0.06f, 0.06f);
 
             col=new Collision();
             
@@ -90,16 +90,22 @@ namespace SpaceTaxi_1.GameStates {
                 && customer.CountHasExpired()) {
                 customer.pickedUp = true;
                 customer.timeToDrop.ResetTimer();
-                
-                
+                        
             }
 
             if (customer.pickedUp && customer.TimeToDropHasExpired())
              {
                  player.Entity.DeleteEntity();
 
+            }   
+        }
+
+        private void DropOff() {
+            // TODO: add specific platform for dropoff
+            if (player.physics.IsGrounded && customer.pickedUp) {
+                // customer.pickedUp = false;
+                score.AddPoint("200");
             }
-            
         }
         
         
@@ -107,6 +113,7 @@ namespace SpaceTaxi_1.GameStates {
         public void UpdateGameLogic() {
             col.Collisions(parser.textureList,player);
             TaxiTour();
+            DropOff();
 
             if (!player.Entity.IsDeleted()) {
                 player.Move();
