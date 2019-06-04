@@ -26,8 +26,6 @@ namespace SpaceTaxi_1 {
         private readonly DynamicShape shape;
         private Orientation taxiOrientation;
         
-        //public Vec2F gravityVector = new Vec2F(0.0f,-40f);
-        //public Vec2F velocityVector = new Vec2F(0.0f,0.0f);
         public Physics physics;
         
 

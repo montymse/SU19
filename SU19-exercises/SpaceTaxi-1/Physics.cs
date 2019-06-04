@@ -28,7 +28,7 @@ namespace SpaceTaxi_1 {
             
             //This is a placeholder
             DeltaTime = 0.0015f;
-
+            
             IsGrounded = false;
         }
         
@@ -57,8 +57,14 @@ namespace SpaceTaxi_1 {
         /// </summary>
 
         public void UpdateVelocity() {
+            //Add gravity if the object is not grounded
             Velocity += !IsGrounded ? Gravity * DeltaTime : new Vec2F(0, 0);
+            
+            //If the object is falling and is grounded, stop it
+            //This is to keep it from falling through the ground
             Velocity.Y = Velocity.Y < 0 && IsGrounded ? 0 : Velocity.Y;
+            
+            //If the object is grounded and is ascending, it's no longer grounded.
             if (IsGrounded && Velocity.Y > 0) IsGrounded = false;
         }
 
