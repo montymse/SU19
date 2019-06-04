@@ -46,7 +46,7 @@ namespace SpaceTaxi_1 {
             // game timer
             gameTimer = new GameTimer(60, 60); // 60 UPS, 60 FPS limit
 
-            
+
         }
 
         public void GameLoop() {
