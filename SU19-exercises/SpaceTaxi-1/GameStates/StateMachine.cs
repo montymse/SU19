@@ -9,11 +9,10 @@ namespace SpaceTaxi_1.GameStates {
         public StateMachine() {
             ActiveState = MainMenu.GetInstance();
             SpaceTaxiBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
-            
             SpaceTaxiBus.GetBus().Subscribe(GameEventType.InputEvent, this);
         }
 
-        
+
         /// <summary>
         /// Switches between the states
         /// </summary>
@@ -47,29 +46,20 @@ namespace SpaceTaxi_1.GameStates {
         ///  The game event
         /// </param>
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
-
             if (eventType == GameEventType.GameStateEvent) {
-                
                 switch (gameEvent.Parameter1) {
                 case "GAME_RUNNING":
-                    
                     SwitchState((StateTransformer.TransformStringToState(gameEvent.Parameter1)));
-                    
                     break;
-                case "GAME_PAUSED": 
+                case "GAME_PAUSED":
                     SwitchState((StateTransformer.TransformStringToState(gameEvent.Parameter1)));
                     break;
 
                 case "GAME_MAINMENU":
                     SwitchState((StateTransformer.TransformStringToState(gameEvent.Parameter1)));
                     break;
-
-                   
-        
                 }
-
             }
-         
         }
     }
 }

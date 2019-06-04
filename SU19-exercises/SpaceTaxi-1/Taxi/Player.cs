@@ -16,43 +16,43 @@ namespace SpaceTaxi_1 {
         private ImageStride taxiBoosterOnBottom;
         private ImageStride taxiBoosterOnBottomRight;
         private ImageStride taxiBoosterOnBottomLeft;
-        
+
         //Booster flags
         private bool LeftOrRightBoosterActive;
         private bool BottomBoosterActive;
-        
+
         private float BoostPower = 0.2f;
-        
+
         private readonly DynamicShape shape;
         private Orientation taxiOrientation;
-        
+
         public Physics physics;
-        
+
 
         public Player() {
             shape = new DynamicShape(new Vec2F(), new Vec2F());
-            
+
             taxiBoosterOffImageLeft =
                 new Image(Path.Combine("Assets", "Images", "Taxi_Thrust_None.png"));
             taxiBoosterOffImageRight =
                 new Image(Path.Combine("Assets", "Images", "Taxi_Thrust_None_Right.png"));
-            
+
             taxiBoosterOnLeft = new ImageStride(10, ImageStride.CreateStrides(
-                2,Path.Combine("Assets","Images","Taxi_Thrust_Back.png")));
+                2, Path.Combine("Assets", "Images", "Taxi_Thrust_Back.png")));
             taxiBoosterOnRight = new ImageStride(10, ImageStride.CreateStrides(
-                2,Path.Combine("Assets","Images","Taxi_Thrust_Back_Right.png")));
+                2, Path.Combine("Assets", "Images", "Taxi_Thrust_Back_Right.png")));
             taxiBoosterOnBottomBackLeft = new ImageStride(10, ImageStride.CreateStrides(
-                2,Path.Combine("Assets","Images","Taxi_Thrust_Bottom_Back.png")));
+                2, Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Back.png")));
             taxiBoosterOnBottomBackRight = new ImageStride(10, ImageStride.CreateStrides(
-                2,Path.Combine("Assets","Images","Taxi_Thrust_Bottom_Back_Right.png")));
+                2, Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Back_Right.png")));
             taxiBoosterOnBottomLeft = new ImageStride(10, ImageStride.CreateStrides(
-                2,Path.Combine("Assets","Images","Taxi_Thrust_Bottom.png")));
+                2, Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom.png")));
             taxiBoosterOnBottomRight = new ImageStride(10, ImageStride.CreateStrides(
-                2,Path.Combine("Assets","Images","Taxi_Thrust_Bottom_Right.png")));
-    
+                2, Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Right.png")));
+
             BottomBoosterActive = false;
             LeftOrRightBoosterActive = false;
-            
+
             physics = new Physics(40);
 
             Entity = new Entity(shape, taxiBoosterOffImageLeft);
@@ -69,24 +69,20 @@ namespace SpaceTaxi_1 {
             shape.Extent.X = width;
             shape.Extent.Y = height;
         }
-        
+
         /// <summary>
         /// Renders the player with correct orientation
         /// </summary>
-
         public void RenderPlayer() {
-          
             if (BottomBoosterActive && LeftOrRightBoosterActive) {
                 Entity.Image = taxiOrientation == Orientation.Left
                     ? taxiBoosterOnBottomBackLeft
                     : taxiBoosterOnBottomBackRight;
-            }
-            else if (BottomBoosterActive) {
+            } else if (BottomBoosterActive) {
                 Entity.Image = taxiOrientation == Orientation.Left
                     ? taxiBoosterOnBottomLeft
                     : taxiBoosterOnBottomRight;
-            }
-            else if (LeftOrRightBoosterActive) {
+            } else if (LeftOrRightBoosterActive) {
                 Entity.Image = taxiOrientation == Orientation.Left
                     ? taxiBoosterOnLeft
                     : taxiBoosterOnRight;
@@ -96,43 +92,43 @@ namespace SpaceTaxi_1 {
                     ? taxiBoosterOffImageLeft
                     : taxiBoosterOffImageRight;
             }
+
             Entity.RenderEntity();
         }
 
         /// <summary>
         /// Moves the player around in with the given velocity and direction
         /// </summary>
-        
-        public void Move() {   
-            
-           //Engage the thrusters
-           Booster();
-           
-          Entity.Shape.AsDynamicShape().Direction = physics.GetVelocity();
-          Entity.Shape.AsDynamicShape().Move();
-          physics.UpdateVelocity();
+        public void Move() {
+            //Engage the thrusters
+            Booster();
+
+            Entity.Shape.AsDynamicShape().Direction = physics.GetVelocity();
+            Entity.Shape.AsDynamicShape().Move();
+            physics.UpdateVelocity();
         }
-        
+
         /// <summary>
         /// Activates the booster
         /// </summary>
         private void Booster() {
             if (LeftOrRightBoosterActive) {
-               switch (taxiOrientation) {
-                   case Orientation.Left:
-                       physics.ApplyForce(Physics.ForceDirection.Left,BoostPower);
-                       break;
-                   case Orientation.Right:
-                       physics.ApplyForce(Physics.ForceDirection.Right,BoostPower);
-                       break;
-               }
+                switch (taxiOrientation) {
+                case Orientation.Left:
+                    physics.ApplyForce(Physics.ForceDirection.Left, BoostPower);
+                    break;
+                case Orientation.Right:
+                    physics.ApplyForce(Physics.ForceDirection.Right, BoostPower);
+                    break;
+                }
             }
+
             if (BottomBoosterActive) {
-               physics.ApplyForce(Physics.ForceDirection.Up,BoostPower);
+                physics.ApplyForce(Physics.ForceDirection.Up, BoostPower);
             }
         }
-        
-       
+
+
         /// <summary>
         /// Event processor. It changes the booster flags and taxi orientation based on user input 
         /// </summary>
@@ -142,30 +138,30 @@ namespace SpaceTaxi_1 {
         /// <param name="gameEvent">
         /// The gameEvent
         /// </param>
-
         public void ProcessEvent(GameEventType eventType,
             GameEvent<object> gameEvent) {
             if (eventType == GameEventType.PlayerEvent) {
                 switch (gameEvent.Message) {
-                    case "BOOSTER_TO_LEFT":
-                        taxiOrientation = Orientation.Left;
-                        LeftOrRightBoosterActive = true;
-                        break;
-                    case "BOOSTER_TO_RIGHT":
-                        taxiOrientation = Orientation.Right;
-                        LeftOrRightBoosterActive = true;
-                        break;
-                    case "BOOSTER_UPWARDS":
-                        BottomBoosterActive = true;
-                        break;
-                    case "STOP_ACCELERATE_LEFT": case "STOP_ACCELERATE_RIGHT" : 
-                        LeftOrRightBoosterActive = false;
-                        break;
-                    case "STOP_ACCELERATE_UP" :
-                        BottomBoosterActive = false;
-                        break;
+                case "BOOSTER_TO_LEFT":
+                    taxiOrientation = Orientation.Left;
+                    LeftOrRightBoosterActive = true;
+                    break;
+                case "BOOSTER_TO_RIGHT":
+                    taxiOrientation = Orientation.Right;
+                    LeftOrRightBoosterActive = true;
+                    break;
+                case "BOOSTER_UPWARDS":
+                    BottomBoosterActive = true;
+                    break;
+                case "STOP_ACCELERATE_LEFT":
+                case "STOP_ACCELERATE_RIGHT":
+                    LeftOrRightBoosterActive = false;
+                    break;
+                case "STOP_ACCELERATE_UP":
+                    BottomBoosterActive = false;
+                    break;
                 }
-            } 
+            }
         }
     }
 }

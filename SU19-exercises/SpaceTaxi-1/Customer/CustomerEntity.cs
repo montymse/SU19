@@ -7,7 +7,6 @@ using DIKUArcade.Timers;
 
 namespace SpaceTaxi_1.Customer {
     public class CustomerEntity {
-
         private string filename;
         private string[] customerInfo;
         private string customerName; //
@@ -20,7 +19,6 @@ namespace SpaceTaxi_1.Customer {
         private TimedEvent countTime; //
         public TimedEvent timeToDrop; //
         public bool pickedUp = false;
-        
 
 
         public CustomerEntity(string filename) {
@@ -41,11 +39,10 @@ namespace SpaceTaxi_1.Customer {
                         CustomerInfo.PickupPosition(this.filename).Item2),
                     new Vec2F(0.06f, 0.06f)),
                 new Image(Path.Combine("Assets", "Images", "CustomerStandRight.png")));
-            Entity.Shape.AsDynamicShape().Direction=new Vec2F(0,0);
-            
+            Entity.Shape.AsDynamicShape().Direction = new Vec2F(0, 0);
+
             countTime.ResetTimer();
             timeToDrop.ResetTimer();
-            
         }
 
 
@@ -53,12 +50,10 @@ namespace SpaceTaxi_1.Customer {
         public bool CountHasExpired() {
             return countTime.HasExpired();
         }
-        
+
         //If this is true, game has ended. (because the taxi did not make it in time
         public bool TimeToDropHasExpired() {
             return timeToDrop.HasExpired();
         }
-        
-        
     }
 }

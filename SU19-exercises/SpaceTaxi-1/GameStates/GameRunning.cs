@@ -36,14 +36,12 @@ namespace SpaceTaxi_1.GameStates {
         /// <returns>
         /// Sets gamerunning to null and returns.
         /// </returns>
-
         public static GameRunning GetInstance0() {
             GameRunning.instance = null;
-             return GameRunning.instance;
+            return GameRunning.instance;
         }
 
         public static GameRunning GetInstance() {
-
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
         }
 
@@ -62,52 +60,44 @@ namespace SpaceTaxi_1.GameStates {
             player.SetPosition(0.45f, 0.6f);
             player.SetExtent(0.06f, 0.06f);
 
-            col=new Collision(ActiveLevelPath);
-            
-            parser=new Parser(Placement.FindPlacementAndImage(
+            col = new Collision(ActiveLevelPath);
+
+            parser = new Parser(Placement.FindPlacementAndImage(
                 ActiveLevelPath
             ));
-               
+
             //Add textures
             parser.CreateEntityList();
-            
-            customer=new CustomerEntity(ActiveLevelPath);
-            
-            score= new CustomerPoints(customer);
-            
 
+            customer = new CustomerEntity(ActiveLevelPath);
+
+            score = new CustomerPoints(customer);
         }
-        
+
         /// <summary>
         /// Handles the customers taxi tour
         /// (the timers and the customer getting picked up)
         /// </summary>
-
-
         private void TaxiTour() {
-            if (player.physics.IsGrounded && 
+            if (player.physics.IsGrounded &&
                 Math.Abs(customer.Entity.Shape.Position.Y - player.Entity.Shape.Position.Y) < 0.05
                 && customer.CountHasExpired()) {
                 customer.pickedUp = true;
                 customer.timeToDrop.ResetTimer();
-                        
             }
 
-            if (customer.pickedUp && customer.TimeToDropHasExpired())
-             {
-                 player.Entity.DeleteEntity();
-
-            }   
+            if (customer.pickedUp && customer.TimeToDropHasExpired()) {
+                player.Entity.DeleteEntity();
+            }
         }
 
-        
+
         public void UpdateGameLogic() {
-            col.Collisions(parser.textureList,player);
+            col.Collisions(parser.textureList, player);
             TaxiTour();
 
             if (!player.Entity.IsDeleted()) {
                 player.Move();
-
             }
         }
 
@@ -116,30 +106,25 @@ namespace SpaceTaxi_1.GameStates {
             score.RenderScore();
             parser.textureList.RenderEntities();
 
-            
-           if (!player.Entity.IsDeleted()) {
+
+            if (!player.Entity.IsDeleted()) {
                 player.RenderPlayer();
             }
 
-           if (!customer.pickedUp && customer.CountHasExpired()) {
-               customer.Entity.RenderEntity();
-           }
+            if (!customer.pickedUp && customer.CountHasExpired()) {
+                customer.Entity.RenderEntity();
+            }
 
 
-           if (player.Entity.IsDeleted()) {
-               col.explosions.RenderAnimations();
-               col.GameOver.RenderText();
-               
-              
-           }
-
-     
+            if (player.Entity.IsDeleted()) {
+                col.explosions.RenderAnimations();
+                col.GameOver.RenderText();
+            }
         }
-        
+
         /// <summary>
         /// The function changes between the two levels
         /// </summary>
-
         public void ChangeLevel() {
             if (ActiveLevel == 0) {
                 ActiveLevel = 1;
@@ -148,6 +133,7 @@ namespace SpaceTaxi_1.GameStates {
                 ActiveLevel = 0;
                 ActiveLevelPath = "../../Levels/short-n-sweet.txt";
             }
+
             InitializeGameState();
         }
 
@@ -163,7 +149,7 @@ namespace SpaceTaxi_1.GameStates {
                             "CHANGE_STATE",
                             "GAME_PAUSED", ""));
                     break;
-                
+
                 case "KEY_SPACE":
                     GameRunning.GetInstance0();
                     SpaceTaxiBus.GetBus().RegisterEvent(
@@ -172,7 +158,7 @@ namespace SpaceTaxi_1.GameStates {
                             this,
                             "CHANGE_STATE",
                             "GAME_MAINMENU", ""));
-                
+
                     break;
                 case "KEY_Q":
                     SpaceTaxiBus.GetBus().RegisterEvent(
@@ -183,7 +169,8 @@ namespace SpaceTaxi_1.GameStates {
                             "", ""));
 
                     break;
-                case "KEY_UP": case "KEY_W":
+                case "KEY_UP":
+                case "KEY_W":
                     player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
@@ -191,55 +178,58 @@ namespace SpaceTaxi_1.GameStates {
                             "", ""));
                     break;
 
-                case "KEY_LEFT": case "KEY_A":
+                case "KEY_LEFT":
+                case "KEY_A":
                     player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "BOOSTER_TO_LEFT",
                             "", ""));
                     break;
-                case "KEY_RIGHT": case "KEY_D":
+                case "KEY_RIGHT":
+                case "KEY_D":
                     player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "BOOSTER_TO_RIGHT",
                             "", ""));
-                   break;
-                
+                    break;
                 }
 
                 break;
             case "KEY_RELEASE":
                 switch (keyAction) {
-                case "KEY_LEFT": case "KEY_A":
+                case "KEY_LEFT":
+                case "KEY_A":
                     player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "STOP_ACCELERATE_LEFT",
                             "", ""));
-                
+
                     break;
-                case "KEY_RIGHT": case "KEY_D":
+                case "KEY_RIGHT":
+                case "KEY_D":
                     player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "STOP_ACCELERATE_RIGHT",
                             "", ""));
-                 
+
                     break;
-                case "KEY_UP": case "KEY_W":
+                case "KEY_UP":
+                case "KEY_W":
                     player.ProcessEvent(GameEventType.PlayerEvent,
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,
                             "STOP_ACCELERATE_UP",
                             "", ""));
-                 
-                    break;
 
+                    break;
                 }
+
                 break;
             }
         }
     }
 }
-

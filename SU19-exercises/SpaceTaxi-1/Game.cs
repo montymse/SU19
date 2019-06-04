@@ -16,7 +16,7 @@ namespace SpaceTaxi_1 {
         private Window win;
         public StateMachine stateMachine;
 
-        
+
         private List<Entity> textureList;
 
         public Game() {
@@ -26,15 +26,13 @@ namespace SpaceTaxi_1 {
 
             //statemachine
             stateMachine = new StateMachine();
-            SpaceTaxiBus.GetBus().InitializeEventBus(new List<GameEventType>()
-            {
+            SpaceTaxiBus.GetBus().InitializeEventBus(new List<GameEventType>() {
                 GameEventType.WindowEvent,
                 GameEventType.InputEvent,
                 GameEventType.GameStateEvent,
                 GameEventType.PlayerEvent
-
             });
-        
+
 
             SpaceTaxiBus.GetBus().Subscribe(GameEventType.WindowEvent, this);
             SpaceTaxiBus.GetBus().Subscribe(GameEventType.PlayerEvent, this);
@@ -42,11 +40,8 @@ namespace SpaceTaxi_1 {
             SpaceTaxiBus.GetBus().Subscribe(GameEventType.InputEvent, this);
 
 
-                      
             // game timer
             gameTimer = new GameTimer(60, 60); // 60 UPS, 60 FPS limit
-
-
         }
 
         public void GameLoop() {
@@ -54,30 +49,27 @@ namespace SpaceTaxi_1 {
                 gameTimer.MeasureTime();
 
                 while (gameTimer.ShouldUpdate()) {
-
                     win.PollEvents();
-                    
+
                     SpaceTaxiBus.GetBus().ProcessEvents();
                     stateMachine.ActiveState.UpdateGameLogic();
                 }
 
                 if (gameTimer.ShouldRender()) {
-                    win.Clear();  
+                    win.Clear();
                     stateMachine.ActiveState.RenderState();
 
                     win.SwapBuffers();
-                    
                 }
 
                 if (gameTimer.ShouldReset()) {
                     // 1 second has passed - display last captured ups and fps from the timer
                     win.Title = "Space Taxi | UPS: " + gameTimer.CapturedUpdates + ", FPS: " +
-                                 gameTimer.CapturedFrames;
+                                gameTimer.CapturedFrames;
                 }
             }
         }
 
-       
 
         public void ProcessEvent(GameEventType eventType,
             GameEvent<object> gameEvent) {
@@ -91,19 +83,14 @@ namespace SpaceTaxi_1 {
                     win.SaveScreenShot();
                     break;
                 }
-              
             }
 
             if (eventType == GameEventType.GameStateEvent) {
-                stateMachine.ProcessEvent(eventType,gameEvent);
-
-              }
-            
-            if (eventType == GameEventType.PlayerEvent) {
+                stateMachine.ProcessEvent(eventType, gameEvent);
             }
-            
-            else if (eventType == GameEventType.InputEvent) {
 
+            if (eventType == GameEventType.PlayerEvent) { } else if (eventType ==
+                                                                     GameEventType.InputEvent) {
                 switch (gameEvent.Parameter1) {
                 case "KEY_PRESS":
                     stateMachine.ActiveState.HandleKeyEvent(gameEvent.Parameter1,
@@ -115,9 +102,6 @@ namespace SpaceTaxi_1 {
                     break;
                 }
             }
-            
         }
-       
-            }
-        }
-    
+    }
+}

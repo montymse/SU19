@@ -22,7 +22,7 @@ namespace SpaceTaxi_1 {
 
 
         public Collision(string activelevel) {
-            Activeplatforms=new Parser(CollisionPlatforms.GetPlatform(activelevel));
+            Activeplatforms = new Parser(CollisionPlatforms.GetPlatform(activelevel));
             Activeplatforms.CreateEntityList();
             explosionStrides = ImageStride.CreateStrides(8,
                 Path.Combine("Assets", "Images", "Explosion.png"));
@@ -35,8 +35,7 @@ namespace SpaceTaxi_1 {
             GameOver.SetColor(new Vec3I(0, 255, 0));
         }
 
-        
-        
+
         /// <summary>
         /// Adds explosion upon collision
         /// </summary>
@@ -50,7 +49,6 @@ namespace SpaceTaxi_1 {
         /// <param name="extentY">
         ///Extend y of explosion
         /// </param>
-
         private void AddExplosion(float posX, float posY,
             float extentX, float extentY) {
             explosions.AddAnimation(
@@ -67,7 +65,6 @@ namespace SpaceTaxi_1 {
         /// <param name="player">
         /// Player
         /// </param>
-
         public void Collisions(EntityContainer<Entity> Entities, Player player) {
             if (player.Entity.Shape.Position.Y >= 1f) {
                 GameRunning.GetInstance().ChangeLevel();
@@ -84,7 +81,6 @@ namespace SpaceTaxi_1 {
                 if (col.Collision) {
                     return col.Collision;
                 }
-                
             }
 
             return false;
@@ -99,30 +95,22 @@ namespace SpaceTaxi_1 {
         /// <param name="player">
         /// Player
         /// </param>
-       
-
-
         private void CollisionDetect(EntityContainer<Entity> Entities, Player player) {
             foreach (Entity elm in Entities) {
                 CollisionData col =
                     CollisionDetection.Aabb(player.Entity.Shape.AsDynamicShape(),
                         elm.Shape.AsDynamicShape());
 
-               
+
                 if (col.Collision) {
                     //Landing
-                    if (collisionPlatform(player) && 
-                        player.Entity.Shape.AsDynamicShape().Direction.Y >= -0.005f 
-                         
-                         )
-                    {
+                    if (collisionPlatform(player) &&
+                        player.Entity.Shape.AsDynamicShape().Direction.Y >= -0.005f
+                    ) {
                         player.physics.IsGrounded = true;
 
 
-
-
-                     //Collision with an obstacle. Taxi dies. 
-                     
+                        //Collision with an obstacle. Taxi dies. 
                     } else {
                         Tuple<float, float> position =
                             new Tuple<float, float>(player.Entity.Shape.Position.X,
@@ -134,14 +122,11 @@ namespace SpaceTaxi_1 {
                         AddExplosion(position.Item1, position.Item2,
                             extent.Item1, extent.Item2);
 
-                        player.Entity.Shape.AsDynamicShape().Direction=new Vec2F(0f,0f);
+                        player.Entity.Shape.AsDynamicShape().Direction = new Vec2F(0f, 0f);
                         player.Entity.DeleteEntity();
                     }
                 }
             }
         }
-        
     }
-    
-    
 }

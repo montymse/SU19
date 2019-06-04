@@ -2,8 +2,6 @@ using System;
 
 namespace SpaceTaxi_1 {
     public class Opener {
-        
-        
         /// <summary>
         /// FileToStringList opens a text file in order to read all lines of the text file
         /// into a string array
@@ -22,7 +20,7 @@ namespace SpaceTaxi_1 {
             string[] text = System.IO.File.ReadAllLines(file);
             return text;
         }
-        
+
         /// <summary>
         /// FileToString opens a text file and reads all the text in the file into a string
         /// </summary>
@@ -31,12 +29,11 @@ namespace SpaceTaxi_1 {
         /// <returns>
         /// a string with all the text from the file given as argument.
         /// </returns>
-        
         public static string FileToString(string file) {
             string text = System.IO.File.ReadAllText(file);
             return text;
         }
-        
+
         /// <summary>
         /// CutStringLevel cuts a string array, and only returns the first 23 lines
         /// of the string array. This is done because, the first 23 lines of ASCII-based
@@ -49,17 +46,15 @@ namespace SpaceTaxi_1 {
         /// a string array with the first 23 lines of the string array that
         /// FileToStringList returns
         /// </returns>
-
         public static string[] CutStringLevel(string file) {
             string[] text = FileToStringList(file);
             string[] level = new string[24];
-            
+
             for (int i = 0; i < 23; i++) {
-                level[i] = text[i];   
+                level[i] = text[i];
             }
 
             return level;
         }
-
     }
 }
