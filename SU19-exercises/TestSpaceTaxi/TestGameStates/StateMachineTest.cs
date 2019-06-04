@@ -15,7 +15,7 @@ namespace TestSpaceTaxi.TestGameStates {
             DIKUArcade.Window.CreateOpenGLContext();
             stateMachine = new StateMachine();
 
-            GalagaBus.GetBus().InitializeEventBus(new List<GameEventType>() {
+            SpaceTaxiBus.GetBus().InitializeEventBus(new List<GameEventType>() {
                 GameEventType.WindowEvent,
                 GameEventType.InputEvent,
                 GameEventType.GameStateEvent,
@@ -23,7 +23,7 @@ namespace TestSpaceTaxi.TestGameStates {
 
             });
 
-            GalagaBus.GetBus().Subscribe(GameEventType.GameStateEvent, stateMachine);
+            SpaceTaxiBus.GetBus().Subscribe(GameEventType.GameStateEvent, stateMachine);
 
 
         }
@@ -35,14 +35,14 @@ namespace TestSpaceTaxi.TestGameStates {
 
         [Test]
         public void TestEventGamePaused() {
-            GalagaBus.GetBus().RegisterEvent(
+            SpaceTaxiBus.GetBus().RegisterEvent(
                 GameEventFactory<object>.CreateGameEventForAllProcessors(
                     GameEventType.GameStateEvent,
                     this,
                     "CHANGE_STATE",
                     "GAME_PAUSED", ""));
 
-            GalagaBus.GetBus().ProcessEventsSequentially();
+            SpaceTaxiBus.GetBus().ProcessEventsSequentially();
             Assert.That(stateMachine.ActiveState, Is.InstanceOf<GamePaused>());
 
         }

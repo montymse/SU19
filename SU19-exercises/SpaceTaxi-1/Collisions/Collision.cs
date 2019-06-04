@@ -124,8 +124,6 @@ namespace SpaceTaxi_1 {
                      //Collision with an obstacle. Taxi dies. 
                      
                     } else {
-                        Console.WriteLine(col.CollisionDir);
-                        
                         Tuple<float, float> position =
                             new Tuple<float, float>(player.Entity.Shape.Position.X,
                                 player.Entity.Shape.Position.Y);
@@ -147,17 +145,3 @@ namespace SpaceTaxi_1 {
     
     
 }
-
-
-
-/* public bool CollisionDetectCustomer(Entity customer, Player player) {
-            CollisionData col =
-                CollisionDetection.Aabb(player.Entity.Shape.AsDynamicShape(),
-                    customer.Shape.AsDynamicShape());
-            Console.WriteLine("collided? {0}"
-            ,col.Collision);
-
-
-
-            return player.physics.IsGrounded; //&& col.Collision;
-        }*/

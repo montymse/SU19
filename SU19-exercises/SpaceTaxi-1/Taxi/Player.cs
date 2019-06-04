@@ -128,7 +128,6 @@ namespace SpaceTaxi_1 {
                }
             }
             if (BottomBoosterActive) {
-                //velocityVector += new Vec2F(0.0f, BoostPower);
                physics.ApplyForce(Physics.ForceDirection.Up,BoostPower);
             }
         }
