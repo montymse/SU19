@@ -72,7 +72,22 @@ namespace SpaceTaxi_1 {
                 CollisionDetect(Entities, player);
             }
         }
-
+        
+        
+        
+/// <summary>
+/// Method for determining collision with platform
+/// </summary>
+/// <param name="player">
+/// player
+/// </param>
+/// <returns>
+/// true if there is a collision with a platform else false
+/// </returns>
+/// <remarks>
+/// Supporting method that will be used in collisiondetect method
+/// for landing of taxi
+/// </remarks>
         private bool collisionPlatform(Player player) {
             foreach (Entity elm in Activeplatforms.textureList) {
                 CollisionData col =

@@ -10,6 +10,7 @@ using DIKUArcade.Physics;
 using DIKUArcade.State;
 using DIKUArcade.Timers;
 using SpaceTaxi_1.Customer;
+using SpaceTaxi_1.TaxiTour;
 
 namespace SpaceTaxi_1.GameStates {
     public class GameRunning : IGameState {
@@ -21,9 +22,11 @@ namespace SpaceTaxi_1.GameStates {
         private Collision col;
         private CustomerPoints score;
         private CustomerEntity customer;
+        private PickUp taxiTour;
 
-        private int ActiveLevel = 0;
-        private string ActiveLevelPath = "../../Levels/short-n-sweet.txt";
+        private int activeLevel = 0;
+        private string activeLevelPath = "../../Levels/short-n-sweet.txt";
+        private string inactiveLevelPath = "../../Levels/the-beach.txt";
 
 
         public GameRunning() {
@@ -60,41 +63,26 @@ namespace SpaceTaxi_1.GameStates {
             player.SetPosition(0.45f, 0.6f);
             player.SetExtent(0.06f, 0.06f);
 
-            col = new Collision(ActiveLevelPath);
+            col = new Collision(activeLevelPath);
 
             parser = new Parser(Placement.FindPlacementAndImage(
-                ActiveLevelPath
+                activeLevelPath
             ));
 
             //Add textures
             parser.CreateEntityList();
 
-            customer = new CustomerEntity(ActiveLevelPath);
+            customer = new CustomerEntity(activeLevelPath);
 
             score = new CustomerPoints(customer);
-        }
-
-        /// <summary>
-        /// Handles the customers taxi tour
-        /// (the timers and the customer getting picked up)
-        /// </summary>
-        private void TaxiTour() {
-            if (player.physics.IsGrounded &&
-                Math.Abs(customer.Entity.Shape.Position.Y - player.Entity.Shape.Position.Y) < 0.05
-                && customer.CountHasExpired()) {
-                customer.pickedUp = true;
-                customer.timeToDrop.ResetTimer();
-            }
-
-            if (customer.pickedUp && customer.TimeToDropHasExpired()) {
-                player.Entity.DeleteEntity();
-            }
+            
+            taxiTour=new PickUp();
         }
 
 
         public void UpdateGameLogic() {
             col.Collisions(parser.textureList, player);
-            TaxiTour();
+            taxiTour.TaxiTour(player, customer);
 
             if (!player.Entity.IsDeleted()) {
                 player.Move();
@@ -126,12 +114,15 @@ namespace SpaceTaxi_1.GameStates {
         /// The function changes between the two levels
         /// </summary>
         public void ChangeLevel() {
-            if (ActiveLevel == 0) {
-                ActiveLevel = 1;
-                ActiveLevelPath = "../../Levels/the-beach.txt";
+            if (activeLevel == 0) {
+                activeLevel = 1;
+                activeLevelPath = "../../Levels/the-beach.txt";
+                inactiveLevelPath = "../../Levels/short-n-sweet.txt";
             } else {
-                ActiveLevel = 0;
-                ActiveLevelPath = "../../Levels/short-n-sweet.txt";
+                activeLevel = 0;
+                activeLevelPath = "../../Levels/short-n-sweet.txt";
+                inactiveLevelPath = "../../Levels/the-beach.txt";
+
             }
 
             InitializeGameState();

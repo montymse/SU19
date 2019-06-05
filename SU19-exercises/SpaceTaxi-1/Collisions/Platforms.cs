@@ -5,7 +5,19 @@ using System.Text.RegularExpressions;
 
 namespace SpaceTaxi_1.Collisions {
     public class CollisionPlatforms : Placement {
-        public static string[] GetPlatforms(string filename) {
+        
+        
+        
+        /// <summary>
+        /// Gets the platform names from the level file
+        /// </summary>
+        /// <param name="filename">
+        /// File path 
+        /// </param>
+        /// <returns>
+        /// String array with all the platforms in a given map
+        /// </returns>
+        public static string[] Platforms(string filename) {
             string platform = "";
             string[] file = Opener.FileToStringList(filename);
             string identifier = "Platforms:";
@@ -20,9 +32,19 @@ namespace SpaceTaxi_1.Collisions {
 
             return platform.Split();
         }
+        
+        /// <summary>
+        /// finds the related image file and positions of all the platforms in the given levelfile
+        /// </summary>
+        /// <param name="textfile">
+        /// level file
+        /// </param>
+        /// <returns>
+        /// the related image file and positions of all the platforms in the level
+        /// </returns>
 
         public static List<Tuple<Tuple<float, float>, string>> GetPlatform(string textfile) {
-            string[] platformNames = CollisionPlatforms.GetPlatforms(textfile);
+            string[] platformNames = CollisionPlatforms.Platforms(textfile);
 
             string[] text =
                 Opener.CutStringLevel(textfile);
@@ -36,6 +58,8 @@ namespace SpaceTaxi_1.Collisions {
 
             for (int y = 0; y < text.Length - 1; y++) {
                 for (int x = 0; x < text[y].Length; x++) {
+                    //The condition of the if statement bellow is where 
+                    //Placement.FindPlacementAndImage and GetPlatform are different
                     if (platformNames.Contains(text[y][x].ToString())) {
                         foreach (Tuple<string, string> item in textures) {
                             if (item.Item1.Contains(text[y][x].ToString())) {

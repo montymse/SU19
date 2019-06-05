@@ -12,7 +12,7 @@ namespace SpaceTaxi_1.Customer {
         private string customerName; //
         private string counter; //
         private string platform;
-        private string destination; //
+        public string destination; //
         public string timelimit; //
         public string points; //
         public Entity Entity; //
@@ -46,12 +46,28 @@ namespace SpaceTaxi_1.Customer {
         }
 
 
-        //If this is true game should render customer.
+        /// <summary>
+        /// Checks if customer should pop up and render in game
+        /// </summary>
+        /// <returns>
+        /// If this is true game should render customer.
+        /// </returns>
+    
         public bool CountHasExpired() {
             return countTime.HasExpired();
         }
 
-        //If this is true, game has ended. (because the taxi did not make it in time
+        
+        /// <summary>
+        /// Time limit of dropping customer of a picking them of. 
+        /// </summary>
+        /// <returns>
+        /// True if time to drop cusotmer of has expired.
+        /// </returns>
+        /// <remarks>
+        /// If this is true, game has ended.
+        /// (because the taxi did not make it in time)
+        /// </remarks>
         public bool TimeToDropHasExpired() {
             return timeToDrop.HasExpired();
         }

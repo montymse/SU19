@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collisions\Collision.cs" />
-    <Compile Include="Collisions\CollisionPlatforms.cs" />
+    <Compile Include="Collisions\Platforms.cs" />
     <Compile Include="Customer\CustomerInfo.cs" />
     <Compile Include="Customer\CustomerEntity.cs" />
     <Compile Include="Customer\CustomerPoints.cs" />
@@ -59,6 +59,8 @@
     <Compile Include="LevelParser\Parser.cs" />
     <Compile Include="LevelParser\Placement.cs" />
     <Compile Include="Physics.cs" />
+    <Compile Include="TaxiTour\DropOff.cs" />
+    <Compile Include="TaxiTour\PickUp.cs" />
     <Compile Include="Taxi\Orientation.cs" />
     <Compile Include="Taxi\Player.cs" />
     <Compile Include="Program.cs" />

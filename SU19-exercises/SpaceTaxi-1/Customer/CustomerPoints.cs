@@ -24,9 +24,22 @@ namespace SpaceTaxi_1.Customer {
                 new Vec2F(0.2f, 0.2f));
         }
 
+        
+        /// <summary>
+        /// Point system, adds point to the score. 
+        /// </summary>
+        /// <param name="point">
+        /// The amount of point you will get for picking
+        /// and dropping customer off in thr right place
+        /// before the time limit
+        /// </param>
         public void AddPoint(string point) {
             points += int.Parse(point);
         }
+        
+        /// <summary>
+        /// Renders the text
+        /// </summary>
 
         public void RenderScore() {
             Score.SetText(string.Format("Score: {0}", points));
