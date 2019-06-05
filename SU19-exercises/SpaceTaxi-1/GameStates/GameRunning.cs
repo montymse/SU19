@@ -44,6 +44,12 @@ namespace SpaceTaxi_1.GameStates {
             return GameRunning.instance;
         }
 
+        /// <summary>
+        ///  Creates a instance of GameRunning is there is not one already
+        /// </summary>
+        /// <returns>
+        /// return an instance of GameRunning
+        /// </returns>
         public static GameRunning GetInstance() {
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
         }
@@ -124,8 +130,24 @@ namespace SpaceTaxi_1.GameStates {
                 inactiveLevelPath = "../../Levels/the-beach.txt";
 
             }
+            
+            player = new Player();
+            player.SetPosition(0.45f, 0.6f);
+            player.SetExtent(0.06f, 0.06f);
 
-            InitializeGameState();
+            col = new Collision(activeLevelPath);
+
+            parser = new Parser(Placement.FindPlacementAndImage(
+                activeLevelPath
+            ));
+
+            //Add textures
+            parser.CreateEntityList();
+
+            customer = new CustomerEntity(activeLevelPath);
+            
+
+            
         }
 
         public void HandleKeyEvent(string keyValue, string keyAction) {
