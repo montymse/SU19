@@ -12,7 +12,8 @@ namespace TestSpaceTaxi.TestLevelParser {
 
             Assert.AreEqual(
                 Opener.FileToString(
-                    "/Users/Muse/Desktop/su19-mikaelMuseFrederik/SU19-exercises/TestSpaceTaxi/Levels/abc.txt"),
+                    "/Users/Muse/Desktop/su19-mikaelMuseFrederik/SU19-exercises/TestSpaceTaxi/" +
+                    "Levels/abc.txt"),
                 "abcdefghijklmnopqrstuvwyz"
                 );
         }
@@ -20,11 +21,13 @@ namespace TestSpaceTaxi.TestLevelParser {
         [Test]
         public void TestCutStringLevel() {
             string[] x = new[]
-                {"1", "2", "3", "4", "5", "6", "7", "8", "9","1", "2", "3", "4", "5", "6", "7", "8", "9","1", "2", "3", "4", "5",null};
+                {"1", "2", "3", "4", "5", "6", "7", "8", "9","1", "2", "3", "4",
+                    "5", "6", "7", "8", "9","1", "2", "3", "4", "5",null};
                 
             Assert.AreEqual(
                 Opener.CutStringLevel(
-                    "/Users/Muse/Desktop/su19-mikaelMuseFrederik/SU19-exercises/TestSpaceTaxi/Levels/123.txt"),
+                    "/Users/Muse/Desktop/su19-mikaelMuseFrederik/SU19-exercises/" +
+                    "TestSpaceTaxi/Levels/123.txt"),
                 x);
 
 

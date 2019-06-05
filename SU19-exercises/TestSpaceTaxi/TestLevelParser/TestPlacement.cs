@@ -11,7 +11,8 @@ namespace TestSpaceTaxi.TestLevelParser {
         
         
         public void FindPlacementAndImage() {
-            List<Tuple<Tuple<float, float>,string>> x = new List<Tuple<Tuple<float, float>, string>>();
+            List<Tuple<Tuple<float, float>,string>> x = new List<Tuple<Tuple<float, float>,
+                string>>();
             x.Add(new Tuple<Tuple<float, float>,
                 string>(new Tuple<float, float>((float)8/40,1f-(float)6/23), " yellow-stick.png"));
             x.Add(new Tuple<Tuple<float, float>,
@@ -29,7 +30,8 @@ namespace TestSpaceTaxi.TestLevelParser {
 
             Assert.AreEqual(
                 Placement.FindPlacementAndImage(
-                    "/Users/Muse/Desktop/su19-mikaelMuseFrederik/SU19-exercises/TestSpaceTaxi/Levels/placementtest.txt"),
+                    "/Users/Muse/Desktop/su19-mikaelMuseFrederik/SU19-exercises/" +
+                    "TestSpaceTaxi/Levels/placementtest.txt"),
                x
                 );
 

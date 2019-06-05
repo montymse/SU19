@@ -22,7 +22,8 @@ namespace TestSpaceTaxi.TestLevelParser {
 
             Assert.AreEqual(
                 ImageList.StringToImageList(Opener.FileToString(
-                "/Users/Muse/Desktop/su19-mikaelMuseFrederik/SU19-exercises/TestSpaceTaxi/Levels/imagetest.txt")
+                "/Users/Muse/Desktop/su19-mikaelMuseFrederik/SU19-exercises/TestSpaceTaxi/" +
+                "Levels/imagetest.txt")
                     ),x);
 
             

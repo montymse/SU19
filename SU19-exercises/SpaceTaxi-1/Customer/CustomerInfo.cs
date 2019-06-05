@@ -2,7 +2,7 @@ using System;
 using System.Xml.Linq;
 
 namespace SpaceTaxi_1.Customer {
-    public class CustomerInfo {
+    public static class CustomerInfo {
         /// <summary> Takes a string[] generated from opener and extracts the line that contains
         /// the customer info </summary>
         /// <returns> The customer information as a single string, error message if
@@ -32,7 +32,7 @@ namespace SpaceTaxi_1.Customer {
         }
 
 
-        public static Tuple<int, int> PickPosition(string filename) {
+        private static Tuple<int, int> Pick(string filename) {
             Tuple<int, int> x = new Tuple<int, int>(0, 0);
             string[] file = Opener.CutStringLevel(filename);
             for (int i = 0; i < file.Length - 1; i++) {
@@ -51,7 +51,7 @@ namespace SpaceTaxi_1.Customer {
 
 
         public static Tuple<float, float> PickupPosition(string filename) {
-            Tuple<int, int> x = PickPosition(filename);
+            Tuple<int, int> x = Pick(filename);
             string[] map = Opener.CutStringLevel(filename);
             char d = map[x.Item2][x.Item1];
             int xaxispos = (x.Item1 + map[x.Item2].IndexOf(d)) / 2;
